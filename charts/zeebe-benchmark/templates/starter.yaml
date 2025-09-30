@@ -88,12 +88,7 @@ spec:
                 name: starter-config
                 optional: true
           resources:
-            limits:
-              cpu: 250m
-              memory: 256Mi
-            requests:
-              cpu: 250m
-              memory: 256Mi
+            {{- toYaml $.Values.starter.resources | nindent 12 }}
           ports:
             - containerPort: 9600
               name: "http"
