@@ -17,7 +17,7 @@ spec:
   endpoints:
     - honorLabels: true
       # since - is not supported directly, we have to use the index function and quote "camunda-platform"
-      interval: {{ index .Values "camunda-platform" "prometheusServiceMonitor" "scrapeInterval" }}
+      interval: 30s
       path: /actuator/prometheus
       port: server
 ---
