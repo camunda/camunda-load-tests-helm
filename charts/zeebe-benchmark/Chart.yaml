@@ -1,9 +1,9 @@
 apiVersion: v2
-name: zeebe-benchmark
-description: A Helm chart for Zeebe benchmarks
+name: camunda-load-tests
+description: A Helm chart for Camunda load tests
 type: application
-version: 0.3.26
-appVersion: "8.2.5"
+version: 0.1.0
+appVersion: "8.8.0"
 sources:
   - https://github.com/camunda/zeebe-benchmark-helm
   - https://github.com/camunda/camunda
@@ -14,7 +14,7 @@ dependencies:
     condition: "prometheus-elasticsearch-exporter.enabled"
 maintainers:
   - name: ChrisKujawa
-    email: christopher.zell@camunda.com
+    email: christopher.kujawa@camunda.com
 annotations:
   artifacthub.io/links: |
     - name: Zeebe Repo
