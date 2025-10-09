@@ -31,7 +31,7 @@ We value all feedback and contributions. To start contributing to this project, 
 - Familiarize yourself with the
   [contribution guide](./CONTRIBUTING.md).
 - Find more information about configuring and deploying the Zeebe Benchmark
-  [Helm chart](./charts/zeebe-benchmark/README.md).
+  [Helm chart](charts/load-test/README.md).
 
 ## Versioning
 

@@ -164,9 +164,9 @@ _Conjunction:_
 - [configuration] for section/group of variables
 
 All variables and the corresponding documentation are reflected in the
-[README](charts/zeebe-benchmark/README.md).
+[README](charts/camunda-load-test/README.md).
 Please make sure to update the README as well, if changing or adding new variables. Their exist an
-helper script ([convertValuesDoc.sh](charts/zeebe-benchmark/convertValuesDoc.sh)) to generate a markdown like structure based on the `.yaml` file documentation.
+helper script ([convertValuesDoc.sh](charts/load-test/convertValuesDoc.sh)) to generate a markdown like structure based on the `.yaml` file documentation.
 
 ## CI
 

@@ -1,7 +1,7 @@
 package test
 
 import (
-	"benchmark-helm/charts/zeebe-benchmark/test/golden"
+	"benchmark-helm/charts/camunda-load-test/test/golden"
 	"path/filepath"
 	"strings"
 	"testing"
