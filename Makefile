@@ -20,8 +20,8 @@ go.test: helm.dependency-update
 	$(goBin) test ./...
 
 # go.test-golden-updated: runs the tests with updating the golden files
-.PHONY: go.test-golden-updated
-go.test-golden-updated: helm.dependency-update
+.PHONY: go.update-golden
+go.update-golden: helm.dependency-update
 	$(goBin) test ./... -args -update-golden
 
 # go.test-it: runs the integration tests against the current kube context
