@@ -1,7 +1,7 @@
 package test
 
 import (
-	"camunda-load-tests/charts/camunda-load-test/test/golden"
+	"camunda-load-tests/charts/camunda-load-tests/test/golden"
 	"path/filepath"
 	"strings"
 	"testing"

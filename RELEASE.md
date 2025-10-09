@@ -7,7 +7,7 @@ created. The charts are hosted via GitHub pages and use the release artifacts. W
 
 ## Update Camunda Platform Helm chart
 
-Before the release make sure that the Chart version, in the [Chart.yaml](./charts/camunda-load-test/Chart.yaml) is up-to-date.
+Before the release make sure that the Chart version, in the [Chart.yaml](charts/camunda-load-tests/Chart.yaml) is up-to-date.
 This should be also done automatically via dependabot.
 
 ## Process
