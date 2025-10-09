@@ -23,9 +23,12 @@ spec:
             - name: JDK_JAVA_OPTIONS
               value: >-
                 -Dconfig.override_with_env_vars=true
-{{/*                -Dapp.tls=true*/}}
+                {{- if $.Values.saas.enabled }}
+                -Dapp.tls=true
+                {{- else }}
                 -Dapp.brokerUrl=http://{{ $.Values.global.connect.serviceName }}:26500
                 -Dapp.brokerRestUrl=http://{{ $.Values.global.connect.serviceName }}:8080
+                {{- end }}
                 -Dapp.preferRest={{ .Values.global.preferRest.enabled }}
                 -Dapp.starter.rate={{ .Values.starter.rate }}
                 -Dapp.starter.durationLimit=0
@@ -72,17 +75,6 @@ spec:
                   name: {{ include "zeebe-benchmark.credentials-name" $ }}
                   key: authServer
             {{- end }}
-            - name: ZEEBE_CLIENT_ID
-              value: zeebe
-            - name: ZEEBE_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  key: zeebe-secret
-                  name: ck-update-test-zeebe-identity-secret
-            - name: ZEEBE_AUTHORIZATION_SERVER_URL
-              value: http://ck-update-test-keycloak:80/auth/realms/camunda-platform/protocol/openid-connect/token
-            - name: CAMUNDA_CLIENT_ZEEBE_AUDIENCE
-              value: zeebe-api
           envFrom:
             - configMapRef:
                 name: starter-config
