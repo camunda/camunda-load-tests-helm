@@ -9,7 +9,7 @@ metadata:
   name: broker-service-monitor
   labels:
     release: monitoring
-    {{- include "zeebe-benchmark.labels" . | nindent 4 }}
+    {{- include "camunda-load-tests.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
@@ -30,7 +30,7 @@ metadata:
   name: benchmark-zeebe-gateway
   labels:
     app.kubernetes.io/component: zeebe-gateway
-    {{- include "zeebe-benchmark.labels" . | nindent 4 }}
+    {{- include "camunda-load-tests.labels" . | nindent 4 }}
 spec:
   selector:
     app: camunda-platform

@@ -1,7 +1,7 @@
 package test
 
 import (
-	"benchmark-helm/charts/camunda-load-test/test/golden"
+	"camunda-load-tests/charts/camunda-load-test/test/golden"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -15,13 +15,13 @@ func TestGoldenDefaults(t *testing.T) {
 
 	chartPath, err := filepath.Abs("../")
 	require.NoError(t, err)
-	templateNames := []string{"clients-service", "leader-balancing-cron", "publisher", "starter", "timer", "benchmark-config"}
+	templateNames := []string{"clients-service", "leader-balancing-cron", "publisher", "starter", "timer"}
 
 	for _, name := range templateNames {
 		suite.Run(t, &golden.TemplateGoldenTest{
 			ChartPath:      chartPath,
-			Release:        "benchmark-test",
-			Namespace:      "benchmark-" + strings.ToLower(random.UniqueId()),
+			Release:        "load-test",
+			Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
 			GoldenFileName: name,
 			Templates:      []string{"templates/" + name + ".yaml"},
 			SetValues:      map[string]string{},
@@ -44,8 +44,8 @@ func TestGoldenWorkers(t *testing.T) {
 	for _, name := range templateNames {
 		suite.Run(t, &golden.TemplateGoldenTest{
 			ChartPath:      chartPath,
-			Release:        "benchmark-test",
-			Namespace:      "benchmark-" + strings.ToLower(random.UniqueId()),
+			Release:        "load-test",
+			Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
 			GoldenFileName: name,
 			Templates:      []string{"templates/" + name + ".yaml"},
 			SetValues:      values,
@@ -71,8 +71,8 @@ func TestGoldenExtendedStarter(t *testing.T) {
 	for _, name := range templateNames {
 		suite.Run(t, &golden.TemplateGoldenTest{
 			ChartPath:      chartPath,
-			Release:        "benchmark-test",
-			Namespace:      "benchmark-" + strings.ToLower(random.UniqueId()),
+			Release:        "load-test",
+			Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
 			GoldenFileName: name + "-extended",
 			Templates:      []string{"templates/" + name + ".yaml"},
 			SetValues:      values,

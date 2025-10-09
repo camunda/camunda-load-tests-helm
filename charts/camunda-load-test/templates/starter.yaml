@@ -57,22 +57,22 @@ spec:
             - name: ZEEBE_ADDRESS
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "zeebe-benchmark.credentials-name" $ }}
+                  name: {{ include "camunda-load-tests.credentials-name" $ }}
                   key: zeebeAddress
             - name: ZEEBE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "zeebe-benchmark.credentials-name" $ }}
+                  name: {{ include "camunda-load-tests.credentials-name" $ }}
                   key: clientId
             - name: ZEEBE_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "zeebe-benchmark.credentials-name" $ }}
+                  name: {{ include "camunda-load-tests.credentials-name" $ }}
                   key: clientSecret
             - name: ZEEBE_AUTHORIZATION_SERVER_URL
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "zeebe-benchmark.credentials-name" $ }}
+                  name: {{ include "camunda-load-tests.credentials-name" $ }}
                   key: authServer
             {{- end }}
           envFrom:

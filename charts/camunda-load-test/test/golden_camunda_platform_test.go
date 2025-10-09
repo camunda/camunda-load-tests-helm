@@ -1,7 +1,7 @@
 package test
 
 import (
-	"benchmark-helm/charts/camunda-load-test/test/golden"
+	"camunda-load-tests/charts/camunda-load-test/test/golden"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -23,8 +23,8 @@ func TestGoldenCamundaPlatformServiceMonitorDefaults(t *testing.T) {
 	for _, name := range templateNames {
 		suite.Run(t, &golden.TemplateGoldenTest{
 			ChartPath:      chartPath,
-			Release:        "benchmark-test",
-			Namespace:      "benchmark-" + strings.ToLower(random.UniqueId()),
+			Release:        "load-test",
+			Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
 			GoldenFileName: "c8-" + name,
 			Templates:      []string{"charts/camunda-platform/templates/service-monitor/" + name + ".yaml"},
 		})
@@ -43,8 +43,8 @@ func TestGoldenCamundaPlatformCoreDefaults(t *testing.T) {
 	for _, name := range templateNames {
 		suite.Run(t, &golden.TemplateGoldenTest{
 			ChartPath:      chartPath,
-			Release:        "benchmark-test",
-			Namespace:      "benchmark-" + strings.ToLower(random.UniqueId()),
+			Release:        "load-test",
+			Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
 			GoldenFileName: "c8-core-" + name,
 			Templates:      []string{"charts/camunda-platform/templates/orchestration/" + name + ".yaml"},
 		})

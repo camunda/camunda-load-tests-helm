@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "zeebe-benchmark.name" -}}
+{{- define "camunda-load-tests.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "zeebe-benchmark.fullname" -}}
+{{- define "camunda-load-tests.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,7 +27,7 @@ If release name contains chart name it will be used as a full name.
 Create a default fully qualified credentials name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "zeebe-benchmark.credentials-name" -}}
+{{- define "camunda-load-tests.credentials-name" -}}
 {{- if .Values.saas.credentials.existingSecret }}
 {{- .Values.saas.credentials.existingSecret }}
 {{- else }}
@@ -39,16 +39,16 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "zeebe-benchmark.chart" -}}
+{{- define "camunda-load-tests.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "zeebe-benchmark.labels" -}}
-helm.sh/chart: {{ include "zeebe-benchmark.chart" . }}
-{{ include "zeebe-benchmark.selectorLabels" . }}
+{{- define "camunda-load-tests.labels" -}}
+helm.sh/chart: {{ include "camunda-load-tests.chart" . }}
+{{ include "camunda-load-tests.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -58,17 +58,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "zeebe-benchmark.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "zeebe-benchmark.name" . }}
+{{- define "camunda-load-tests.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "camunda-load-tests.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "zeebe-benchmark.serviceAccountName" -}}
+{{- define "camunda-load-tests.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "zeebe-benchmark.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "camunda-load-tests.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

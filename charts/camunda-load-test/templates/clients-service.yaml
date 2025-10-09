@@ -5,7 +5,7 @@ metadata:
   name: clients
   labels:
     app.kubernetes.io/component: zeebe-client
-    {{- include "zeebe-benchmark.labels" . | nindent 4 }}
+    {{- include "camunda-load-tests.labels" . | nindent 4 }}
 spec:
   selector:
     app.kubernetes.io/component: zeebe-client
@@ -19,7 +19,7 @@ metadata:
   name: clients
   labels:
     release: monitoring
-    {{- include "zeebe-benchmark.labels" . | nindent 4 }}
+    {{- include "camunda-load-tests.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:

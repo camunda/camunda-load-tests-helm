@@ -22,7 +22,7 @@ fi
 
 # Chart name is hard-coded since we only have 1 main chart,
 # but it could be customized in case we have more in the future.
-chart_name="zeebe-benchmark"
+chart_name="camunda-load-test"
 
 # When changing the minor version, export "is_minor_version=1",
 # that will increment the minor version and set the patch version to zero.

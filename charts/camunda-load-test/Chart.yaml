@@ -5,7 +5,7 @@ type: application
 version: 0.1.0
 appVersion: "8.8.0"
 sources:
-  - https://github.com/camunda/zeebe-benchmark-helm
+  - https://github.com/camunda/camunda-load-tests-helm
   - https://github.com/camunda/camunda
 dependencies:
   - name: prometheus-elasticsearch-exporter

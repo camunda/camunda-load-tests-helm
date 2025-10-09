@@ -1,4 +1,4 @@
-# Default values for Zeebe Benchmark Helm chart.
+# Default values for Camunda load tests Helm chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -24,7 +24,7 @@
 
 # Global configuration for variables which can be accessed by all sub charts
 global:
-  # PreferRest allows to configure benchmark applications to make use of the REST API, instead of the gRPC API.
+  # PreferRest allows to configure load test applications to make use of the REST API, instead of the gRPC API.
   preferRest:
     enabled: false
   connect:
@@ -42,14 +42,14 @@ global:
     auth:
       enabled: false
 
-# Saas configuration to run benchmarks against Camunda SaaS environment
+# Saas configuration to run load tests against Camunda SaaS environment
 saas:
-  # Saas.enabled if true enables the benchmark to run against Camunda SaaS
+  # Saas.enabled if true enables the load tests to run against Camunda SaaS
   enabled: false
 
   # Saas.credentials configuration to connect to a Camunda SaaS cluster
   credentials:
-    # Saas.existingSecret can be used to configure the secret name that should be referenced by the benchmark
+    # Saas.existingSecret can be used to configure the secret name that should be referenced by the load tests
     # applications to retrieve credential information.
     #
     # If this value is set, other credentials are not used.
@@ -81,22 +81,22 @@ saas:
 #        => New way to deploy workers <=
 workers:
   worker:
-    # Workers.benchmark.replicas defines how many replicas of the benchmark worker should be deployed
+    # Workers.worker.replicas defines how many replicas of the load test worker should be deployed
     replicas: 3
-    # Workers.benchmark.capacity defines how many jobs the worker should activate and work on
+    # Workers.worker.capacity defines how many jobs the worker should activate and work on
     capacity: 60
-    # Workers.benchmark.threads defines how many threads the worker can use to work on jobs
+    # Workers.worker.threads defines how many threads the worker can use to work on jobs
     threads: 10
-    # Workers.benchmark.jobType defines the job type which should be used by the worker
+    # Workers.worker.jobType defines the job type which should be used by the worker
     jobType: "benchmark-task"
-    # Workers.benchmark.payloadPath defines the path (inside the worker app) to the payload resource
+    # Workers.worker.payloadPath defines the path (inside the worker app) to the payload resource
     # that should be used to complete the corresponding jobs
     payloadPath: "bpmn/typical_payload.json"
-    # Workers.benchmark.payloadPath defines the delay of the worker before completing a job
+    # Workers.worker.payloadPath defines the delay of the worker before completing a job
     completionDelay: 50ms
-    # Workers.benchmark.logLevel defines the logging level for the benchmark worker
+    # Workers.worker.logLevel defines the logging level for the load test worker
     logLevel: "WARN"
-    # Workers.benchmark.resources defines the resources for the benchmark worker
+    # Workers.worker.resources defines the resources for the load test worker
     resources:
       limits:
         cpu: 500m
@@ -105,18 +105,18 @@ workers:
         cpu: 500m
         memory: 256Mi
 
-  # Workers.benchmark defines the configuration for the default benchmark worker
+  # Workers.worker defines the configuration for the default load test worker
   # Adding more and different worker can be done via adding a new map like:
-  #  benchmark-2:
-  #    # Workers.benchmark.replicas defines how many replicas of the benchmark worker should be deployed
+  #  worker-2:
+  #    # Workers.worker.replicas defines how many replicas of the load test worker should be deployed
   #    replicas: 3
-  #    # Workers.benchmark.capacity defines how many jobs the worker should activate and work on
+  #    # Workers.worker.capacity defines how many jobs the worker should activate and work on
   #    capacity: 60
-  #    # Workers.benchmark.jobType defines the job type which should be used by the worker
+  #    # Workers.worker.jobType defines the job type which should be used by the worker
   #    jobType: "benchmark-2-task"
-  #    # Workers.benchmark.logLevel defines the logging level for the benchmark worker
+  #    # Workers.worker.logLevel defines the logging level for the load test worker
   #    logLevel: "WARN"
-  #    # Workers.benchmark.resources defines the resources for the benchmark worker
+  #    # Workers.worker.resources defines the resources for the load test worker
   #    resources:
   #      limits:
   #        cpu: 500m
@@ -131,7 +131,7 @@ starter:
   replicas: 1
   # Starter.rate defines with which rate process instances should be created by the starter
   rate: 150
-  # Starter.logLevel defines the logging level for the benchmark starter
+  # Starter.logLevel defines the logging level for the load test starter
   logLevel: "WARN"
   # Starter.processId defines the process ID, that should be used for creating new process instances
   processId: "benchmark"

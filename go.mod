@@ -1,4 +1,4 @@
-module benchmark-helm
+module camunda-load-tests
 
 go 1.24.6
 
