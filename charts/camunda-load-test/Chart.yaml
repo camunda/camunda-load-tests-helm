@@ -7,11 +7,6 @@ appVersion: "8.8.0"
 sources:
   - https://github.com/camunda/camunda-load-tests-helm
   - https://github.com/camunda/camunda
-dependencies:
-  - name: prometheus-elasticsearch-exporter
-    repository: "https://prometheus-community.github.io/helm-charts"
-    version: 6.4.0
-    condition: "prometheus-elasticsearch-exporter.enabled"
 maintainers:
   - name: ChrisKujawa
     email: christopher.kujawa@camunda.com
