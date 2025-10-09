@@ -28,10 +28,7 @@ global:
   preferRest:
     enabled: false
   connect:
-    serviceName: ck-update-test-zeebe-gateway
-  # Disable global ingress
-  ingress:
-    enabled: false
+    serviceName: camunda-gateway
   image:
     # Image.repository defines the repository from which to fetch the docker images
     repository: "gcr.io/zeebe-io"
