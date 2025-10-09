@@ -121,7 +121,7 @@ As mentioned earlier we expect unit tests on new contributions. The unit tests (
 
 We write new golden file tests, for default values, where we can compare a complete manifest with his properties.
 Most of the golden file tests are part of the `goldenfiles_test.go` in the corresponding sub-chart testing directory.
-For an example see [test/golden_test.go](charts/camunda-load-test/test/golden_test.go).
+For an example see [test/golden_test.go](charts/camunda-load-tests/test/golden_test.go).
 
 If the complete manifest can be enabled by a toggle, we also write a golden file test. This test is part of `<manifestFileName>_test.go` file. The `<manifestFileName>` corresponds to the template filename we have in the sub-chart `templates` dir. For example, the prometheus [servicemonitor](charts/camunda-platform/templates/service-monitor.yaml) can be enabled by a toggle. This means we write a golden file test in [servicemonitor_test.go](charts/camunda-platform/test/servicemonitor_test.go).
 
@@ -164,7 +164,7 @@ _Conjunction:_
 - [configuration] for section/group of variables
 
 All variables and the corresponding documentation are reflected in the
-[README](charts/camunda-load-test/README.md).
+[README](charts/camunda-load-tests/README.md).
 Please make sure to update the README as well, if changing or adding new variables. Their exist an
 helper script ([convertValuesDoc.sh](charts/load-test/convertValuesDoc.sh)) to generate a markdown like structure based on the `.yaml` file documentation.
 

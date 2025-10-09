@@ -2,7 +2,7 @@
 
 # Makefile for managing the Helm charts
 
-chartPath=charts/camunda-load-test
+chartPath=charts/camunda-load-tests
 chartVersion=$(shell grep -Po '(?<=^version: ).+' $(chartPath)/Chart.yaml)
 releaseName=load-test
 gitChglog=quay.io/git-chglog/git-chglog:0.15.1
@@ -55,12 +55,12 @@ go.addlicense-install:
 # go.addlicense-run: adds license headers to $(goBin) files
 .PHONY: go.addlicense-run
 go.addlicense-run:
-	addlicense -c 'Camunda Services GmbH' -l apache charts/camunda-load-test/test/**/*.go
+	addlicense -c 'Camunda Services GmbH' -l apache charts/camunda-load-tests/test/**/*.go
 
 # go.addlicense-check: checks that the $(goBin) files contain license header
 .PHONY: go.addlicense-check
 go.addlicense-check:
-	addlicense -check -l apache charts/camunda-load-test/test/**/*.go
+	addlicense -check -l apache charts/camunda-load-tests/test/**/*.go
 
 #########################################################
 ######### Tools

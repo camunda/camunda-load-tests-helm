@@ -20,7 +20,7 @@ It can be executed against any Camunda Platform 8 cluster, either self-managed o
 ## Installation
 
 Find out more details about different installation and deployment options
-on the [Camunda load test Helm chart README](./charts/camunda-load-test/README.md).
+on the [Camunda load test Helm chart README](./charts/camunda-load-tests/README.md).
 
 ## Contributing
 
@@ -31,7 +31,7 @@ We value all feedback and contributions. To start contributing to this project, 
 - Familiarize yourself with the
   [contribution guide](./CONTRIBUTING.md).
 - Find more information about configuring and deploying the Camunda load tests
-  [Helm chart](charts/camunda-load-test/README.md).
+  [Helm chart](charts/camunda-load-tests/README.md).
 
 ## Versioning
 
