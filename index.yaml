@@ -1,0 +1,32 @@
+apiVersion: v1
+entries:
+  camunda-load-tests:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
+          description: "rename camunda-load-tests"
+        - kind: changed
+          description: "add s to name"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2025-10-10T14:29:35.265108796Z"
+    description: A Helm chart for Camunda load tests
+    digest: 7f7163b329051ebed1c35cc017b206e57135f46adacfaceb936cb585948f68cb
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
+    version: 0.1.1
+generated: "2025-10-10T14:29:35.265118354Z"
