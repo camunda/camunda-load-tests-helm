@@ -1,0 +1,154 @@
+# Default values for Camunda load tests Helm chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The values file follows helm best practices https://helm.sh/docs/chart_best_practices/values/
+#
+# This means:
+#   * Variable names should begin with a lowercase letter, and words should be separated with camelcase.
+#   * Every defined property in values.yaml should be documented. The documentation string should begin with the name of the property that it describes, and then give at least a one-sentence description
+#
+# Furthermore, we try to apply the following pattern: # [VarName] [conjunction] [definition]
+#
+# VarName:
+#
+#  * In the documentation the variable name is started with a big letter, similar to kubernetes resource documentation.
+#  * If the variable is part of a subsection/object we use a json path expression (to make it more clear where the variable belongs to).
+#    The root (chart name) is omitted (e.g. zeebe). This is useful for using --set in helm.
+#
+# Conjunction:
+#   * [defines] for mandatory configuration
+#   * [can be used] for optional configuration
+#   * [if true] for toggles
+#   * [configuration] for section/group of variables
+
+# Global configuration for variables which can be accessed by all sub charts
+global:
+  # PreferRest allows to configure load test applications to make use of the REST API, instead of the gRPC API.
+  preferRest:
+    enabled: false
+  connect:
+    serviceName: camunda-gateway
+  image:
+    # Image.repository defines the repository from which to fetch the docker images
+    repository: "gcr.io/zeebe-io"
+    # Image.tag defines the tag / version which should be used in the chart
+    tag: SNAPSHOT
+    ## @param global.image.pullPolicy defines the image pull policy which should be used https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
+    pullPolicy: Always
+    ## @param global.image.pullSecrets can be used to configure image pull secrets https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+    pullSecrets: []
+  identity:
+    auth:
+      enabled: false
+
+# Saas configuration to run load tests against Camunda SaaS environment
+saas:
+  # Saas.enabled if true enables the load tests to run against Camunda SaaS
+  enabled: false
+
+  # Saas.credentials configuration to connect to a Camunda SaaS cluster
+  credentials:
+    # Saas.existingSecret can be used to configure the secret name that should be referenced by the load tests
+    # applications to retrieve credential information.
+    #
+    # If this value is set, other credentials are not used.
+    #
+    # Credentials Secret need to follow the following format:
+    #
+    # apiVersion: v1
+    # kind: Secret
+    # metadata:
+    #   name: cloud-credentials
+    # type: Opaque
+    # stringData:
+    #   clientId: hH55UFivfw-bbHAuPwN545oyv8tTdW0z
+    #   clientSecret: xtHQB.zBLcQrw4GaP0k_ci~ePjbD8qVlYaFKNo__2a7ZJxL-DAVVHepq~X9elPRb
+    #   zeebeAddress: e314a337-a462-4988-a3be-d1f2e153e034.zeebe.ultrawombat.com:443
+    #   authServer: https://login.cloud.ultrawombat.com/oauth/token
+    existingSecret:
+
+    # Saas.credentials.clientId to define the clientId to connect
+    clientId: ""
+    # Saas.credentials.clientSecret to define the clientSecret to connect
+    clientSecret: ""
+    # Saas.credentials.zeebeAddress to define the address of the cluster (including port)
+    zeebeAddress:
+    # SaaS.credentials.authServer to define the authentication server to retrieve JWT tokens
+    authServer: "https://login.cloud.ultrawombat.com/oauth/token"
+
+# Workers configuration for the to be deployed worker application
+#        => New way to deploy workers <=
+workers:
+  worker:
+    # Workers.worker.replicas defines how many replicas of the load test worker should be deployed
+    replicas: 3
+    # Workers.worker.capacity defines how many jobs the worker should activate and work on
+    capacity: 60
+    # Workers.worker.threads defines how many threads the worker can use to work on jobs
+    threads: 10
+    # Workers.worker.jobType defines the job type which should be used by the worker
+    jobType: "benchmark-task"
+    # Workers.worker.payloadPath defines the path (inside the worker app) to the payload resource
+    # that should be used to complete the corresponding jobs
+    payloadPath: "bpmn/typical_payload.json"
+    # Workers.worker.payloadPath defines the delay of the worker before completing a job
+    completionDelay: 50ms
+    # Workers.worker.logLevel defines the logging level for the load test worker
+    logLevel: "WARN"
+    # Workers.worker.resources defines the resources for the load test worker
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 500m
+        memory: 256Mi
+
+  # Workers.worker defines the configuration for the default load test worker
+  # Adding more and different worker can be done via adding a new map like:
+  #  worker-2:
+  #    # Workers.worker.replicas defines how many replicas of the load test worker should be deployed
+  #    replicas: 3
+  #    # Workers.worker.capacity defines how many jobs the worker should activate and work on
+  #    capacity: 60
+  #    # Workers.worker.jobType defines the job type which should be used by the worker
+  #    jobType: "benchmark-2-task"
+  #    # Workers.worker.logLevel defines the logging level for the load test worker
+  #    logLevel: "WARN"
+  #    # Workers.worker.resources defines the resources for the load test worker
+  #    resources:
+  #      limits:
+  #        cpu: 500m
+  #        memory: 256Mi
+  #      requests:
+  #        cpu: 500m
+  #        memory: 256Mi
+
+# Starter configuration for the to be deployed starter application
+starter:
+  # Starter.replicas defines how many replicas of the application should be deployed
+  replicas: 1
+  # Starter.rate defines with which rate process instances should be created by the starter
+  rate: 150
+  # Starter.logLevel defines the logging level for the load test starter
+  logLevel: "WARN"
+  # Starter.processId defines the process ID, that should be used for creating new process instances
+  processId: "benchmark"
+  # Starter.payloadPath defines the path (inside the starter app) to the payload resource
+  # that should be used to create the corresponding process instance
+  payloadPath: "bpmn/typical_payload.json"
+  # Starter.bpmnXmlPath defines the path (inside the starter app) to the main bpmn XML resource that should be deployed
+  bpmnXmlPath: "bpmn/one_task.bpmn"
+  # Starter.extraBpmnModels can be used to specify paths (inside the starter app) to extra resources that should be deployed
+  extraResources: []
+  # Starter.businessKey can be used to specify a businessKey variable, inside a unique identifier is stored for
+  # each created process instance
+  businessKey: "businessKey"
+  resources:
+    limits:
+      cpu: 250m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 1Gi

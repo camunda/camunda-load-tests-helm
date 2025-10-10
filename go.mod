@@ -1,11 +1,10 @@
-module benchmark-helm
+module camunda-load-tests
 
 go 1.24.6
 
 require (
 	github.com/gruntwork-io/terratest v0.47.2
 	github.com/stretchr/testify v1.9.0
-	k8s.io/api v0.28.4
 )
 
 require (
@@ -75,6 +74,7 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	k8s.io/api v0.28.4 // indirect
 	k8s.io/apimachinery v0.28.4 // indirect
 	k8s.io/client-go v0.28.4 // indirect
 	k8s.io/klog/v2 v2.100.1 // indirect

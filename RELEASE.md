@@ -1,14 +1,13 @@
-# Zeebe Benchmark Helm Chart Release Process
+# Camunda Load Test Helm Chart Release Process
 
 The charts are build, linted and tested on every push to the main branch. If the chart version
-(in `Chart.yaml`) changes a new github release with the corresponding packaged helm chart is
-created. The charts are hosted via github pages and use the release artifacts. We use the
+(in `Chart.yaml`) changes a new GitHub release with the corresponding packaged helm chart is
+created. The charts are hosted via GitHub pages and use the release artifacts. We use the
 [chart-releaser-action](https://github.com/helm/chart-releaser-action) to release the charts.
 
 ## Update Camunda Platform Helm chart
 
-Before the release make sure that the Chart version, in the [Chart.yaml](./charts/zeebe-benchmark/Chart.yaml) is up-to-date.
-
+Before the release make sure that the Chart version, in the [Chart.yaml](charts/camunda-load-tests/Chart.yaml) is up-to-date.
 This should be also done automatically via dependabot.
 
 ## Process
@@ -41,7 +40,7 @@ This action will:
 > [!Note]
 >
 > If you are using macOS or Windows, the `make release.chores` command might not work as expected.
-> Instead, you can run the [Chart - Prepare Release](https://github.com/camunda/zeebe-benchmark-helm/actions/workflows/chart-prepare-release.yaml) workflow.
+> Instead, you can run the [Chart - Prepare Release](https://github.com/camunda/camunda-load-tests-helm/actions/workflows/chart-prepare-release.yaml) workflow.
 > The link to open the pull request will be shown in the workflow logs.
 
 Next, all that you need to open the PR using the generated link and follow th checklist there.

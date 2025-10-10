@@ -109,7 +109,7 @@ We separate our tests in two parts, with different targets and goals.
 
 **For new contributions it is expected to write new unit tests, but no integration tests.** We keep the count of integration tests to a minimum, and the knowledge for writing them is not expected for contributors.
 
-Tests can be found in the `charts/zeebe-benchmark` directory under `test/`. 
+Tests can be found in the `charts/camunda-load-test` directory under `test/`. 
 
 In order to run the tests, execute `make go.test` on the root repository level.
 
@@ -121,7 +121,7 @@ As mentioned earlier we expect unit tests on new contributions. The unit tests (
 
 We write new golden file tests, for default values, where we can compare a complete manifest with his properties.
 Most of the golden file tests are part of the `goldenfiles_test.go` in the corresponding sub-chart testing directory.
-For an example see [test/golden_test.go](charts/zeebe-benchmark/test/golden_test.go).
+For an example see [test/golden_test.go](charts/camunda-load-tests/test/golden_test.go).
 
 If the complete manifest can be enabled by a toggle, we also write a golden file test. This test is part of `<manifestFileName>_test.go` file. The `<manifestFileName>` corresponds to the template filename we have in the sub-chart `templates` dir. For example, the prometheus [servicemonitor](charts/camunda-platform/templates/service-monitor.yaml) can be enabled by a toggle. This means we write a golden file test in [servicemonitor_test.go](charts/camunda-platform/test/servicemonitor_test.go).
 
@@ -164,9 +164,9 @@ _Conjunction:_
 - [configuration] for section/group of variables
 
 All variables and the corresponding documentation are reflected in the
-[README](charts/zeebe-benchmark/README.md).
+[README](charts/camunda-load-tests/README.md).
 Please make sure to update the README as well, if changing or adding new variables. Their exist an
-helper script ([convertValuesDoc.sh](charts/zeebe-benchmark/convertValuesDoc.sh)) to generate a markdown like structure based on the `.yaml` file documentation.
+helper script ([convertValuesDoc.sh](charts/load-test/convertValuesDoc.sh)) to generate a markdown like structure based on the `.yaml` file documentation.
 
 ## CI
 

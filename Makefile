@@ -2,9 +2,9 @@
 
 # Makefile for managing the Helm charts
 
-chartPath=charts/zeebe-benchmark
+chartPath=charts/camunda-load-tests
 chartVersion=$(shell grep -Po '(?<=^version: ).+' $(chartPath)/Chart.yaml)
-releaseName=zeebe-benchmark-test
+releaseName=load-test
 gitChglog=quay.io/git-chglog/git-chglog:0.15.1
 goBin=go
 #########################################################
@@ -20,8 +20,8 @@ go.test: helm.dependency-update
 	$(goBin) test ./...
 
 # go.test-golden-updated: runs the tests with updating the golden files
-.PHONY: go.test-golden-updated
-go.test-golden-updated: helm.dependency-update
+.PHONY: go.update-golden
+go.update-golden: helm.dependency-update
 	$(goBin) test ./... -args -update-golden
 
 # go.test-it: runs the integration tests against the current kube context
@@ -55,12 +55,12 @@ go.addlicense-install:
 # go.addlicense-run: adds license headers to $(goBin) files
 .PHONY: go.addlicense-run
 go.addlicense-run:
-	addlicense -c 'Camunda Services GmbH' -l apache charts/zeebe-benchmark/test/**/*.go
+	addlicense -c 'Camunda Services GmbH' -l apache charts/camunda-load-tests/test/**/*.go
 
 # go.addlicense-check: checks that the $(goBin) files contain license header
 .PHONY: go.addlicense-check
 go.addlicense-check:
-	addlicense -check -l apache charts/zeebe-benchmark/test/**/*.go
+	addlicense -check -l apache charts/camunda-load-tests/test/**/*.go
 
 #########################################################
 ######### Tools
@@ -143,7 +143,7 @@ helm.template: helm.dependency-update
 .PHONY: release.bump-chart-version-and-commit
 release.bump-chart-version-and-commit: .release.bump-chart-version
 	git add $(chartPath);\
-	git commit -m "chore: bump benchmark chart version to $(chartVersion)"
+	git commit -m "chore: bump load test chart version to $(chartVersion)"
 
 .PHONY: .release.generate-notes
 .release.generate-notes:
@@ -157,15 +157,15 @@ endif
 .PHONY: release.generate-notes-and-commit
 release.generate-notes-and-commit: .release.generate-notes
 	git add $(chartPath);\
-	git commit -m "chore: add release notes for benchmark $(chartVersion)"
+	git commit -m "chore: add release notes for load test chart $(chartVersion)"
 
 .PHONY: release.generate-pr-url
 release.generate-pr-url:
 	@echo "\n\n###################################\n"
 	@echo "Open the release PR using this URL:"
-	@echo "https://github.com/camunda/zeebe-benchmark-helm/compare/release?expand=1&template=release_template.md&title=Release%20Zeebe%20Benchmark%20Helm%20Chart%20v$(chartVersion)"
+	@echo "https://github.com/camunda/camunda-load-test-helm/compare/release?expand=1&template=release_template.md&title=Release%20Camunda%20Load%20Tests%20Helm%20Chart%20v$(chartVersion)"
 	@if [ "$$CI" != "true" ]; then \
-	  xdg-open "https://github.com/camunda/zeebe-benchmark-helm/compare/release?expand=1&template=release_template.md&title=Release%20Zeebe%20Benchmark%20Helm%20Chart%20v$(chartVersion)"; \
+	  xdg-open "https://github.com/camunda/camunda-load-test-helm/compare/release?expand=1&template=release_template.md&title=Release%20Camunda%20Load%20Tests%20Helm%20Chart%20v$(chartVersion)"; \
 	fi
 	@echo "\n###################################\n\n"
 
