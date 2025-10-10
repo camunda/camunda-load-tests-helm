@@ -109,7 +109,7 @@ We separate our tests in two parts, with different targets and goals.
 
 **For new contributions it is expected to write new unit tests, but no integration tests.** We keep the count of integration tests to a minimum, and the knowledge for writing them is not expected for contributors.
 
-Tests can be found in the `charts/camunda-load-test` directory under `test/`. 
+Tests can be found in the `charts/camunda-load-tests` directory under `test/`. 
 
 In order to run the tests, execute `make go.test` on the root repository level.
 
@@ -165,8 +165,6 @@ _Conjunction:_
 
 All variables and the corresponding documentation are reflected in the
 [README](charts/camunda-load-tests/README.md).
-Please make sure to update the README as well, if changing or adding new variables. Their exist an
-helper script ([convertValuesDoc.sh](charts/load-test/convertValuesDoc.sh)) to generate a markdown like structure based on the `.yaml` file documentation.
 
 ## CI
 

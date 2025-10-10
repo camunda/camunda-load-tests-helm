@@ -163,9 +163,9 @@ release.generate-notes-and-commit: .release.generate-notes
 release.generate-pr-url:
 	@echo "\n\n###################################\n"
 	@echo "Open the release PR using this URL:"
-	@echo "https://github.com/camunda/camunda-load-test-helm/compare/release?expand=1&template=release_template.md&title=Release%20Camunda%20Load%20Tests%20Helm%20Chart%20v$(chartVersion)"
+	@echo "https://github.com/camunda/camunda-load-tests-helm/compare/release?expand=1&template=release_template.md&title=Release%20Camunda%20Load%20Tests%20Helm%20Chart%20v$(chartVersion)"
 	@if [ "$$CI" != "true" ]; then \
-	  xdg-open "https://github.com/camunda/camunda-load-test-helm/compare/release?expand=1&template=release_template.md&title=Release%20Camunda%20Load%20Tests%20Helm%20Chart%20v$(chartVersion)"; \
+	  xdg-open "https://github.com/camunda/camunda-load-tests-helm/compare/release?expand=1&template=release_template.md&title=Release%20Camunda%20Load%20Tests%20Helm%20Chart%20v$(chartVersion)"; \
 	fi
 	@echo "\n###################################\n\n"
 

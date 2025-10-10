@@ -1,6 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
+# Chart name is hard-coded since we only have 1 main chart,
+# but it could be customized in case we have more in the future.
+chart_name="camunda-load-tests"
+
 print_help () {
 cat << EOF
 Usage:
@@ -11,7 +15,7 @@ Details:
     Updating the Chart.yaml version will trigger Helm release with the new version.
 
 Notes:
-    Default value for 'chart-name' is 'camunda-platform'.
+    Default value for 'chart-name' is '$chart_name'.
 EOF
 }
 
@@ -19,10 +23,6 @@ if [ "${1:-''}" == '-h' ]; then
   print_help
   exit 1
 fi
-
-# Chart name is hard-coded since we only have 1 main chart,
-# but it could be customized in case we have more in the future.
-chart_name="camunda-load-test"
 
 # When changing the minor version, export "is_minor_version=1",
 # that will increment the minor version and set the patch version to zero.
