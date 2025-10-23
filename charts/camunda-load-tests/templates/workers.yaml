@@ -62,11 +62,11 @@ spec:
               value: {{ $worker.logLevel | quote }}
             {{- end }}
             {{- if $.Values.saas.enabled }}
-            - name: ZEEBE_ADDRESS
+            - name: ZEEBE_REST_ADDRESS
               valueFrom:
                 secretKeyRef:
                   name: {{ include "camunda-load-tests.credentials-name" $ }}
-                  key: zeebeAddress
+                  key: zeebeRestAddress
             - name: ZEEBE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -82,6 +82,21 @@ spec:
                 secretKeyRef:
                   name: {{ include "camunda-load-tests.credentials-name" $ }}
                   key: authServer
+            - name: ZEEBE_TOKEN_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "camunda-load-tests.credentials-name" $ }}
+                  key: authorizationAudience
+            - name: ZEEBE_AUTH_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "camunda-load-tests.credentials-name" $ }}
+                  key: authType
+            - name: ZEEBE_GRPC_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "camunda-load-tests.credentials-name" $ }}
+                  key: zeebeGrpcAddress
             {{- end }}
           {{- if $worker.resources }}
           resources:
