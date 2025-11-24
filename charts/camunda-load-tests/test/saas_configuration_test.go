@@ -33,6 +33,9 @@ func TestGoldenCredentials(t *testing.T) {
 				"saas.credentials.clientSecret":     "clientSecret",
 				"saas.credentials.authServer":       "authServer",
 				"saas.credentials.zeebeRestAddress": "zeebeRestAddress",
+				"saas.credentials.authType":  "authType",
+				"saas.credentials.zeebeGrpcAddress":  "zeebeGrpcAddress",
+				"saas.credentials.authorizationAudience":  "authorizationAudience",
 			},
 		})
 	}
