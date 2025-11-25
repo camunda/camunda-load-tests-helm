@@ -3,6 +3,50 @@ entries:
   camunda-load-tests:
   - annotations:
       artifacthub.io/changes: |
+        - kind: fixed
+          description: "formating."
+        - kind: fixed
+          description: "adjust path."
+        - kind: fixed
+          description: "update golden tests."
+        - kind: fixed
+          description: "address comments."
+        - kind: fixed
+          description: "formating."
+        - kind: fixed
+          description: "fix golden files."
+        - kind: fixed
+          description: "adjust saas_configuration_test.go."
+        - kind: fixed
+          description: "adjust ream.me."
+        - kind: fixed
+          description: "add missing credentials to values.yaml."
+        - kind: fixed
+          description: "add missing credentials to the templates."
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2025-11-25T09:27:56.984509797Z"
+    description: A Helm chart for Camunda load tests
+    digest: 23e9fcaf3bcb0e9eedc44d54fd8d87350db473ea563c41bd6fc9ff1e8862d311
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.2/camunda-load-tests-0.1.2.tgz
+    version: 0.1.2
+  - annotations:
+      artifacthub.io/changes: |
         - kind: changed
           description: "rename camunda-load-tests"
         - kind: changed
@@ -29,4 +73,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2025-10-10T14:29:35.265118354Z"
+generated: "2025-11-25T09:27:56.98452217Z"
