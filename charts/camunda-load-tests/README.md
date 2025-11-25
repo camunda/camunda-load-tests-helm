@@ -63,13 +63,16 @@ need to run through the following steps:
 4. Run the following `install` command (please replace `PREFIX` with your initials)
 
 ```yaml
-helm install PREFIX-saas-load-test camunda-load-tests/camunda-load-tests \
+helm install PREFIX-saas-load-test charts/camunda-load-tests \
   --set camunda-platform.enabled=false \
   --set saas.enabled=true \
   --set saas.credentials.clientId="$ZEEBE_CLIENT_ID" \
   --set saas.credentials.clientSecret="$ZEEBE_CLIENT_SECRET" \
-  --set saas.credentials.zeebeAddress="$ZEEBE_ADDRESS" \
-  --set saas.credentials.authServer="$ZEEBE_AUTHORIZATION_SERVER_URL"
+  --set saas.credentials.zeebeRestAddress="$ZEEBE_REST_ADDRESS" \
+  --set saas.credentials.authServer="$ZEEBE_AUTHORIZATION_SERVER_URL" \
+  --set saas.credentials.authType="OAUTH" \
+  --set saas.credentials.zeebeGrpcAddress="$ZEEBE_GRPC_ADDRESS" \
+  --set saas.credentials.authorizationAudience="$ZEEBE_TOKEN_AUDIENCE"
 ```
 
 This will run the load test against the SaaS Camunda cluster.

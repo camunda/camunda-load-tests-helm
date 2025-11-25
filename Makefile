@@ -19,7 +19,7 @@ goBin=go
 go.test: helm.dependency-update
 	$(goBin) test ./...
 
-# go.test-golden-updated: runs the tests with updating the golden files
+# go.update-golden: runs the tests with updating the golden files
 .PHONY: go.update-golden
 go.update-golden: helm.dependency-update
 	$(goBin) test ./... -args -update-golden

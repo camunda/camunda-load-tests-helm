@@ -28,11 +28,14 @@ func TestGoldenCredentials(t *testing.T) {
 			GoldenFileName: "golden-credentials-" + name,
 			Templates:      []string{"templates/" + name + ".yaml"},
 			SetValues: map[string]string{
-				"saas.enabled":                  "true",
-				"saas.credentials.clientId":     "clientId",
-				"saas.credentials.clientSecret": "clientSecret",
-				"saas.credentials.authServer":   "authServer",
-				"saas.credentials.zeebeAddress": "zeebeAddress",
+				"saas.enabled":                           "true",
+				"saas.credentials.clientId":              "clientId",
+				"saas.credentials.clientSecret":          "clientSecret",
+				"saas.credentials.authServer":            "authServer",
+				"saas.credentials.zeebeRestAddress":      "zeebeRestAddress",
+				"saas.credentials.authType":              "authType",
+				"saas.credentials.zeebeGrpcAddress":      "zeebeGrpcAddress",
+				"saas.credentials.authorizationAudience": "authorizationAudience",
 			},
 		})
 	}
