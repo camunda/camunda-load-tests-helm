@@ -2,7 +2,7 @@ apiVersion: v2
 name: camunda-load-tests
 description: A Helm chart for Camunda load tests
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "8.8.0"
 sources:
   - https://github.com/camunda/camunda-load-tests-helm
@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: changed\n  description: \"rename camunda-load-tests\"\n- kind: changed\n  description: \"add s to name\"\n"
+  artifacthub.io/changes: "- kind: fixed\n  description: \"formating.\"\n- kind: fixed\n  description: \"adjust path.\"\n- kind: fixed\n  description: \"update golden tests.\"\n- kind: fixed\n  description: \"address comments.\"\n- kind: fixed\n  description: \"formating.\"\n- kind: fixed\n  description: \"fix golden files.\"\n- kind: fixed\n  description: \"adjust saas_configuration_test.go.\"\n- kind: fixed\n  description: \"adjust ream.me.\"\n- kind: fixed\n  description: \"add missing credentials to values.yaml.\"\n- kind: fixed\n  description: \"add missing credentials to the templates.\"\n"
