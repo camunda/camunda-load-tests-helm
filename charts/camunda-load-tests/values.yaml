@@ -102,6 +102,8 @@ workers:
     completionDelay: 50ms
     # Workers.worker.logLevel defines the logging level for the load test worker
     logLevel: "WARN"
+    # Workers.worker.imagePullSecrets can be used to override global.image.pullSecrets for this worker
+    imagePullSecrets: []
     # Workers.worker.resources defines the resources for the load test worker
     resources:
       limits:
@@ -151,6 +153,8 @@ starter:
   # Starter.businessKey can be used to specify a businessKey variable, inside a unique identifier is stored for
   # each created process instance
   businessKey: "businessKey"
+  # Starter.imagePullSecrets can be used to override global.image.pullSecrets for the starter
+  imagePullSecrets: []
   resources:
     limits:
       cpu: 250m
