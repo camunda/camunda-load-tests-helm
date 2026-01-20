@@ -29,6 +29,11 @@ global:
     enabled: false
   connect:
     serviceName: camunda-gateway
+  # global.extraConfig
+  extraConfig:
+    # Example to disable data availability monitoring in load test applications
+    # app.monitorDataAvailability: false
+
   image:
     # Image.repository defines the repository from which to fetch the docker images
     repository: "gcr.io/zeebe-io"
