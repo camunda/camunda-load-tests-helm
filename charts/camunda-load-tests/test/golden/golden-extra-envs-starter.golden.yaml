@@ -25,7 +25,8 @@ spec:
             - name: JDK_JAVA_OPTIONS
               value: >-
                 -Dconfig.override_with_env_vars=true
-                -Dapp.tls=true
+                -Dapp.brokerUrl=http://camunda-gateway:26500
+                -Dapp.brokerRestUrl=http://camunda-gateway:8080
                 -Dapp.preferRest=false
                 -Dapp.starter.rate=150
                 -Dapp.starter.durationLimit=0
@@ -37,41 +38,8 @@ spec:
                 -XX:+HeapDumpOnOutOfMemoryError
             - name: LOG_LEVEL
               value: "WARN"
-            - name: ZEEBE_REST_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: secret-name
-                  key: zeebeRestAddress
-            - name: ZEEBE_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: secret-name
-                  key: clientId
-            - name: ZEEBE_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secret-name
-                  key: clientSecret
-            - name: ZEEBE_AUTHORIZATION_SERVER_URL
-              valueFrom:
-                secretKeyRef:
-                  name: secret-name
-                  key: authServer
-            - name: ZEEBE_TOKEN_AUDIENCE
-              valueFrom:
-                secretKeyRef:
-                  name: secret-name
-                  key: authorizationAudience
-            - name: ZEEBE_AUTH_TYPE
-              valueFrom:
-                secretKeyRef:
-                  name: secret-name
-                  key: authType
-            - name: ZEEBE_GRPC_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: secret-name
-                  key: zeebeGrpcAddress
+            - name: APP_MONITORDATAAVAILABILITY
+              value: "false"
           envFrom:
             - configMapRef:
                 name: starter-config

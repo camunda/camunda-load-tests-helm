@@ -29,10 +29,15 @@ global:
     enabled: false
   connect:
     serviceName: camunda-gateway
-  # global.extraConfig
+  # global.extraConfig allows to configure extra configuration for all load test applications
   extraConfig:
     # Example to disable data availability monitoring in load test applications
     # app.monitorDataAvailability: false
+  # global.extraEnv allows to configure extra environment variables for all load test applications
+  extraEnv: []
+    # Example to disable data availability monitoring in load test applications
+    # - name: APP_MONITORDATAAVAILABILITY
+    #   value: "false"
 
   image:
     # Image.repository defines the repository from which to fetch the docker images
