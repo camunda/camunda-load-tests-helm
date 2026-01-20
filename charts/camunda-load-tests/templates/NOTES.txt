@@ -9,9 +9,9 @@ Extra configurations:
 {{ .Values.global.extraConfig | toYaml | indent 4 }}
 {{- end }}
 
-{{- if .Values.global.extraEnv }}
+{{- if .Values.global.extraEnvVars }}
 Extra environment variables:
-{{ .Values.global.extraEnv | toYaml | indent 4 }}
+{{ .Values.global.extraEnvVars | toYaml | indent 4 }}
 {{- end }}
 
 Starter:

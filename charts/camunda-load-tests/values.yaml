@@ -33,8 +33,8 @@ global:
   extraConfig:
     # Example to disable data availability monitoring in load test applications
     # app.monitorDataAvailability: false
-  # global.extraEnv allows to configure extra environment variables for all load test applications
-  extraEnv: []
+  # global.extraEnvVars allows to configure extra environment variables for all load test applications
+  extraEnvVars: []
     # Example to disable data availability monitoring in load test applications
     # As long we use https://github.com/lightbend/config we need to stick to the pattern of
     # using env variable overrides with CONFIG_FORCE_ prefix

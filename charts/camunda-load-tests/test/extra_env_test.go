@@ -25,8 +25,8 @@ func TestGoldenExtraEnvs(t *testing.T) {
 			GoldenFileName: "golden-extra-envs-" + name,
 			Templates:      []string{"templates/" + name + ".yaml"},
 			SetValues: map[string]string{
-				"global.extraEnv[0].name":  "APP_MONITORDATAAVAILABILITY",
-				"global.extraEnv[0].value": "false",
+				"global.extraEnvVars[0].name":  "APP_MONITORDATAAVAILABILITY",
+				"global.extraEnvVars[0].value": "false",
 			},
 		})
 	}

@@ -99,7 +99,7 @@ spec:
             - name: SPRING_CONFIG_ADDITIONALLOCATION
               value: "/usr/local/camunda/config/load-test-config.yaml"
             {{- end }}
-            {{- range $keyValue := $.Values.global.extraEnv }}
+            {{- range $keyValue := $.Values.global.extraEnvVars }}
             - name: {{ $keyValue.name }}
               value: {{ $keyValue.value | quote }}
             {{- end }}
