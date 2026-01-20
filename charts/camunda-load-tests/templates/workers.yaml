@@ -102,6 +102,11 @@ spec:
                   name: {{ include "camunda-load-tests.credentials-name" $ }}
                   key: zeebeGrpcAddress
             {{- end }}
+            {{- if $.Values.global.extraConfig }}
+            # To be able to load a separate/additional configuration
+            - name: SPRING_CONFIG_ADDITIONALLOCATION
+              value: "/usr/local/camunda/config/load-test-config.yaml"
+            {{- end }}
           {{- if $worker.resources }}
           resources:
             {{- toYaml $worker.resources | nindent 12 }}
@@ -109,5 +114,17 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
+{{- if $.Values.global.extraConfig }}
+          volumeMounts:
+            - name: load-test-config
+              mountPath: /usr/local/camunda/config/load-test-config.yaml
+              subPath: load-test-config.yaml
+      volumes:
+        - name: load-test-config
+          configMap:
+            name: load-test-config
+            defaultMode: 0754
+{{- end }}
+
 ---
 {{- end }}

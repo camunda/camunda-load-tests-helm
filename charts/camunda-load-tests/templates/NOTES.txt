@@ -4,8 +4,10 @@ The load test is running with:
 
 Global image: {{ .Values.global.image.repository }}:{{ .Values.global.image.tag }}
 
+{{- if .Values.global.extraConfig }}
 Extra configurations:
 {{ .Values.global.extraConfig | toYaml | indent 4 }}
+{{- end }}
 
 Starter:
 {{- range $k, $v := .Values.starter }}
