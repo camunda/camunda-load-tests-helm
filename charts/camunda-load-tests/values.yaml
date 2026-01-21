@@ -29,10 +29,21 @@ global:
     enabled: false
   connect:
     serviceName: camunda-gateway
-  # global.extraConfig
+  # global.extraConfig allows to configure extra configuration for all load test applications
   extraConfig:
     # Example to disable data availability monitoring in load test applications
     # app.monitorDataAvailability: false
+  # global.extraEnvVars allows to configure extra environment variables for all load test applications
+  extraEnvVars: []
+    # Example to disable data availability monitoring in load test applications
+    # As long we use https://github.com/lightbend/config we need to stick to the pattern of
+    # using env variable overrides with CONFIG_FORCE_ prefix
+    # NOTE: The env variable needs to be in upper case and dots need to be replaced with underscores
+    # IMPORTANT: configuration afterward is lower case again! See example below.
+    # For more information see:
+    # https://github.com/lightbend/config?tab=readme-ov-file#optional-system-or-env-variable-overrides
+    # - name: CONFIG_FORCE_app_monitorDataAvailability
+    #   value: "false"
 
   image:
     # Image.repository defines the repository from which to fetch the docker images
