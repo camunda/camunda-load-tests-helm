@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: added\n  description: \"add imagePullSecrets support for starter and workers\"\n- kind: fixed\n  description: \"simplify imagePullSecrets to only use global configuration\"\n"
+  artifacthub.io/changes: "- kind: added\n  description: \"configure load-test apps\"\n- kind: added\n  description: \"add extraConfig value\"\n- kind: fixed\n  description: \"correctly print worker cfgs\"\n"
