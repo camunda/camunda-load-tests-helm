@@ -16,6 +16,16 @@
         "devDependencies"
       ],
       "automerge": true
+    },
+    {
+      "description": "Automerge all updates with green CI.",
+      "matchPackageNames": [
+        "*"
+      ],
+      "automerge": true,
+      "addLabels": [
+        "automerge"
+      ]
     }
   ]
 }
