@@ -2,18 +2,19 @@ The changelog is automatically generated using [git-chglog](https://github.com/g
 and it follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
 
 
-<a name="camunda-load-tests-0.1.3"></a>
-## [camunda-load-tests-0.1.3](https://github.com/camunda/camunda-platform-helm/compare/camunda-load-tests-0.1.2...camunda-load-tests-0.1.3) (2025-12-12)
+<a name="camunda-load-tests-0.1.4"></a>
+## [camunda-load-tests-0.1.4](https://github.com/camunda/camunda-platform-helm/compare/camunda-load-tests-0.1.3...camunda-load-tests-0.1.4) (2026-01-22)
 
 ### Feat
 
-* add imagePullSecrets support for starter and workers ([#6](https://github.com/camunda/camunda-platform-helm/issues/6))
+* configure load-test apps
+* add extraConfig value
 
 ### Fix
 
-* simplify imagePullSecrets to only use global configuration ([#7](https://github.com/camunda/camunda-platform-helm/issues/7))
+* correctly print worker cfgs
 
-### Pull Requests
+### Test
 
-* Merge pull request [#5](https://github.com/camunda/camunda-platform-helm/issues/5) from camunda/release
+* validate extraConfig value
 
