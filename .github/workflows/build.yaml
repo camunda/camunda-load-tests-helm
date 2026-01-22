@@ -54,6 +54,8 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
       - id: merge
         name: Merge PR
-        run: gh pr merge ${{ github.event.pull_request.number }} --merge
+        run: |
+          # Call the API directly to work around https://github.com/cli/cli/issues/8352
+          gh api graphql -f query='mutation PullRequestAutoMerge {enablePullRequestAutoMerge(input: {pullRequestId: "${{ github.event.pull_request.node_id }}"}) {clientMutationId}}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
