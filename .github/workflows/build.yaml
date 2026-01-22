@@ -58,4 +58,4 @@ jobs:
           # Call the API directly to work around https://github.com/cli/cli/issues/8352
           gh api graphql -f query='mutation PullRequestAutoMerge {enablePullRequestAutoMerge(input: {pullRequestId: "${{ github.event.pull_request.node_id }}"}) {clientMutationId}}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.AUTO_MERGE_GITHUB_TOKEN }}"
