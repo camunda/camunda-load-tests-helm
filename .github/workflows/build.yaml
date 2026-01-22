@@ -7,7 +7,6 @@ on:
 
 env:
   HELM_VERSION: 3.13.1
-  GH_TOKEN: ${{ github.token }}
 
 jobs:
   build:
@@ -49,6 +48,12 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v6
+      - run: gh pr review --approve "${{ github.event.pull_request.html_url }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
       - id: merge
         name: Merge PR
         run: gh pr merge ${{ github.event.pull_request.number }} --merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
