@@ -4,6 +4,36 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: added
+          description: "configure load-test apps"
+        - kind: added
+          description: "add extraConfig value"
+        - kind: fixed
+          description: "correctly print worker cfgs"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-01-22T17:02:30.28614021Z"
+    description: A Helm chart for Camunda load tests
+    digest: 320691fa12abcefe5b5104a1128781187000f26dfad952652e05bf1f02b27ad2
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.4/camunda-load-tests-0.1.4.tgz
+    version: 0.1.4
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
           description: "add imagePullSecrets support for starter and workers"
         - kind: fixed
           description: "simplify imagePullSecrets to only use global configuration"
@@ -101,4 +131,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2025-12-12T14:49:06.997256908Z"
+generated: "2026-01-22T17:02:30.286161851Z"
