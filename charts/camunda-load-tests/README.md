@@ -64,7 +64,6 @@ need to run through the following steps:
 
 ```yaml
 helm install PREFIX-saas-load-test charts/camunda-load-tests \
-  --set camunda-platform.enabled=false \
   --set saas.enabled=true \
   --set saas.credentials.clientId="$ZEEBE_CLIENT_ID" \
   --set saas.credentials.clientSecret="$ZEEBE_CLIENT_SECRET" \
