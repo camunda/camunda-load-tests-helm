@@ -62,7 +62,7 @@ need to run through the following steps:
 3. [Source](https://linuxcommand.org/lc3_man_pages/sourceh.html) the downloaded file, containing the environment variables (e.g. `source Credentials.yaml`)
 4. Run the following `install` command (please replace `PREFIX` with your initials)
 
-```yaml
+```shell
 helm install PREFIX-saas-load-test charts/camunda-load-tests \
   --set saas.enabled=true \
   --set saas.credentials.clientId="$ZEEBE_CLIENT_ID" \
