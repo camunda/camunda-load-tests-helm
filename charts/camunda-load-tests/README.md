@@ -63,7 +63,7 @@ need to run through the following steps:
 4. Run the following `install` command (please replace `PREFIX` with your initials)
 
 ```shell
-helm install PREFIX-saas-load-test charts/camunda-load-tests \
+helm install PREFIX-saas-load-test camunda-load-tests/camunda-load-tests \
   --set saas.enabled=true \
   --set saas.credentials.clientId="$ZEEBE_CLIENT_ID" \
   --set saas.credentials.clientSecret="$ZEEBE_CLIENT_SECRET" \
