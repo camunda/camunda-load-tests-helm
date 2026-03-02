@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: added\n  description: \"configure load-test apps\"\n- kind: added\n  description: \"add extraConfig value\"\n- kind: fixed\n  description: \"correctly print worker cfgs\"\n"
+  artifacthub.io/changes: "- kind: added\n  description: \"introduce extraEnvs\"\n- kind: fixed\n  description: \"update README\"\n- kind: changed\n  description: \"use extraEnvVars as value name\"\n"
