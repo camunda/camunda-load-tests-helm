@@ -4,6 +4,36 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: added
+          description: "introduce extraEnvs"
+        - kind: fixed
+          description: "update README"
+        - kind: changed
+          description: "use extraEnvVars as value name"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-03-02T14:15:26.448185095Z"
+    description: A Helm chart for Camunda load tests
+    digest: 5230b9ed8d5bcefacad3c13e3eafc2df330cb6a0dd1dcbc6ce371ca71e4f6719
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.5/camunda-load-tests-0.1.5.tgz
+    version: 0.1.5
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
           description: "configure load-test apps"
         - kind: added
           description: "add extraConfig value"
@@ -131,4 +161,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-01-22T17:02:30.286161851Z"
+generated: "2026-03-02T14:15:26.448209641Z"
