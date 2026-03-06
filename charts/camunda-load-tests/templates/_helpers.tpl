@@ -6,6 +6,18 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Generate the common annotations for deployments.
+*/}}
+{{- define "camunda-load-tests.annotations" -}}
+{{- if $.Values.global.extraConfig -}}
+checksum/config: {{ include (print $.Template.BasePath "/load-test-config.yaml") . | sha256sum }}
+{{- end -}}
+{{- if $.Values.saas.enabled -}}
+checksum/saas-credentials: {{ include (print $.Template.BasePath "/credentials.yaml") . | sha256sum }}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.

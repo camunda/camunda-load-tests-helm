@@ -16,6 +16,8 @@ spec:
       labels:
         app: otherWorker
         app.kubernetes.io/component: zeebe-client
+      annotations:
+        
     spec:
       containers:
         - name: otherWorker
@@ -56,6 +58,8 @@ spec:
       labels:
         app: worker
         app.kubernetes.io/component: zeebe-client
+      annotations:
+        
     spec:
       containers:
         - name: worker
