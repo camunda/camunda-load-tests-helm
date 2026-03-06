@@ -79,3 +79,24 @@ func TestGoldenExtendedStarter(t *testing.T) {
 		})
 	}
 }
+
+func TestGoldenWorkerWithMessage(t *testing.T) {
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	suite.Run(t, &golden.TemplateGoldenTest{
+		ChartPath:      chartPath,
+		Release:        "load-test",
+		Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
+		GoldenFileName: "workers-with-message",
+		Templates:      []string{"templates/workers.yaml"},
+		SetValues: map[string]string{
+			"workers.worker.replicas":                    "1",
+			"workers.worker.capacity":                    "30",
+			"workers.worker.jobType":                     "benchmark-task",
+			"workers.worker.completionDelay":             "300ms",
+			"workers.worker.message.name":                "my-message",
+			"workers.worker.message.correlationVariable": "orderId",
+		},
+	})
+}
