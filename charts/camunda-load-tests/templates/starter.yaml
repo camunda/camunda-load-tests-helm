@@ -103,6 +103,50 @@ spec:
             - name: {{ $keyValue.name }}
               value: {{ $keyValue.value | quote }}
             {{- end }}
+            ##
+            ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
+            ##
+            - name: CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC
+              value: {{ .Values.global.preferRest.enabled | quote }}
+            {{- if not $.Values.saas.enabled }}
+            - name: CAMUNDA_CLIENT_GRPC_ADDRESS
+              value: "http://{{ $.Values.global.connect.serviceName }}:26500"
+            - name: CAMUNDA_CLIENT_REST_ADDRESS
+              value: "http://{{ $.Values.global.connect.serviceName }}:8080"
+            {{- else }}
+            - name: CAMUNDA_CLIENT_MODE
+              value: "saas"
+            - name: CAMUNDA_CLIENT_AUTH_METHOD
+              value: "oidc"
+            {{- end }}
+            - name: LOAD_TESTER_STARTER_RATE
+              value: {{ .Values.starter.rate | quote }}
+            - name: LOAD_TESTER_STARTER_DURATION_LIMIT
+              value: "0"
+            {{- if .Values.starter.processId }}
+            - name: LOAD_TESTER_STARTER_PROCESS_ID
+              value: {{ .Values.starter.processId | quote }}
+            {{- end }}
+            {{- if .Values.starter.bpmnXmlPath }}
+            - name: LOAD_TESTER_STARTER_BPMN_XML_PATH
+              value: {{ .Values.starter.bpmnXmlPath | quote }}
+            {{- end }}
+            {{- range $index, $value := .Values.starter.extraResources }}
+            - name: LOAD_TESTER_STARTER_EXTRA_BPMN_MODELS_{{ $index }}_
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- if .Values.starter.businessKey }}
+            - name: LOAD_TESTER_STARTER_BUSINESS_KEY
+              value: {{ .Values.starter.businessKey | quote }}
+            {{- end }}
+            {{- if .Values.starter.payloadPath }}
+            - name: LOAD_TESTER_STARTER_PAYLOAD_PATH
+              value: {{ .Values.starter.payloadPath | quote }}
+            {{- end }}
+            {{- if .Values.starter.logLevel }}
+            - name: LOGGING_LEVEL_IO_CAMUNDA_ZEEBE
+              value: {{ .Values.starter.logLevel | quote }}
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: starter-config
