@@ -41,6 +41,29 @@ spec:
             # To be able to load a separate/additional configuration
             - name: SPRING_CONFIG_ADDITIONALLOCATION
               value: "/usr/local/camunda/config/load-test-config.yaml"
+            ##
+            ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
+            ##
+            - name: CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC
+              value: "false"
+            - name: CAMUNDA_CLIENT_GRPC_ADDRESS
+              value: "http://camunda-gateway:26500"
+            - name: CAMUNDA_CLIENT_REST_ADDRESS
+              value: "http://camunda-gateway:8080"
+            - name: LOAD_TESTER_STARTER_RATE
+              value: "150"
+            - name: LOAD_TESTER_STARTER_DURATION_LIMIT
+              value: "0"
+            - name: LOAD_TESTER_STARTER_PROCESS_ID
+              value: "benchmark"
+            - name: LOAD_TESTER_STARTER_BPMN_XML_PATH
+              value: "bpmn/one_task.bpmn"
+            - name: LOAD_TESTER_STARTER_BUSINESS_KEY
+              value: "businessKey"
+            - name: LOAD_TESTER_STARTER_PAYLOAD_PATH
+              value: "bpmn/typical_payload.json"
+            - name: LOGGING_LEVEL_IO_CAMUNDA_ZEEBE
+              value: "WARN"
           envFrom:
             - configMapRef:
                 name: starter-config

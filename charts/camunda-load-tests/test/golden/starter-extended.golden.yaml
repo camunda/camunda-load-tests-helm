@@ -40,6 +40,33 @@ spec:
                 -XX:+HeapDumpOnOutOfMemoryError
             - name: LOG_LEVEL
               value: "INFO"
+            ##
+            ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
+            ##
+            - name: CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC
+              value: "false"
+            - name: CAMUNDA_CLIENT_GRPC_ADDRESS
+              value: "http://camunda-gateway:26500"
+            - name: CAMUNDA_CLIENT_REST_ADDRESS
+              value: "http://camunda-gateway:8080"
+            - name: LOAD_TESTER_STARTER_RATE
+              value: "150"
+            - name: LOAD_TESTER_STARTER_DURATION_LIMIT
+              value: "0"
+            - name: LOAD_TESTER_STARTER_PROCESS_ID
+              value: "real"
+            - name: LOAD_TESTER_STARTER_BPMN_XML_PATH
+              value: "bpmn/real.bpmn"
+            - name: LOAD_TESTER_STARTER_EXTRA_BPMN_MODELS_0_
+              value: "bpmn/extra.bpmn"
+            - name: LOAD_TESTER_STARTER_EXTRA_BPMN_MODELS_1_
+              value: "bpmn/extra.dmn"
+            - name: LOAD_TESTER_STARTER_BUSINESS_KEY
+              value: "customerId"
+            - name: LOAD_TESTER_STARTER_PAYLOAD_PATH
+              value: "empty.json"
+            - name: LOGGING_LEVEL_IO_CAMUNDA_ZEEBE
+              value: "INFO"
           envFrom:
             - configMapRef:
                 name: starter-config
