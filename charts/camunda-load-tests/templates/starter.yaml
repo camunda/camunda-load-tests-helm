@@ -14,6 +14,8 @@ spec:
       labels:
         app: starter
         app.kubernetes.io/component: zeebe-client
+      annotations:
+        {{- include "camunda-load-tests.annotations" $ | nindent 8 }}
     spec:
       {{- if .Values.global.image.pullSecrets }}
       imagePullSecrets:
