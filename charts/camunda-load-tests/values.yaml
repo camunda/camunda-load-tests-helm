@@ -35,15 +35,17 @@ global:
     # app.monitorDataAvailability: false
   # global.extraEnvVars allows to configure extra environment variables for all load test applications
   extraEnvVars: []
-    # Example to disable data availability monitoring in load test applications
-    # As long we use https://github.com/lightbend/config we need to stick to the pattern of
-    # using env variable overrides with CONFIG_FORCE_ prefix
-    # NOTE: The env variable needs to be in upper case and dots need to be replaced with underscores
-    # IMPORTANT: configuration afterward is lower case again! See example below.
-    # For more information see:
+    # For the old HOCON-based load tester, use CONFIG_FORCE_ prefix:
     # https://github.com/lightbend/config?tab=readme-ov-file#optional-system-or-env-variable-overrides
     # - name: CONFIG_FORCE_app_monitorDataAvailability
     #   value: "false"
+    #
+    # For the new Spring Boot-based load tester, use standard Spring relaxed binding:
+    # - name: LOAD_TESTER_MONITOR_DATA_AVAILABILITY
+    #   value: "false"
+    #
+    # Common connection/auth env vars (starter.rate, worker.capacity, etc.)
+    # are set automatically by the chart templates for both old and new apps.
 
   image:
     # Image.repository defines the repository from which to fetch the docker images

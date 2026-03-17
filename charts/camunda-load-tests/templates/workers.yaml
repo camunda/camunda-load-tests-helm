@@ -113,6 +113,61 @@ spec:
             - name: {{ $keyValue.name }}
               value: {{ $keyValue.value | quote }}
             {{- end }}
+            ##
+            ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
+            ##
+            - name: CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC
+              value: {{ $.Values.global.preferRest.enabled | quote }}
+            {{- if not $.Values.saas.enabled }}
+            - name: CAMUNDA_CLIENT_GRPC_ADDRESS
+              value: "http://{{ $.Values.global.connect.serviceName }}:26500"
+            - name: CAMUNDA_CLIENT_REST_ADDRESS
+              value: "http://{{ $.Values.global.connect.serviceName }}:8080"
+            {{- else }}
+            - name: CAMUNDA_CLIENT_MODE
+              value: "saas"
+            - name: CAMUNDA_CLIENT_AUTH_METHOD
+              value: "oidc"
+            {{- end }}
+            {{- if $worker.capacity }}
+            - name: LOAD_TESTER_WORKER_CAPACITY
+              value: {{ $worker.capacity | quote }}
+            {{- end }}
+            {{- if $worker.threads }}
+            - name: LOAD_TESTER_WORKER_THREADS
+              value: {{ $worker.threads | quote }}
+            {{- end }}
+            - name: LOAD_TESTER_WORKER_POLLING_DELAY
+              value: "1ms"
+            {{- if $worker.completionDelay }}
+            - name: LOAD_TESTER_WORKER_COMPLETION_DELAY
+              value: {{ $worker.completionDelay | quote }}
+            {{- else }}
+            - name: LOAD_TESTER_WORKER_COMPLETION_DELAY
+              value: "50ms"
+            {{- end }}
+            - name: LOAD_TESTER_WORKER_WORKER_NAME
+              value: {{ $workerName | quote }}
+            {{- if $worker.jobType }}
+            - name: LOAD_TESTER_WORKER_JOB_TYPE
+              value: {{ $worker.jobType | quote }}
+            {{- end }}
+            {{- if $worker.payloadPath }}
+            - name: LOAD_TESTER_WORKER_PAYLOAD_PATH
+              value: {{ $worker.payloadPath | quote }}
+            {{- end }}
+            {{- if $worker.message }}
+            - name: LOAD_TESTER_WORKER_SEND_MESSAGE
+              value: "true"
+            - name: LOAD_TESTER_WORKER_MESSAGE_NAME
+              value: {{ $worker.message.name | quote }}
+            - name: LOAD_TESTER_WORKER_CORRELATION_KEY_VARIABLE_NAME
+              value: {{ $worker.message.correlationVariable | quote }}
+            {{- end }}
+            {{- if $worker.logLevel }}
+            - name: LOGGING_LEVEL_IO_CAMUNDA_ZEEBE
+              value: {{ $worker.logLevel | quote }}
+            {{- end }}
           {{- if $worker.resources }}
           resources:
             {{- toYaml $worker.resources | nindent 12 }}
