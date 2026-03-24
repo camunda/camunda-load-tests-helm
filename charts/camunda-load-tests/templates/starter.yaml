@@ -36,6 +36,7 @@ spec:
                 -Dapp.brokerRestUrl=http://{{ $.Values.global.connect.serviceName }}:8080
                 {{- end }}
                 -Dapp.preferRest={{ .Values.global.preferRest.enabled }}
+                -Dapp.performReadBenchmarks={{ .Values.global.performReadBenchmarks }}
                 -Dapp.starter.rate={{ .Values.starter.rate }}
                 -Dapp.starter.durationLimit=0
                 -Dzeebe.client.requestTimeout=62000
@@ -110,6 +111,8 @@ spec:
             ##
             - name: CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC
               value: {{ .Values.global.preferRest.enabled | quote }}
+            - name: LOAD_TESTER_PERFORM_READ_BENCHMARKS
+              value: {{ .Values.global.performReadBenchmarks | quote }}
             {{- if not $.Values.saas.enabled }}
             - name: CAMUNDA_CLIENT_GRPC_ADDRESS
               value: "http://{{ $.Values.global.connect.serviceName }}:26500"
