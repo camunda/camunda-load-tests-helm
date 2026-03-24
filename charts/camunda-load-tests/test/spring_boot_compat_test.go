@@ -53,6 +53,7 @@ func TestSpringBootEnvVarsStarter(t *testing.T) {
 	assert.Equal(t, "my-process", envVars["LOAD_TESTER_STARTER_PROCESS_ID"])
 	assert.Equal(t, "0", envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"])
 	assert.Equal(t, "false", envVars["CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC"])
+	assert.Equal(t, "false", envVars["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
 	assert.Equal(t, "http://camunda-gateway:26500", envVars["CAMUNDA_CLIENT_GRPC_ADDRESS"])
 	assert.Equal(t, "http://camunda-gateway:8080", envVars["CAMUNDA_CLIENT_REST_ADDRESS"])
 
@@ -60,6 +61,7 @@ func TestSpringBootEnvVarsStarter(t *testing.T) {
 	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
 	assert.Contains(t, jdkOpts, "-Dapp.starter.rate=200")
 	assert.Contains(t, jdkOpts, "-Dapp.starter.processId=\"my-process\"")
+	assert.Contains(t, jdkOpts, "-Dapp.performReadBenchmarks=false")
 }
 
 func TestSpringBootEnvVarsWorker(t *testing.T) {
@@ -108,10 +110,63 @@ func TestSpringBootEnvVarsWorker(t *testing.T) {
 	assert.Equal(t, "myWorker", envVars["LOAD_TESTER_WORKER_WORKER_NAME"])
 	assert.Equal(t, "http://camunda-gateway:26500", envVars["CAMUNDA_CLIENT_GRPC_ADDRESS"])
 
+	// performReadBenchmarks defaults to false
+	assert.Equal(t, "false", envVars["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
+
 	// Old HOCON vars still present
 	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
 	assert.Contains(t, jdkOpts, "-Dapp.worker.capacity=50")
 	assert.Contains(t, jdkOpts, "-Dapp.worker.jobType=\"my-job\"")
+	assert.Contains(t, jdkOpts, "-Dapp.performReadBenchmarks=false")
+}
+
+func TestSpringBootPerformReadBenchmarks(t *testing.T) {
+	// Verify that performReadBenchmarks maps to both HOCON and Spring Boot env vars
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	options := &helm.Options{
+		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
+		SetValues: map[string]string{
+			"global.performReadBenchmarks": "true",
+		},
+	}
+
+	// Test starter
+	starterOutput := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/starter.yaml"})
+	var starterDeployment appsv1.Deployment
+	helm.UnmarshalK8SYaml(t, starterOutput, &starterDeployment)
+
+	starterEnv := make(map[string]string)
+	for _, env := range starterDeployment.Spec.Template.Spec.Containers[0].Env {
+		starterEnv[env.Name] = env.Value
+	}
+
+	assert.Equal(t, "true", starterEnv["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
+	assert.Contains(t, starterEnv["JDK_JAVA_OPTIONS"], "-Dapp.performReadBenchmarks=true")
+
+	// Test worker
+	workerOutput := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/workers.yaml"})
+	docs := strings.Split(workerOutput, "---")
+	var workerDoc string
+	for _, doc := range docs {
+		if strings.Contains(doc, "kind: Deployment") {
+			workerDoc = doc
+			break
+		}
+	}
+	require.NotEmpty(t, workerDoc)
+
+	var workerDeployment appsv1.Deployment
+	helm.UnmarshalK8SYaml(t, workerDoc, &workerDeployment)
+
+	workerEnv := make(map[string]string)
+	for _, env := range workerDeployment.Spec.Template.Spec.Containers[0].Env {
+		workerEnv[env.Name] = env.Value
+	}
+
+	assert.Equal(t, "true", workerEnv["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
+	assert.Contains(t, workerEnv["JDK_JAVA_OPTIONS"], "-Dapp.performReadBenchmarks=true")
 }
 
 func TestSpringBootEnvVarsSaaSMode(t *testing.T) {

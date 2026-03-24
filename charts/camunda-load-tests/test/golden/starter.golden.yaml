@@ -30,6 +30,7 @@ spec:
                 -Dapp.brokerUrl=http://camunda-gateway:26500
                 -Dapp.brokerRestUrl=http://camunda-gateway:8080
                 -Dapp.preferRest=false
+                -Dapp.performReadBenchmarks=false
                 -Dapp.starter.rate=150
                 -Dapp.starter.durationLimit=0
                 -Dzeebe.client.requestTimeout=62000
@@ -44,6 +45,8 @@ spec:
             ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
             ##
             - name: CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC
+              value: "false"
+            - name: LOAD_TESTER_PERFORM_READ_BENCHMARKS
               value: "false"
             - name: CAMUNDA_CLIENT_GRPC_ADDRESS
               value: "http://camunda-gateway:26500"
