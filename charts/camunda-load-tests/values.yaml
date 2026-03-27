@@ -157,6 +157,9 @@ starter:
   replicas: 1
   # Starter.rate defines with which rate process instances should be created by the starter
   rate: 150
+  # Starter.rateDuration can be used to define the time unit for the rate (e.g. "1s" for per-second, "1m" for per-minute).
+  # If not set, the application default is used.
+  rateDuration:
   # Starter.logLevel defines the logging level for the load test starter
   logLevel: "WARN"
   # Starter.processId defines the process ID, that should be used for creating new process instances
