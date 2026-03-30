@@ -38,6 +38,9 @@ spec:
                 -Dapp.preferRest={{ .Values.global.preferRest.enabled }}
                 -Dapp.performReadBenchmarks={{ .Values.global.performReadBenchmarks }}
                 -Dapp.starter.rate={{ .Values.starter.rate }}
+                {{- if .Values.starter.rateDuration }}
+                -Dapp.starter.rateDuration={{ .Values.starter.rateDuration }}
+                {{- end }}
                 -Dapp.starter.durationLimit=0
                 -Dzeebe.client.requestTimeout=62000
                 {{- if .Values.starter.processId }}
@@ -126,6 +129,10 @@ spec:
             {{- end }}
             - name: LOAD_TESTER_STARTER_RATE
               value: {{ .Values.starter.rate | quote }}
+            {{- if .Values.starter.rateDuration }}
+            - name: LOAD_TESTER_STARTER_RATE_DURATION
+              value: {{ .Values.starter.rateDuration | quote }}
+            {{- end }}
             - name: LOAD_TESTER_STARTER_DURATION_LIMIT
               value: "0"
             {{- if .Values.starter.processId }}

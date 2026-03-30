@@ -64,6 +64,62 @@ func TestSpringBootEnvVarsStarter(t *testing.T) {
 	assert.Contains(t, jdkOpts, "-Dapp.performReadBenchmarks=false")
 }
 
+func TestSpringBootEnvVarsStarterRateDuration(t *testing.T) {
+	// Verify that rateDuration is correctly set in both HOCON and Spring Boot env vars
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	options := &helm.Options{
+		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
+		SetValues: map[string]string{
+			"starter.rate":         "10",
+			"starter.rateDuration": "1m",
+		},
+	}
+
+	output := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/starter.yaml"})
+	var deployment appsv1.Deployment
+	helm.UnmarshalK8SYaml(t, output, &deployment)
+
+	envVars := make(map[string]string)
+	for _, env := range deployment.Spec.Template.Spec.Containers[0].Env {
+		envVars[env.Name] = env.Value
+	}
+
+	// Spring Boot env var
+	assert.Equal(t, "1m", envVars["LOAD_TESTER_STARTER_RATE_DURATION"])
+
+	// Old HOCON var
+	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
+	assert.Contains(t, jdkOpts, "-Dapp.starter.rateDuration=1m")
+}
+
+func TestSpringBootEnvVarsStarterRateDurationNotSetByDefault(t *testing.T) {
+	// Verify that rateDuration is NOT set when not configured (app default is used)
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	options := &helm.Options{
+		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
+	}
+
+	output := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/starter.yaml"})
+	var deployment appsv1.Deployment
+	helm.UnmarshalK8SYaml(t, output, &deployment)
+
+	envVars := make(map[string]string)
+	for _, env := range deployment.Spec.Template.Spec.Containers[0].Env {
+		envVars[env.Name] = env.Value
+	}
+
+	// Should NOT be present when not configured
+	_, exists := envVars["LOAD_TESTER_STARTER_RATE_DURATION"]
+	assert.False(t, exists, "LOAD_TESTER_STARTER_RATE_DURATION should not be set by default")
+
+	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
+	assert.NotContains(t, jdkOpts, "rateDuration")
+}
+
 func TestSpringBootEnvVarsWorker(t *testing.T) {
 	// Verify that Spring Boot env vars are correctly set for workers
 	chartPath, err := filepath.Abs("../")
