@@ -49,6 +49,11 @@ global:
     # Common connection/auth env vars (starter.rate, worker.capacity, etc.)
     # are set automatically by the chart templates for both old and new apps.
 
+  # global.nodeSelector can be used to configure node selectors for all load test pods
+  nodeSelector: {}
+  # global.tolerations can be used to configure tolerations for all load test pods
+  tolerations: []
+
   image:
     # Image.repository defines the repository from which to fetch the docker images
     repository: "gcr.io/zeebe-io"
