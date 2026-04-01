@@ -22,6 +22,14 @@ spec:
       imagePullSecrets:
         {{- toYaml $.Values.global.image.pullSecrets | nindent 8 }}
       {{- end }}
+      {{- if $.Values.global.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $.Values.global.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if $.Values.global.tolerations }}
+      tolerations:
+        {{- toYaml $.Values.global.tolerations | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ $workerName }}
           image: "{{ $.Values.global.image.repository }}/worker:{{ $.Values.global.image.tag }}"
