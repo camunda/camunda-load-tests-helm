@@ -17,7 +17,7 @@ spec:
         app: worker
         app.kubernetes.io/component: zeebe-client
       annotations:
-        checksum/config: b6be876770dc6cc39bc947cc04927e9a9a2bfd72484aea138d56f8fc930790d6
+        checksum/config: 72a78853417d01814f00711ca713a5f41dd7f143130ad54363bc6a69beaa116e
     spec:
       containers:
         - name: worker

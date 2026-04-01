@@ -20,6 +20,7 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/helm"
 	"github.com/gruntwork-io/terratest/modules/k8s"
+	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -39,6 +40,7 @@ type TemplateGoldenTest struct {
 func (s *TemplateGoldenTest) TestContainerGoldenTestDefaults() {
 	options := &helm.Options{
 		KubectlOptions: k8s.NewKubectlOptions("", "", s.Namespace),
+		Logger:         logger.Discard,
 		SetValues:      s.SetValues,
 	}
 	output := helm.RenderTemplate(s.T(), options, s.ChartPath, s.Release, s.Templates)
