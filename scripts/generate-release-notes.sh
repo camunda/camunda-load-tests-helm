@@ -8,7 +8,6 @@ for chart_file in ${chart_files_to_release}; do
     chart_version=$(grep -Po "(?<=^version: ).+" ${chart_file})
     chart_tag="${chart_name}-${chart_version}"
     chart_path="charts/${chart_name}"
-    chart_file="${chart_path}/Chart.yaml"
     tmp_chart_yaml_file="${chart_path}/Chart-with-artifacthub-changes.yaml.tmp"
     tmp_changes_file="${chart_path}/changes-for-artifacthub.yaml.tmp"
 
