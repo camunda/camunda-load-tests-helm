@@ -142,7 +142,7 @@ helm.template: helm.dependency-update
 
 .PHONY: release.bump-chart-version-and-commit
 release.bump-chart-version-and-commit: .release.bump-chart-version
-	git add $(chartPath);\
+	git add $(chartPath)
 	git commit -m "chore: bump load test chart version to $(chartVersion)"
 
 .PHONY: .release.generate-notes
@@ -156,7 +156,7 @@ endif
 
 .PHONY: release.generate-notes-and-commit
 release.generate-notes-and-commit: .release.generate-notes
-	git add $(chartPath);\
+	git add $(chartPath)
 	git commit -m "chore: add release notes for load test chart $(chartVersion)"
 
 .PHONY: release.generate-pr-url
