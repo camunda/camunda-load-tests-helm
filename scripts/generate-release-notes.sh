@@ -46,8 +46,8 @@ for chart_file in ${chart_files_to_release}; do
 
     cat "$tmp_changes_file"
 
-    if [[ $(cat "$tmp_changes_file" | wc -l) -eq 1 ]]; then
-        echo "[ERROR] Somthing is wrong, no changes detected to generate Artifact Hub changelog."
+    if [[ $(wc -l < "$tmp_changes_file") -eq 1 ]]; then
+        echo "[ERROR] Something is wrong, no changes detected to generate Artifact Hub changelog."
         exit 1
     fi
 
@@ -55,6 +55,6 @@ for chart_file in ${chart_files_to_release}; do
     # https://mikefarah.gitbook.io/yq/operators/reduce#merge-all-yaml-files-together
     yq eval-all '. as $item ireduce ({}; . * $item )' \
         "$chart_file" "$tmp_changes_file" > "$tmp_chart_yaml_file"
-    cat "$tmp_chart_yaml_file" > "$chart_file"
-    rm "$tmp_changes_file" "$tmp_chart_yaml_file"
+    mv "$tmp_chart_yaml_file" "$chart_file"
+    rm "$tmp_changes_file"
 done

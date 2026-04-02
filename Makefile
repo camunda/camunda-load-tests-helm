@@ -148,7 +148,7 @@ release.bump-chart-version-and-commit: .release.bump-chart-version
 .PHONY: .release.generate-notes
 .release.generate-notes:
 ifdef chgLogCmd
-	bash scripts/generate-release-notes.sh;
+	bash scripts/generate-release-notes.sh
 else
 	docker run --rm -w /data -v `pwd`:/data --entrypoint sh $(gitChglog) \
 		-c "apk add bash grep yq; bash scripts/generate-release-notes.sh"
