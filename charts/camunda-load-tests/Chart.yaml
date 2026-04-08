@@ -2,7 +2,7 @@ apiVersion: v2
 name: camunda-load-tests
 description: A Helm chart for Camunda load tests
 type: application
-version: 0.1.5
+version: 0.1.6
 appVersion: "8.8.0"
 sources:
   - https://github.com/camunda/camunda-load-tests-helm
@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: added\n  description: \"introduce extraEnvs\"\n- kind: fixed\n  description: \"update README\"\n- kind: changed\n  description: \"use extraEnvVars as value name\"\n"
+  artifacthub.io/changes: "- kind: added\n  description: \"allow to configure nodeSelector + tolerations\"\n- kind: added\n  description: \"support configurable rateDuration for starter\"\n- kind: added\n  description: \"add performReadBenchmarks as a first-class Helm value\"\n- kind: added\n  description: \"add Spring Boot env vars to worker template\"\n- kind: added\n  description: \"add Spring Boot env vars to starter template\"\n- kind: added\n  description: \"restart deployments when configuration or secrets change\"\n- kind: fixed\n  description: \"compute config checksum based on the config content directly\"\n"
