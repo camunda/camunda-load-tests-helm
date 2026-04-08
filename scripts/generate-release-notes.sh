@@ -8,6 +8,8 @@ for chart_file in ${chart_files_to_release}; do
     chart_version=$(grep -Po "(?<=^version: ).+" ${chart_file})
     chart_tag="${chart_name}-${chart_version}"
     chart_path="charts/${chart_name}"
+    tmp_chart_yaml_file="${chart_path}/Chart-with-artifacthub-changes.yaml.tmp"
+    tmp_changes_file="${chart_path}/changes-for-artifacthub.yaml.tmp"
 
     #
     # Generate RELEASE-NOTES.md file (used for Github release notes and ArtifactHub "changes" annotation).
@@ -30,7 +32,7 @@ for chart_file in ${chart_files_to_release}; do
         ["fix"]=fixed
     )
 
-    echo -e 'annotations:\n  artifacthub.io/changes: |' > "${chart_path}/changes-for-artifacthub.yaml.tmp"
+    echo -e 'annotations:\n  artifacthub.io/changes: |' > "$tmp_changes_file"
 
     for change_type in ${change_types}; do
         change_type_section=$(sed -rn "/^\#+\s${change_type^}/,/^#/p" "${chart_path}/RELEASE-NOTES.md")
@@ -38,22 +40,21 @@ for chart_file in ${chart_files_to_release}; do
             echo "${change_type_section}" | egrep '^\*' | sed 's/^* //g' | while read commit_message; do
                 echo "    - kind: ${kac_map[${change_type}]}"
                 echo "      description: \"$(echo ${commit_message} | sed -r "s/ \(.+\)$//")\""
-            done >> "${chart_path}/changes-for-artifacthub.yaml.tmp"
+            done >> "$tmp_changes_file"
         fi
     done
 
-    cat "${chart_path}/changes-for-artifacthub.yaml.tmp"
+    cat "$tmp_changes_file"
 
-    if [[ $(cat "${chart_path}/changes-for-artifacthub.yaml.tmp" | wc -l) -eq 1 ]]; then
-        echo "[ERROR] Somthing is wrong, no changes detected to generate Artifact Hub changelog."
+    if [[ $(wc -l < "$tmp_changes_file") -eq 1 ]]; then
+        echo "[ERROR] Something is wrong, no changes detected to generate Artifact Hub changelog."
         exit 1
     fi
 
     # Merge changes back to the Chart.yaml file.
     # https://mikefarah.gitbook.io/yq/operators/reduce#merge-all-yaml-files-together
     yq eval-all '. as $item ireduce ({}; . * $item )' \
-        ${chart_path}/Chart.yaml ${chart_path}/changes-for-artifacthub.yaml.tmp > \
-        ${chart_path}/Chart-with-artifacthub-changes.yaml.tmp
-    cat ${chart_path}/Chart-with-artifacthub-changes.yaml.tmp > ${chart_path}/Chart.yaml
-    rm ${chart_path}/changes-for-artifacthub.yaml.tmp
+        "$chart_file" "$tmp_changes_file" > "$tmp_chart_yaml_file"
+    mv "$tmp_chart_yaml_file" "$chart_file"
+    rm "$tmp_changes_file"
 done
