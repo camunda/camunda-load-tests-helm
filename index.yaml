@@ -4,6 +4,44 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: added
+          description: "allow to configure nodeSelector + tolerations"
+        - kind: added
+          description: "support configurable rateDuration for starter"
+        - kind: added
+          description: "add performReadBenchmarks as a first-class Helm value"
+        - kind: added
+          description: "add Spring Boot env vars to worker template"
+        - kind: added
+          description: "add Spring Boot env vars to starter template"
+        - kind: added
+          description: "restart deployments when configuration or secrets change"
+        - kind: fixed
+          description: "compute config checksum based on the config content directly"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-04-08T10:24:34.576025971Z"
+    description: A Helm chart for Camunda load tests
+    digest: 7dbdea982d503e3429ad441d31a80ae3ac649779d24e4b2ded44012845002b89
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.6/camunda-load-tests-0.1.6.tgz
+    version: 0.1.6
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
           description: "introduce extraEnvs"
         - kind: fixed
           description: "update README"
@@ -161,4 +199,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-02T14:15:26.448209641Z"
+generated: "2026-04-08T10:24:34.57606284Z"
