@@ -2,7 +2,7 @@ apiVersion: v2
 name: camunda-load-tests
 description: A Helm chart for Camunda load tests
 type: application
-version: 0.1.6
+version: 0.1.7
 appVersion: "8.8.0"
 sources:
   - https://github.com/camunda/camunda-load-tests-helm
