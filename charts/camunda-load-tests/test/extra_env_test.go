@@ -31,3 +31,25 @@ func TestGoldenExtraEnvs(t *testing.T) {
 		})
 	}
 }
+
+func TestGoldenExtraEnvsWithValueFrom(t *testing.T) {
+	// Test to validate that extra environments are correctly rendered in templates
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+	templateNames := []string{"workers", "starter"}
+
+	for _, name := range templateNames {
+		suite.Run(t, &golden.TemplateGoldenTest{
+			ChartPath:      chartPath,
+			Release:        "load-test",
+			Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
+			GoldenFileName: "golden-extra-envs-with-value-from-" + name,
+			Templates:      []string{"templates/" + name + ".yaml"},
+			SetValues: map[string]string{
+				"global.extraEnvVars[0].name":                        "TEST_SECRET",
+				"global.extraEnvVars[0].valueFrom.secretKeyRef.name": "credentials",
+				"global.extraEnvVars[0].valueFrom.secretKeyRef.key":  "secret",
+			},
+		})
+	}
+}

@@ -120,7 +120,12 @@ spec:
             {{- end }}
             {{- range $keyValue := $.Values.global.extraEnvVars }}
             - name: {{ $keyValue.name }}
+              {{- if $keyValue.valueFrom }}
+              valueFrom:
+                {{- toYaml $keyValue.valueFrom | nindent 16 }}
+              {{- else }}
               value: {{ $keyValue.value | quote }}
+              {{- end }}
             {{- end }}
             ##
             ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
