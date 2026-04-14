@@ -46,6 +46,13 @@ global:
     # - name: LOAD_TESTER_MONITOR_DATA_AVAILABILITY
     #   value: "false"
     #
+    # Environment variables values can also be fetched from ConfigMaps or Secrets using valueFrom, e.g.:
+    # - name: CLOUD_CREDENTIALS
+    #   valueFrom:
+    #     secretKeyRef:
+    #       key: secret
+    #       name: credentials
+    #
     # Common connection/auth env vars (starter.rate, worker.capacity, etc.)
     # are set automatically by the chart templates for both old and new apps.
 
