@@ -76,10 +76,10 @@ spec:
           resources:
             limits:
               cpu: 250m
-              memory: 1Gi
+              memory: 2Gi
             requests:
               cpu: 250m
-              memory: 1Gi
+              memory: 2Gi
           ports:
             - containerPort: 9600
               name: "http"
