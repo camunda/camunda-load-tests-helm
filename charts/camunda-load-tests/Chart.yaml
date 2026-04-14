@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: added\n  description: \"pass extra env var configuration \"as it\"\"\n"
+  artifacthub.io/changes: "- kind: fixed\n  description: \"increase memory\"\n"
