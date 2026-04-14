@@ -186,6 +186,7 @@ starter:
   # Starter.businessKey can be used to specify a businessKey variable, inside a unique identifier is stored for
   # each created process instance
   businessKey: "businessKey"
+  # Starter.resources defines the resource requests and limits for the load test starter
   resources:
     limits:
       cpu: 250m
