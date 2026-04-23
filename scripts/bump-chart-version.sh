@@ -29,7 +29,7 @@ fi
 is_minor_version="${is_minor_version:-0}"
 
 # Generate new version based on the old one.
-chart_version_old=$(grep -Po "(?<=^version: ).+" charts/${chart_name}/Chart.yaml)
+chart_version_old=$(yq .version charts/${chart_name}/Chart.yaml)
 chart_version_new=$(echo "${chart_version_old}" |
     awk -F '.' -v OFS='.' -v is_minor_version=${is_minor_version} \
       '{
