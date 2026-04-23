@@ -25,10 +25,10 @@ workers:
     resources:
       limits:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
       requests:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
 
   #####
   # Store information and get customer info
@@ -50,10 +50,10 @@ workers:
     resources:
       limits:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
       requests:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
 
   #####
   # Request proof from vendor
@@ -107,10 +107,10 @@ workers:
     resources:
       limits:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
       requests:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
 
   #####
   # Refund payment
@@ -134,10 +134,10 @@ workers:
     resources:
       limits:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
       requests:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
 
   #####
   # Inform customer about successful claim
@@ -159,10 +159,10 @@ workers:
     resources:
       limits:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
       requests:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
 
 #################################################################################################
 #################################################################################################

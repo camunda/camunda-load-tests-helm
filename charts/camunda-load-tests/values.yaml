@@ -130,18 +130,18 @@ workers:
     # Workers.worker.payloadPath defines the path (inside the worker app) to the payload resource
     # that should be used to complete the corresponding jobs
     payloadPath: "bpmn/typical_payload.json"
-    # Workers.worker.payloadPath defines the delay of the worker before completing a job
+    # Workers.worker.completionDelay defines the delay of the worker before completing a job
     completionDelay: 50ms
     # Workers.worker.logLevel defines the logging level for the load test worker
-    logLevel: "WARN"
+    logLevel: "INFO"
     # Workers.worker.resources defines the resources for the load test worker
     resources:
       limits:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
       requests:
         cpu: 500m
-        memory: 256Mi
+        memory: 512Mi
 
   # Workers.worker defines the configuration for the default load test worker
   # Adding more and different worker can be done via adding a new map like:
@@ -158,10 +158,10 @@ workers:
   #    resources:
   #      limits:
   #        cpu: 500m
-  #        memory: 256Mi
+  #        memory: 512Mi
   #      requests:
   #        cpu: 500m
-  #        memory: 256Mi
+  #        memory: 512Mi
 
 # Starter configuration for the to be deployed starter application
 starter:
@@ -173,7 +173,7 @@ starter:
   # If not set, the application default is used.
   rateDuration:
   # Starter.logLevel defines the logging level for the load test starter
-  logLevel: "WARN"
+  logLevel: "INFO"
   # Starter.processId defines the process ID, that should be used for creating new process instances
   processId: "benchmark"
   # Starter.payloadPath defines the path (inside the starter app) to the payload resource

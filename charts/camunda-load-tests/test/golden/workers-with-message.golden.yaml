@@ -44,7 +44,7 @@ spec:
                 -Dapp.worker.correlationKeyVariableName="orderId"
                 -XX:+HeapDumpOnOutOfMemoryError
             - name: LOG_LEVEL
-              value: "WARN"
+              value: "INFO"
             ##
             ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
             ##
@@ -77,14 +77,14 @@ spec:
             - name: LOAD_TESTER_WORKER_CORRELATION_KEY_VARIABLE_NAME
               value: "orderId"
             - name: LOGGING_LEVEL_IO_CAMUNDA_ZEEBE
-              value: "WARN"
+              value: "INFO"
           resources:
             limits:
               cpu: 500m
-              memory: 256Mi
+              memory: 512Mi
             requests:
               cpu: 500m
-              memory: 256Mi
+              memory: 512Mi
           ports:
             - containerPort: 9600
               name: "http"
