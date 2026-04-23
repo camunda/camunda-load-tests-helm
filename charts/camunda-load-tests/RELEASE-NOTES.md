@@ -2,22 +2,18 @@ The changelog is automatically generated using [git-chglog](https://github.com/g
 and it follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
 
 
-<a name="camunda-load-tests-0.1.8"></a>
-## [camunda-load-tests-0.1.8](https://github.com/camunda/camunda-platform-helm/compare/camunda-load-tests-0.1.7...camunda-load-tests-0.1.8) (2026-04-14)
+<a name="camunda-load-tests-0.1.9"></a>
+## [camunda-load-tests-0.1.9](https://github.com/camunda/camunda-platform-helm/compare/camunda-load-tests-0.1.8...camunda-load-tests-0.1.9) (2026-04-23)
 
-### Docs
+### Feat
 
-* document starter.resources in values.yaml
+* update config for springbootmigration
 
 ### Fix
 
-* increase memory
-
-### Test
-
-* update golden files to reflect 2Gi starter memory
+* double memory for dispute-process-request-proof-from-vendor worker
 
 ### Pull Requests
 
-* Merge pull request [#49](https://github.com/camunda/camunda-platform-helm/issues/49) from camunda/release
+* Merge pull request [#51](https://github.com/camunda/camunda-platform-helm/issues/51) from camunda/release
 
