@@ -3,6 +3,34 @@ entries:
   camunda-load-tests:
   - annotations:
       artifacthub.io/changes: |
+        - kind: added
+          description: "update config for springbootmigration"
+        - kind: fixed
+          description: "double memory for dispute-process-request-proof-from-vendor worker"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-04-23T14:07:09.2038041Z"
+    description: A Helm chart for Camunda load tests
+    digest: 39abe0191553094a2b0af2795bac63af9928e6ce4a7cd7ae1c45c004880f20e7
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.9/camunda-load-tests-0.1.9.tgz
+    version: 0.1.9
+  - annotations:
+      artifacthub.io/changes: |
         - kind: fixed
           description: "increase memory"
       artifacthub.io/containsSecurityUpdates: "false"
@@ -251,4 +279,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-04-14T11:50:22.29439383Z"
+generated: "2026-04-23T14:07:09.20385325Z"
