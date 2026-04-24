@@ -3,6 +3,34 @@ entries:
   camunda-load-tests:
   - annotations:
       artifacthub.io/changes: |
+        - kind: fixed
+          description: "preserve separator between checksum annotations in helper"
+        - kind: changed
+          description: "simplify annotations helper to plain whitespace control"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-04-24T13:49:57.897228682Z"
+    description: A Helm chart for Camunda load tests
+    digest: 17bfcd4e6a02f018127404c19ae28845222d87c103b16770d7dcf0698f343691
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.10/camunda-load-tests-0.1.10.tgz
+    version: 0.1.10
+  - annotations:
+      artifacthub.io/changes: |
         - kind: added
           description: "update config for springbootmigration"
         - kind: fixed
@@ -279,4 +307,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-04-23T14:07:09.20385325Z"
+generated: "2026-04-24T13:49:57.897276382Z"
