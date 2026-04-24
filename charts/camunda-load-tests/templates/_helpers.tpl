@@ -9,14 +9,12 @@ Expand the name of the chart.
 Generate the common annotations for deployments.
 */}}
 {{- define "camunda-load-tests.annotations" -}}
-{{- $annotations := list -}}
-{{- if $.Values.global.extraConfig -}}
-{{- $annotations = append $annotations (printf "checksum/config: %s" ($.Values.global.extraConfig | toYaml | sha256sum)) -}}
-{{- end -}}
-{{- if $.Values.saas.enabled -}}
-{{- $annotations = append $annotations (printf "checksum/saas-credentials: %s" (include (print $.Template.BasePath "/credentials.yaml") . | sha256sum)) -}}
-{{- end -}}
-{{- join "\n" $annotations -}}
+{{ if $.Values.global.extraConfig -}}
+checksum/config: {{ $.Values.global.extraConfig | toYaml | sha256sum }}
+{{- end }}
+{{ if $.Values.saas.enabled -}}
+checksum/saas-credentials: {{ include (print $.Template.BasePath "/credentials.yaml") . | sha256sum }}
+{{- end }}
 {{- end -}}
 
 {{/*

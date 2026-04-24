@@ -18,6 +18,7 @@ spec:
         app.kubernetes.io/component: zeebe-client
       annotations:
         
+        
     spec:
       containers:
         - name: worker
