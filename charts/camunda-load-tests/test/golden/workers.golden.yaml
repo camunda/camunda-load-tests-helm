@@ -6,6 +6,7 @@ metadata:
   name: otherWorker
   labels:
     app: otherWorker
+    
 spec:
   selector:
     matchLabels:
@@ -16,6 +17,7 @@ spec:
       labels:
         app: otherWorker
         app.kubernetes.io/component: zeebe-client
+        
       annotations:
         
         
@@ -71,6 +73,7 @@ metadata:
   name: worker
   labels:
     app: worker
+    
 spec:
   selector:
     matchLabels:
@@ -81,6 +84,7 @@ spec:
       labels:
         app: worker
         app.kubernetes.io/component: zeebe-client
+        
       annotations:
         
         

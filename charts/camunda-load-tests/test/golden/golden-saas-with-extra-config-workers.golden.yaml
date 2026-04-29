@@ -6,6 +6,7 @@ metadata:
   name: worker
   labels:
     app: worker
+    
 spec:
   selector:
     matchLabels:
@@ -16,9 +17,10 @@ spec:
       labels:
         app: worker
         app.kubernetes.io/component: zeebe-client
+        
       annotations:
         checksum/config: e8336a4e36fbb6f1f0137aef57a4e26c600cb335157a4fd7bd72064b06dee7a6
-        checksum/saas-credentials: aa6f54a36322b67c427af8461bbbd6348db0e5a2204a8320c1f4b31707742017
+        checksum/saas-credentials: 2beb8864d42738af0738e346e9bc0fcf42c1f87472de165acc1c0766b281ef04
     spec:
       containers:
         - name: worker

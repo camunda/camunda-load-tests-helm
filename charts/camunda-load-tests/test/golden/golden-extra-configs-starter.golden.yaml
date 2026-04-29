@@ -6,6 +6,7 @@ metadata:
   name: starter
   labels:
     app: starter
+    
 spec:
   selector:
     matchLabels:
@@ -16,6 +17,7 @@ spec:
       labels:
         app: starter
         app.kubernetes.io/component: zeebe-client
+        
       annotations:
         checksum/config: 72a78853417d01814f00711ca713a5f41dd7f143130ad54363bc6a69beaa116e
         
