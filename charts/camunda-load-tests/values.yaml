@@ -73,6 +73,8 @@ global:
   identity:
     auth:
       enabled: false
+  # global.commonLabels can be used to add labels to all resources deployed by this chart
+  commonLabels: {}
 
 # Saas configuration to run load tests against Camunda SaaS environment
 saas:
