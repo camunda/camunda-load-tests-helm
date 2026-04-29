@@ -4,6 +4,7 @@ metadata:
   name: starter
   labels:
     app: starter
+    {{- include "camunda-load-tests.commonLabels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
@@ -14,6 +15,7 @@ spec:
       labels:
         app: starter
         app.kubernetes.io/component: zeebe-client
+        {{- include "camunda-load-tests.commonLabels" . | nindent 8 }}
       annotations:
         {{- include "camunda-load-tests.annotations" $ | nindent 8 }}
     spec:
