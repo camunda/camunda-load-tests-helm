@@ -91,7 +91,7 @@ Common labels from global.commonLabels — injected into all resource metadata.
 Never add to selector.matchLabels (immutable on Deployments).
 */}}
 {{- define "camunda-load-tests.commonLabels" -}}
-{{- if .Values.global.commonLabels }}
+{{- if .Values.global.commonLabels -}}
 {{ tpl (toYaml .Values.global.commonLabels) $ }}
 {{- end }}
 {{- end }}
