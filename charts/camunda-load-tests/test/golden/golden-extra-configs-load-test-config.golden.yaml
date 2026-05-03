@@ -9,7 +9,6 @@ metadata:
     app.kubernetes.io/instance: load-test
     app.kubernetes.io/version: "8.8.0"
     app.kubernetes.io/managed-by: Helm
-    
 data:
   load-test-config.yaml: |
     # Extra configuration for the load test applications
