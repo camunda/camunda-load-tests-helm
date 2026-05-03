@@ -5,7 +5,7 @@ metadata:
   name: load-test-config
   labels:
     {{- include "camunda-load-tests.labels" . | nindent 4 }}
-    {{- include "camunda-load-tests.commonLabels" . | nindent 4 }}
+    {{- if .Values.global.commonLabels }}{{ include "camunda-load-tests.commonLabels" . | nindent 4 }}{{- end }}
 data:
   load-test-config.yaml: |
     # Extra configuration for the load test applications
