@@ -172,6 +172,9 @@ starter:
   # Starter.rateDuration can be used to define the time unit for the rate (e.g. "1s" for per-second, "1m" for per-minute).
   # If not set, the application default is used.
   rateDuration:
+  # Starter.durationLimit can be used to stop creating process instances after the given number of seconds.
+  # If not set (or set to 0), the starter runs indefinitely.
+  durationLimit:
   # Starter.logLevel defines the logging level for the load test starter
   logLevel: "INFO"
   # Starter.processId defines the process ID, that should be used for creating new process instances
