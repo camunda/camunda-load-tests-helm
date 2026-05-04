@@ -4,6 +4,32 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
+          description: "make starter durationLimit configurable instead of hardcoding to 0"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-05-04T12:27:46.789982045Z"
+    description: A Helm chart for Camunda load tests
+    digest: 18ad90c901982ad1df79accaa8f5eda8bf328eb9d1bd2095773f097ddc61c657
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.11/camunda-load-tests-0.1.11.tgz
+    version: 0.1.11
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
           description: "preserve separator between checksum annotations in helper"
         - kind: changed
           description: "simplify annotations helper to plain whitespace control"
@@ -307,4 +333,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-04-24T13:49:57.897276382Z"
+generated: "2026-05-04T12:27:46.790013561Z"
