@@ -49,7 +49,9 @@ spec:
                 {{- if .Values.starter.rateDuration }}
                 -Dapp.starter.rateDuration={{ .Values.starter.rateDuration }}
                 {{- end }}
-                -Dapp.starter.durationLimit=0
+                {{- if .Values.starter.durationLimit }}
+                -Dapp.starter.durationLimit={{ .Values.starter.durationLimit }}
+                {{- end }}
                 -Dzeebe.client.requestTimeout=62000
                 {{- if .Values.starter.processId }}
                 -Dapp.starter.processId={{ .Values.starter.processId | quote }}
@@ -146,8 +148,10 @@ spec:
             - name: LOAD_TESTER_STARTER_RATE_DURATION
               value: {{ .Values.starter.rateDuration | quote }}
             {{- end }}
+            {{- if .Values.starter.durationLimit }}
             - name: LOAD_TESTER_STARTER_DURATION_LIMIT
-              value: "0"
+              value: {{ .Values.starter.durationLimit | quote }}
+            {{- end }}
             {{- if .Values.starter.processId }}
             - name: LOAD_TESTER_STARTER_PROCESS_ID
               value: {{ .Values.starter.processId | quote }}

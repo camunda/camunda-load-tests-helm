@@ -33,7 +33,6 @@ spec:
                 -Dapp.preferRest=false
                 -Dapp.performReadBenchmarks=false
                 -Dapp.starter.rate=150
-                -Dapp.starter.durationLimit=0
                 -Dzeebe.client.requestTimeout=62000
                 -Dapp.starter.processId="real"
                 -Dapp.starter.bpmnXmlPath="bpmn/real.bpmn"
@@ -57,8 +56,6 @@ spec:
               value: "http://camunda-gateway:8080"
             - name: LOAD_TESTER_STARTER_RATE
               value: "150"
-            - name: LOAD_TESTER_STARTER_DURATION_LIMIT
-              value: "0"
             - name: LOAD_TESTER_STARTER_PROCESS_ID
               value: "real"
             - name: LOAD_TESTER_STARTER_BPMN_XML_PATH
