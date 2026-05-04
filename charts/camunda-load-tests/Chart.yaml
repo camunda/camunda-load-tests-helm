@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: fixed\n  description: \"preserve separator between checksum annotations in helper\"\n- kind: changed\n  description: \"simplify annotations helper to plain whitespace control\"\n"
+  artifacthub.io/changes: "- kind: fixed\n  description: \"make starter durationLimit configurable instead of hardcoding to 0\"\n"
