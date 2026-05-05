@@ -10,19 +10,11 @@
             - [Golden Files](#golden-files)
             - [Properties Test](#properties-test)
         - [Test License Headers](#test-license-headers)
-        - [OpenShift](#openshift)
     - [Documentation](#documentation)
 - [CI](#ci)
-    - [OpenShift](#openshift-1)
 - [Resources](#resources)
 
-[fork]: /fork
-[pr]: /compare
-[CODE_OF_CONDUCT]: CODE_OF_CONDUCT.md
-
 We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
-
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/camunda/camunda-platform-helm/blob/main/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ## Issues and PRs
 
@@ -100,7 +92,7 @@ Available commit types:
 > For more details about Helm chart testing read the following blog post:
 > [Advanced Test Practices For Helm Charts](https://medium.com/@zelldon91/advanced-test-practices-for-helm-charts-587caeeb4cb).
 
-In order to make sure that the Helm charts work properly and that further development doesn't break anything we introduced with [#125](https://github.com/camunda/camunda-platform-helm/issues/125) tests for the Helm charts. The tests are written in go, and we use the [terratest framework](https://terratest.gruntwork.io/) to write them.
+In order to make sure that the Helm charts work properly and that further development doesn't break anything, we have tests written in Go using the [terratest framework](https://terratest.gruntwork.io/).
 
 We separate our tests in two parts, with different targets and goals.
 
@@ -121,9 +113,6 @@ As mentioned earlier we expect unit tests on new contributions. The unit tests (
 
 We write new golden file tests, for default values, where we can compare a complete manifest with his properties.
 Most of the golden file tests are part of the `goldenfiles_test.go` in the corresponding sub-chart testing directory.
-For an example see [test/golden_test.go](charts/camunda-load-tests/test/golden_test.go).
-
-If the complete manifest can be enabled by a toggle, we also write a golden file test. This test is part of `<manifestFileName>_test.go` file. The `<manifestFileName>` corresponds to the template filename we have in the sub-chart `templates` dir. For example, the prometheus [servicemonitor](charts/camunda-platform/templates/service-monitor.yaml) can be enabled by a toggle. This means we write a golden file test in [servicemonitor_test.go](charts/camunda-platform/test/servicemonitor_test.go).
 
 In order to generate the golden files run `go.update-golden` on the root level of the repository. This will add a new golden file in a `golden` sub-dir and run the corresponding test. The golden files should also be named related to the manifest.
 
@@ -131,7 +120,7 @@ In order to generate the golden files run `go.update-golden` on the root level o
 
 For things which are not per default enabled or set we write a property test.
 
-Here we directly set the specific property/variable and verify that the Helm chart can be rendered and the property is set correctly on the object. These kind of tests should be part of a `<manifestFileName>_test.go` file. The `<manifestFileName>` corresponds to the template filename we have in the sub-chart `templates` dir. For example, for the zeebe statefulset manifest we have the test [statefulset_test.go](charts/camunda-platform/test/zeebe/statefulset_test.go) under the `zeebe` sub-dir.
+Here we directly set the specific property/variable and verify that the Helm chart can be rendered and the property is set correctly on the object.
 
 It is always helpful to check already existing tests to get a better understanding in how to write new tests, so do not hesitant to read and copy them.
 
@@ -178,4 +167,3 @@ CI is performed via GitHub Actions [workflow](.github/workflows). Currently, CI 
 - [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
 - [Using Pull Requests](https://help.github.com/articles/about-pull-requests/)
 - [GitHub Help](https://help.github.com)
-- [CODE_OF_CONDUCT](https://github.com/camunda/camunda-platform-helm/blob/main/CODE_OF_CONDUCT.md)

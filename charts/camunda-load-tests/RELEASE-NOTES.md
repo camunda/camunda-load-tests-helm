@@ -3,7 +3,7 @@ and it follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.
 
 
 <a name="camunda-load-tests-0.1.11"></a>
-## [camunda-load-tests-0.1.11](https://github.com/camunda/camunda-platform-helm/compare/camunda-load-tests-0.1.10...camunda-load-tests-0.1.11) (2026-05-04)
+## [camunda-load-tests-0.1.11](https://github.com/camunda/camunda-load-tests-helm/compare/camunda-load-tests-0.1.10...camunda-load-tests-0.1.11) (2026-05-04)
 
 ### Fix
 
