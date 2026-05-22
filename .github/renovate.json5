@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+  ],
+
+  "customManagers": [
+    {
+      // Update Helm version
+      "customType": "regex",
+      "managerFilePatterns": [".github/workflows/*.y*ml"],
+      "matchStrings": [
+        // Support:
+        //    HELM_VERSION: xxx
+        //    HELM_VERSION: "xxx"
+        "HELM_VERSION: \"?(?<currentValue>\\S+)\"?",
+      ],
+      "depNameTemplate": "helm/helm",
+      "datasourceTemplate": "github-tag",
+      "extractVersionTemplate": "^v(?<version>\\S+)"
+    },
+  ],
+
+  "automerge": true,
+}

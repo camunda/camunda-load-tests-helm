@@ -38,24 +38,3 @@ jobs:
       run: make helm.repos-add
     - name: Test
       run: make go.test
-  auto-merge:
-    name: Auto-merge dependency PRs
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    if: github.repository == 'camunda/camunda-load-tests-helm' && (github.actor == 'dependabot[bot]' || github.actor == 'renovate[bot]')
-    permissions:
-      checks: read
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v6
-      - run: gh pr review --approve "${{ github.event.pull_request.html_url }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-      - id: merge
-        name: Merge PR
-        run: |
-          # Call the API directly to work around https://github.com/cli/cli/issues/8352
-          gh api graphql -f query='mutation PullRequestAutoMerge {enablePullRequestAutoMerge(input: {pullRequestId: "${{ github.event.pull_request.node_id }}"}) {clientMutationId}}'
-        env:
-          GITHUB_TOKEN: "${{ secrets.AUTO_MERGE_GITHUB_TOKEN }}"
