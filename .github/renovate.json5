@@ -15,8 +15,9 @@
         //    HELM_VERSION: "xxx"
         "HELM_VERSION: \"?(?<currentValue>\\S+)\"?",
       ],
-      "depNameTemplate": "helm/helm",
-      "datasourceTemplate": "github-tag",
+      "depNameTemplate": "helm",
+      "packageNameTemplate": "helm/helm",
+      "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v(?<version>\\S+)"
     },
   ],
