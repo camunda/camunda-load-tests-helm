@@ -53,7 +53,6 @@ spec:
                 {{- if $worker.threads }}
                 -Dapp.worker.threads={{ $worker.threads }}
                 {{- end }}
-                -Dapp.worker.pollingDelay=1ms
                 {{- if $worker.completionDelay }}
                 -Dapp.worker.completionDelay={{ $worker.completionDelay }}
                 {{- else }}
@@ -153,8 +152,6 @@ spec:
             - name: LOAD_TESTER_WORKER_THREADS
               value: {{ $worker.threads | quote }}
             {{- end }}
-            - name: LOAD_TESTER_WORKER_POLLING_DELAY
-              value: "1ms"
             {{- if $worker.completionDelay }}
             - name: LOAD_TESTER_WORKER_COMPLETION_DELAY
               value: {{ $worker.completionDelay | quote }}

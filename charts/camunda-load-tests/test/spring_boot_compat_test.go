@@ -219,7 +219,6 @@ func TestSpringBootEnvVarsWorker(t *testing.T) {
 	assert.Equal(t, "5", envVars["LOAD_TESTER_WORKER_THREADS"])
 	assert.Equal(t, "my-job", envVars["LOAD_TESTER_WORKER_JOB_TYPE"])
 	assert.Equal(t, "200ms", envVars["LOAD_TESTER_WORKER_COMPLETION_DELAY"])
-	assert.Equal(t, "1ms", envVars["LOAD_TESTER_WORKER_POLLING_DELAY"])
 	assert.Equal(t, "myWorker", envVars["LOAD_TESTER_WORKER_WORKER_NAME"])
 	assert.Equal(t, "http://camunda-gateway:26500", envVars["CAMUNDA_CLIENT_GRPC_ADDRESS"])
 
