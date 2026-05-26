@@ -100,6 +100,6 @@ spec:
               path: /health/readiness
               port: http
             initialDelaySeconds: 10
-            periodSeconds: 5
+            periodSeconds: 10
             timeoutSeconds: 3
             failureThreshold: 3

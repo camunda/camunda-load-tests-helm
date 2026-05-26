@@ -191,23 +191,28 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
-          {{- if $.Values.probes.workers.enabled }}
+          {{- $p := $worker.probes | default dict }}
+          {{- $liv := $p.liveness | default dict }}
+          {{- $rd := $p.readiness | default dict }}
+          {{- $enabled := true }}
+          {{- if hasKey $p "enabled" }}{{ $enabled = $p.enabled }}{{ end }}
+          {{- if $enabled }}
           livenessProbe:
             httpGet:
               path: /health/liveness
               port: http
-            initialDelaySeconds: {{ $.Values.probes.workers.liveness.initialDelaySeconds }}
-            periodSeconds: {{ $.Values.probes.workers.liveness.periodSeconds }}
-            timeoutSeconds: {{ $.Values.probes.workers.liveness.timeoutSeconds }}
-            failureThreshold: {{ $.Values.probes.workers.liveness.failureThreshold }}
+            initialDelaySeconds: {{ default 30 $liv.initialDelaySeconds }}
+            periodSeconds: {{ default 10 $liv.periodSeconds }}
+            timeoutSeconds: {{ default 3 $liv.timeoutSeconds }}
+            failureThreshold: {{ default 3 $liv.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /health/readiness
               port: http
-            initialDelaySeconds: {{ $.Values.probes.workers.readiness.initialDelaySeconds }}
-            periodSeconds: {{ $.Values.probes.workers.readiness.periodSeconds }}
-            timeoutSeconds: {{ $.Values.probes.workers.readiness.timeoutSeconds }}
-            failureThreshold: {{ $.Values.probes.workers.readiness.failureThreshold }}
+            initialDelaySeconds: {{ default 10 $rd.initialDelaySeconds }}
+            periodSeconds: {{ default 10 $rd.periodSeconds }}
+            timeoutSeconds: {{ default 3 $rd.timeoutSeconds }}
+            failureThreshold: {{ default 3 $rd.failureThreshold }}
           {{- end }}
 {{- if $.Values.global.extraConfig }}
           volumeMounts:
