@@ -197,3 +197,41 @@ starter:
     requests:
       cpu: 250m
       memory: 2Gi
+
+# Probes configuration for Kubernetes liveness and readiness probes.
+# Backed by the Spring Boot Actuator health endpoints exposed by the load-tester
+# app on container port 9600 at /health/liveness and /health/readiness.
+probes:
+  # Probes.starter probe configuration applied to the starter Deployment
+  starter:
+    # Probes.starter.enabled if true adds liveness and readiness probes to the starter pod
+    enabled: true
+    # Probes.starter.liveness configures the HTTP livenessProbe against /health/liveness
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 3
+    # Probes.starter.readiness configures the HTTP readinessProbe against /health/readiness
+    readiness:
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 3
+  # Probes.workers probe configuration applied to every worker Deployment.
+  # The same values apply to all entries under workers.* (no per-worker override).
+  workers:
+    # Probes.workers.enabled if true adds liveness and readiness probes to every worker pod
+    enabled: true
+    # Probes.workers.liveness configures the HTTP livenessProbe against /health/liveness
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 3
+    # Probes.workers.readiness configures the HTTP readinessProbe against /health/readiness
+    readiness:
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 3
