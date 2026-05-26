@@ -2,10 +2,20 @@ The changelog is automatically generated using [git-chglog](https://github.com/g
 and it follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
 
 
-<a name="camunda-load-tests-0.1.11"></a>
-## [camunda-load-tests-0.1.11](https://github.com/camunda/camunda-load-tests-helm/compare/camunda-load-tests-0.1.10...camunda-load-tests-0.1.11) (2026-05-04)
+<a name="camunda-load-tests-0.1.12"></a>
+## [camunda-load-tests-0.1.12](https://github.com/camunda/camunda-load-tests-helm/compare/camunda-load-tests-0.1.11...camunda-load-tests-0.1.12) (2026-05-26)
+
+### Build
+
+* update golden
 
 ### Fix
 
-* make starter durationLimit configurable instead of hardcoding to 0
+* remove hardcoded worker pollingDelay default
+* documentation and links
+
+### Pull Requests
+
+* Merge pull request [#70](https://github.com/camunda/camunda-load-tests-helm/issues/70) from camunda/renovate/helm-4.x
+* Merge pull request [#60](https://github.com/camunda/camunda-load-tests-helm/issues/60) from camunda/release
 
