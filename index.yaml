@@ -4,6 +4,34 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
+          description: "remove hardcoded worker pollingDelay default"
+        - kind: fixed
+          description: "documentation and links"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-05-26T08:55:12.378829257Z"
+    description: A Helm chart for Camunda load tests
+    digest: 610e85b1cb7535b0838ab40c597ae41c9f55d7420942f5a980b8e15a6348675d
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.12/camunda-load-tests-0.1.12.tgz
+    version: 0.1.12
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
           description: "make starter durationLimit configurable instead of hardcoding to 0"
       artifacthub.io/containsSecurityUpdates: "false"
       artifacthub.io/links: |
@@ -333,4 +361,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-05-04T12:27:46.790013561Z"
+generated: "2026-05-26T08:55:12.37887882Z"
