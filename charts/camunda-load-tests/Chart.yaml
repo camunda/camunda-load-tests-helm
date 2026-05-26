@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: fixed\n  description: \"make starter durationLimit configurable instead of hardcoding to 0\"\n"
+  artifacthub.io/changes: "- kind: fixed\n  description: \"remove hardcoded worker pollingDelay default\"\n- kind: fixed\n  description: \"documentation and links\"\n"
