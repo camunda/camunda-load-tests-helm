@@ -6,6 +6,10 @@ metadata:
   name: starter
   labels:
     app: starter
+    app.kubernetes.io/name: camunda-load-tests
+    app.kubernetes.io/instance: load-test
+    app.kubernetes.io/version: "8.8.0"
+    app.kubernetes.io/managed-by: Helm
     camunda.io/created-by: test-user
     camunda.io/purpose: load-test
 spec:
@@ -18,6 +22,10 @@ spec:
       labels:
         app: starter
         app.kubernetes.io/component: zeebe-client
+        app.kubernetes.io/name: camunda-load-tests
+        app.kubernetes.io/instance: load-test
+        app.kubernetes.io/version: "8.8.0"
+        app.kubernetes.io/managed-by: Helm
         camunda.io/created-by: test-user
         camunda.io/purpose: load-test
       annotations:

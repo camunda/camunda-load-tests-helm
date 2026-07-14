@@ -6,6 +6,10 @@ metadata:
   name: worker
   labels:
     app: worker
+    app.kubernetes.io/name: camunda-load-tests
+    app.kubernetes.io/instance: load-test
+    app.kubernetes.io/version: "8.8.0"
+    app.kubernetes.io/managed-by: Helm
 spec:
   selector:
     matchLabels:
@@ -16,9 +20,13 @@ spec:
       labels:
         app: worker
         app.kubernetes.io/component: zeebe-client
+        app.kubernetes.io/name: camunda-load-tests
+        app.kubernetes.io/instance: load-test
+        app.kubernetes.io/version: "8.8.0"
+        app.kubernetes.io/managed-by: Helm
       annotations:
         checksum/config: e8336a4e36fbb6f1f0137aef57a4e26c600cb335157a4fd7bd72064b06dee7a6
-        checksum/saas-credentials: 3b814aac9505613500f8ebdde4354c3344a1b1a2ef0d8fdb03f70a7623e30acf
+        checksum/saas-credentials: 964aefb6b6b827b193b77f15647f5c766e931e4923f1363c400682fde79f1cfc
     spec:
       containers:
         - name: worker
