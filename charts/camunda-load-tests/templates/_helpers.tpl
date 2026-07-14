@@ -56,7 +56,7 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
+Common labels for all manifests
 */}}
 {{- define "camunda-load-tests.labels" -}}
 helm.sh/chart: {{ include "camunda-load-tests.chart" . }}
@@ -65,6 +65,9 @@ helm.sh/chart: {{ include "camunda-load-tests.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.global.commonLabels }}
+{{ tpl (toYaml .Values.global.commonLabels) $ }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -83,15 +86,5 @@ Create the name of the service account to use
 {{- default (include "camunda-load-tests.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
-Common labels from global.commonLabels — injected into all resource metadata.
-Never add to selector.matchLabels (immutable on Deployments).
-*/}}
-{{- define "camunda-load-tests.commonLabels" -}}
-{{- if .Values.global.commonLabels -}}
-{{ tpl (toYaml .Values.global.commonLabels) $ }}
 {{- end }}
 {{- end }}
