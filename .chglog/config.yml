@@ -2,7 +2,7 @@ style: github
 template: CHANGELOG.tpl.md
 info:
   title: CHANGELOG
-  repository_url: https://github.com/camunda/camunda-platform-helm
+  repository_url: https://github.com/camunda/camunda-load-tests-helm
 options:
   commits:
     filters:

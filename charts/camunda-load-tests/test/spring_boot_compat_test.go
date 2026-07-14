@@ -51,7 +51,8 @@ func TestSpringBootEnvVarsStarter(t *testing.T) {
 	// Spring Boot env vars
 	assert.Equal(t, "200", envVars["LOAD_TESTER_STARTER_RATE"])
 	assert.Equal(t, "my-process", envVars["LOAD_TESTER_STARTER_PROCESS_ID"])
-	assert.Equal(t, "0", envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"])
+	_, durationLimitSet := envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"]
+	assert.False(t, durationLimitSet, "LOAD_TESTER_STARTER_DURATION_LIMIT should not be set by default")
 	assert.Equal(t, "false", envVars["CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC"])
 	assert.Equal(t, "false", envVars["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
 	assert.Equal(t, "http://camunda-gateway:26500", envVars["CAMUNDA_CLIENT_GRPC_ADDRESS"])
@@ -120,6 +121,62 @@ func TestSpringBootEnvVarsStarterRateDurationNotSetByDefault(t *testing.T) {
 	assert.NotContains(t, jdkOpts, "rateDuration")
 }
 
+func TestSpringBootEnvVarsStarterDurationLimit(t *testing.T) {
+	// Verify that durationLimit is correctly set in both HOCON and Spring Boot env vars
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	options := &helm.Options{
+		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
+		SetValues: map[string]string{
+			"starter.rate":          "10",
+			"starter.durationLimit": "300",
+		},
+	}
+
+	output := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/starter.yaml"})
+	var deployment appsv1.Deployment
+	helm.UnmarshalK8SYaml(t, output, &deployment)
+
+	envVars := make(map[string]string)
+	for _, env := range deployment.Spec.Template.Spec.Containers[0].Env {
+		envVars[env.Name] = env.Value
+	}
+
+	// Spring Boot env var
+	assert.Equal(t, "300", envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"])
+
+	// Old HOCON var
+	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
+	assert.Contains(t, jdkOpts, "-Dapp.starter.durationLimit=300")
+}
+
+func TestSpringBootEnvVarsStarterDurationLimitNotSetByDefault(t *testing.T) {
+	// Verify that durationLimit is NOT set when not configured (app default is used)
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	options := &helm.Options{
+		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
+	}
+
+	output := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/starter.yaml"})
+	var deployment appsv1.Deployment
+	helm.UnmarshalK8SYaml(t, output, &deployment)
+
+	envVars := make(map[string]string)
+	for _, env := range deployment.Spec.Template.Spec.Containers[0].Env {
+		envVars[env.Name] = env.Value
+	}
+
+	// Should NOT be present when not configured
+	_, exists := envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"]
+	assert.False(t, exists, "LOAD_TESTER_STARTER_DURATION_LIMIT should not be set by default")
+
+	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
+	assert.NotContains(t, jdkOpts, "durationLimit")
+}
+
 func TestSpringBootEnvVarsWorker(t *testing.T) {
 	// Verify that Spring Boot env vars are correctly set for workers
 	chartPath, err := filepath.Abs("../")
@@ -162,7 +219,6 @@ func TestSpringBootEnvVarsWorker(t *testing.T) {
 	assert.Equal(t, "5", envVars["LOAD_TESTER_WORKER_THREADS"])
 	assert.Equal(t, "my-job", envVars["LOAD_TESTER_WORKER_JOB_TYPE"])
 	assert.Equal(t, "200ms", envVars["LOAD_TESTER_WORKER_COMPLETION_DELAY"])
-	assert.Equal(t, "1ms", envVars["LOAD_TESTER_WORKER_POLLING_DELAY"])
 	assert.Equal(t, "myWorker", envVars["LOAD_TESTER_WORKER_WORKER_NAME"])
 	assert.Equal(t, "http://camunda-gateway:26500", envVars["CAMUNDA_CLIENT_GRPC_ADDRESS"])
 

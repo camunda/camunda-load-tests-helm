@@ -2,7 +2,7 @@ apiVersion: v2
 name: camunda-load-tests
 description: A Helm chart for Camunda load tests
 type: application
-version: 0.1.10
+version: 0.1.12
 appVersion: "8.8.0"
 sources:
   - https://github.com/camunda/camunda-load-tests-helm
@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: fixed\n  description: \"preserve separator between checksum annotations in helper\"\n- kind: changed\n  description: \"simplify annotations helper to plain whitespace control\"\n"
+  artifacthub.io/changes: "- kind: fixed\n  description: \"remove hardcoded worker pollingDelay default\"\n- kind: fixed\n  description: \"documentation and links\"\n"

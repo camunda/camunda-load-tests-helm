@@ -4,8 +4,8 @@ set -euo pipefail
 chart_files_to_release="${1:-"charts/*/Chart.yaml"}"
 
 for chart_file in ${chart_files_to_release}; do
-    chart_name=$(grep -Po "(?<=^name: ).+" ${chart_file})
-    chart_version=$(grep -Po "(?<=^version: ).+" ${chart_file})
+    chart_name=$(yq eval .name ${chart_file})
+    chart_version=$(yq eval .version ${chart_file})
     chart_tag="${chart_name}-${chart_version}"
     chart_path="charts/${chart_name}"
     tmp_chart_yaml_file="${chart_path}/Chart-with-artifacthub-changes.yaml.tmp"
