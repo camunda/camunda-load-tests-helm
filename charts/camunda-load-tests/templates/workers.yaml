@@ -5,6 +5,7 @@ metadata:
   name: {{ $workerName }}
   labels:
     app: {{ $workerName }}
+    {{- include "camunda-load-tests.labels" $ | nindent 4 }}
 spec:
   selector:
     matchLabels:
@@ -15,6 +16,7 @@ spec:
       labels:
         app: {{ $workerName }}
         app.kubernetes.io/component: zeebe-client
+        {{- include "camunda-load-tests.labels" $ | nindent 8 }}
       annotations:
         {{- include "camunda-load-tests.annotations" $ | nindent 8 }}
     spec:
