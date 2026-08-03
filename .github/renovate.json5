@@ -23,4 +23,5 @@
   ],
 
   "automerge": true,
+  "platformAutomerge": true,
 }
