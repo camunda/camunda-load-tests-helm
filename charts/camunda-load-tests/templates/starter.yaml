@@ -187,6 +187,24 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
+          {{- if .Values.starter.probes.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health/liveness
+              port: http
+            initialDelaySeconds: {{ .Values.starter.probes.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.starter.probes.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.starter.probes.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.starter.probes.liveness.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: http
+            initialDelaySeconds: {{ .Values.starter.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.starter.probes.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.starter.probes.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.starter.probes.readiness.failureThreshold }}
+          {{- end }}
 {{- if .Values.global.extraConfig }}
           volumeMounts:
             - name: load-test-config

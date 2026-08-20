@@ -144,6 +144,29 @@ workers:
       requests:
         cpu: 500m
         memory: 512Mi
+    # Workers.worker.probes configures Kubernetes liveness and readiness probes
+    # for this worker. The same block shape may be used (or omitted) on any
+    # additional worker entry under workers.<name>. When omitted, probes default
+    # to enabled with the timings shown here (defaults are baked into the
+    # template so custom workers do not need to repeat the block).
+    # Rationale for the numbers matches starter.probes above:
+    #   initialDelaySeconds liveness=30 (JVM + Spring startup), readiness=10
+    #     (earliest job-worker can be ready);
+    #   periodSeconds=10 (standard cadence, no liveness/readiness asymmetry);
+    #   timeoutSeconds=3 (tolerates GC pauses);
+    #   failureThreshold=3 (~30s of sustained failure before action).
+    probes:
+      enabled: true
+      liveness:
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 3
+        failureThreshold: 3
+      readiness:
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 3
+        failureThreshold: 3
 
   # Workers.worker defines the configuration for the default load test worker
   # Adding more and different worker can be done via adding a new map like:
@@ -199,3 +222,32 @@ starter:
     requests:
       cpu: 250m
       memory: 2Gi
+  # Starter.probes configuration for Kubernetes liveness and readiness probes
+  # backed by the Spring Boot Actuator health endpoints exposed by the load-tester
+  # app on container port 9600 (/health/liveness and /health/readiness).
+  probes:
+    # Starter.probes.enabled if true adds liveness and readiness probes to the starter pod
+    enabled: true
+    # Starter.probes.liveness HTTP probe against /health/liveness.
+    # initialDelaySeconds=30: JVM cold-start + Spring context init typically completes
+    #   well under 30s; this avoids premature liveness failures.
+    # periodSeconds=10: standard Spring Boot probe cadence; aligned with readiness
+    #   below to avoid arbitrary asymmetry.
+    # timeoutSeconds=3: actuator health responds in <100ms locally; 3s tolerates
+    #   transient GC pauses.
+    # failureThreshold=3: 3 consecutive failures = ~30s of sustained unresponsiveness
+    #   before pod restart.
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 3
+    # Starter.probes.readiness HTTP probe against /health/readiness.
+    # initialDelaySeconds=10: readiness flips earliest after broker topology
+    #   connect + first scheduled tick; checking sooner just wastes calls.
+    # Other fields match liveness intentionally.
+    readiness:
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 3
