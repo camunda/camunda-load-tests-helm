@@ -38,38 +38,6 @@ spec:
           env:
             - name: JDK_JAVA_OPTIONS
               value: >-
-                -Dconfig.override_with_env_vars=true
-                {{- if $.Values.saas.enabled }}
-                -Dapp.tls=true
-                {{- else }}
-                -Dapp.brokerUrl=http://{{ $.Values.global.connect.serviceName }}:26500
-                -Dapp.brokerRestUrl=http://{{ $.Values.global.connect.serviceName }}:8080
-                {{- end }}
-                -Dapp.preferRest={{ .Values.global.preferRest.enabled }}
-                -Dapp.performReadBenchmarks={{ .Values.global.performReadBenchmarks }}
-                -Dapp.starter.rate={{ .Values.starter.rate }}
-                {{- if .Values.starter.rateDuration }}
-                -Dapp.starter.rateDuration={{ .Values.starter.rateDuration }}
-                {{- end }}
-                {{- if .Values.starter.durationLimit }}
-                -Dapp.starter.durationLimit={{ .Values.starter.durationLimit }}
-                {{- end }}
-                -Dzeebe.client.requestTimeout=62000
-                {{- if .Values.starter.processId }}
-                -Dapp.starter.processId={{ .Values.starter.processId | quote }}
-                {{- end }}
-                {{- if .Values.starter.bpmnXmlPath }}
-                -Dapp.starter.bpmnXmlPath={{ .Values.starter.bpmnXmlPath | quote }}
-                {{- end }}
-                {{- range $index, $value := .Values.starter.extraResources }}
-                -Dapp.starter.extraBpmnModels.{{ $index }}={{ $value | quote }}
-                {{- end }}
-                {{- if .Values.starter.businessKey }}
-                -Dapp.starter.businessKey={{ .Values.starter.businessKey | quote }}
-                {{- end }}
-                {{- if .Values.starter.payloadPath }}
-                -Dapp.starter.payloadPath={{ .Values.starter.payloadPath | quote }}
-                {{- end }}
                 -XX:+HeapDumpOnOutOfMemoryError
             {{- if .Values.starter.logLevel }}
             - name: LOG_LEVEL

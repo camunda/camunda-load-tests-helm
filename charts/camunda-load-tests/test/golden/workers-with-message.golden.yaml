@@ -35,21 +35,6 @@ spec:
           env:
             - name: JDK_JAVA_OPTIONS
               value: >-
-                -Dconfig.override_with_env_vars=true
-                -Dapp.brokerUrl=http://camunda-gateway:26500
-                -Dapp.brokerRestUrl=http://camunda-gateway:8080
-                -Dapp.preferRest=false
-                -Dapp.performReadBenchmarks=false
-                -Dzeebe.client.requestTimeout=62000
-                -Dapp.worker.capacity=30
-                -Dapp.worker.threads=10
-                -Dapp.worker.completionDelay=300ms
-                -Dapp.worker.workerName="worker"
-                -Dapp.worker.jobType="benchmark-task"
-                -Dapp.worker.payloadPath="bpmn/typical_payload.json"
-                -Dapp.worker.sendMessage=true
-                -Dapp.worker.messageName="my-message"
-                -Dapp.worker.correlationKeyVariableName="orderId"
                 -XX:+HeapDumpOnOutOfMemoryError
             - name: LOG_LEVEL
               value: "INFO"
