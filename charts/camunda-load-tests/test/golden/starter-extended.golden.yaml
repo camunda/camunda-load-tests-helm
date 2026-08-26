@@ -35,19 +35,6 @@ spec:
           env:
             - name: JDK_JAVA_OPTIONS
               value: >-
-                -Dconfig.override_with_env_vars=true
-                -Dapp.brokerUrl=http://camunda-gateway:26500
-                -Dapp.brokerRestUrl=http://camunda-gateway:8080
-                -Dapp.preferRest=false
-                -Dapp.performReadBenchmarks=false
-                -Dapp.starter.rate=300
-                -Dzeebe.client.requestTimeout=62000
-                -Dapp.starter.processId="real"
-                -Dapp.starter.bpmnXmlPath="bpmn/real.bpmn"
-                -Dapp.starter.extraBpmnModels.0="bpmn/extra.bpmn"
-                -Dapp.starter.extraBpmnModels.1="bpmn/extra.dmn"
-                -Dapp.starter.businessKey="customerId"
-                -Dapp.starter.payloadPath="empty.json"
                 -XX:+HeapDumpOnOutOfMemoryError
             - name: LOG_LEVEL
               value: "INFO"

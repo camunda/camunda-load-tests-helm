@@ -57,12 +57,6 @@ func TestSpringBootEnvVarsStarter(t *testing.T) {
 	assert.Equal(t, "false", envVars["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
 	assert.Equal(t, "http://camunda-gateway:26500", envVars["CAMUNDA_CLIENT_GRPC_ADDRESS"])
 	assert.Equal(t, "http://camunda-gateway:8080", envVars["CAMUNDA_CLIENT_REST_ADDRESS"])
-
-	// Old HOCON vars still present in JDK_JAVA_OPTIONS
-	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
-	assert.Contains(t, jdkOpts, "-Dapp.starter.rate=200")
-	assert.Contains(t, jdkOpts, "-Dapp.starter.processId=\"my-process\"")
-	assert.Contains(t, jdkOpts, "-Dapp.performReadBenchmarks=false")
 }
 
 func TestSpringBootEnvVarsStarterRateDuration(t *testing.T) {
@@ -89,10 +83,6 @@ func TestSpringBootEnvVarsStarterRateDuration(t *testing.T) {
 
 	// Spring Boot env var
 	assert.Equal(t, "1m", envVars["LOAD_TESTER_STARTER_RATE_DURATION"])
-
-	// Old HOCON var
-	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
-	assert.Contains(t, jdkOpts, "-Dapp.starter.rateDuration=1m")
 }
 
 func TestSpringBootEnvVarsStarterRateDurationNotSetByDefault(t *testing.T) {
@@ -116,9 +106,6 @@ func TestSpringBootEnvVarsStarterRateDurationNotSetByDefault(t *testing.T) {
 	// Should NOT be present when not configured
 	_, exists := envVars["LOAD_TESTER_STARTER_RATE_DURATION"]
 	assert.False(t, exists, "LOAD_TESTER_STARTER_RATE_DURATION should not be set by default")
-
-	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
-	assert.NotContains(t, jdkOpts, "rateDuration")
 }
 
 func TestSpringBootEnvVarsStarterDurationLimit(t *testing.T) {
@@ -145,10 +132,6 @@ func TestSpringBootEnvVarsStarterDurationLimit(t *testing.T) {
 
 	// Spring Boot env var
 	assert.Equal(t, "300", envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"])
-
-	// Old HOCON var
-	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
-	assert.Contains(t, jdkOpts, "-Dapp.starter.durationLimit=300")
 }
 
 func TestSpringBootEnvVarsStarterDurationLimitNotSetByDefault(t *testing.T) {
@@ -172,9 +155,6 @@ func TestSpringBootEnvVarsStarterDurationLimitNotSetByDefault(t *testing.T) {
 	// Should NOT be present when not configured
 	_, exists := envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"]
 	assert.False(t, exists, "LOAD_TESTER_STARTER_DURATION_LIMIT should not be set by default")
-
-	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
-	assert.NotContains(t, jdkOpts, "durationLimit")
 }
 
 func TestSpringBootEnvVarsWorker(t *testing.T) {
@@ -224,12 +204,6 @@ func TestSpringBootEnvVarsWorker(t *testing.T) {
 
 	// performReadBenchmarks defaults to false
 	assert.Equal(t, "false", envVars["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
-
-	// Old HOCON vars still present
-	jdkOpts := envVars["JDK_JAVA_OPTIONS"]
-	assert.Contains(t, jdkOpts, "-Dapp.worker.capacity=50")
-	assert.Contains(t, jdkOpts, "-Dapp.worker.jobType=\"my-job\"")
-	assert.Contains(t, jdkOpts, "-Dapp.performReadBenchmarks=false")
 }
 
 func TestSpringBootPerformReadBenchmarks(t *testing.T) {
@@ -255,7 +229,6 @@ func TestSpringBootPerformReadBenchmarks(t *testing.T) {
 	}
 
 	assert.Equal(t, "true", starterEnv["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
-	assert.Contains(t, starterEnv["JDK_JAVA_OPTIONS"], "-Dapp.performReadBenchmarks=true")
 
 	// Test worker
 	workerOutput := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/workers.yaml"})
@@ -278,7 +251,6 @@ func TestSpringBootPerformReadBenchmarks(t *testing.T) {
 	}
 
 	assert.Equal(t, "true", workerEnv["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
-	assert.Contains(t, workerEnv["JDK_JAVA_OPTIONS"], "-Dapp.performReadBenchmarks=true")
 }
 
 func TestSpringBootEnvVarsSaaSMode(t *testing.T) {
