@@ -3,7 +3,8 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: load-test-config
-  labels: {{- include "camunda-load-tests.labels" . | nindent 4 }}
+  labels:
+    {{- include "camunda-load-tests.labels" . | nindent 4 }}
 data:
   load-test-config.yaml: |
     # Extra configuration for the load test applications

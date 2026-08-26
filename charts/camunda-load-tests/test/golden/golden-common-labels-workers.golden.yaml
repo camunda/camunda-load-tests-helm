@@ -10,6 +10,8 @@ metadata:
     app.kubernetes.io/instance: load-test
     app.kubernetes.io/version: "8.8.0"
     app.kubernetes.io/managed-by: Helm
+    camunda.io/created-by: test-user
+    camunda.io/purpose: load-test
 spec:
   selector:
     matchLabels:
@@ -24,9 +26,11 @@ spec:
         app.kubernetes.io/instance: load-test
         app.kubernetes.io/version: "8.8.0"
         app.kubernetes.io/managed-by: Helm
+        camunda.io/created-by: test-user
+        camunda.io/purpose: load-test
       annotations:
         
-        checksum/saas-credentials: 55680a76bdaa71a1066a3faa169123a1f124934633ead82234a6407d9825c513
+        
     spec:
       containers:
         - name: worker
@@ -36,7 +40,8 @@ spec:
             - name: JDK_JAVA_OPTIONS
               value: >-
                 -Dconfig.override_with_env_vars=true
-                -Dapp.tls=true
+                -Dapp.brokerUrl=http://camunda-gateway:26500
+                -Dapp.brokerRestUrl=http://camunda-gateway:8080
                 -Dapp.preferRest=false
                 -Dapp.performReadBenchmarks=false
                 -Dzeebe.client.requestTimeout=62000
@@ -49,41 +54,6 @@ spec:
                 -XX:+HeapDumpOnOutOfMemoryError
             - name: LOG_LEVEL
               value: "INFO"
-            - name: ZEEBE_REST_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: load-test-credentials
-                  key: zeebeRestAddress
-            - name: ZEEBE_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: load-test-credentials
-                  key: clientId
-            - name: ZEEBE_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: load-test-credentials
-                  key: clientSecret
-            - name: ZEEBE_AUTHORIZATION_SERVER_URL
-              valueFrom:
-                secretKeyRef:
-                  name: load-test-credentials
-                  key: authServer
-            - name: ZEEBE_TOKEN_AUDIENCE
-              valueFrom:
-                secretKeyRef:
-                  name: load-test-credentials
-                  key: authorizationAudience
-            - name: ZEEBE_AUTH_TYPE
-              valueFrom:
-                secretKeyRef:
-                  name: load-test-credentials
-                  key: authType
-            - name: ZEEBE_GRPC_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: load-test-credentials
-                  key: zeebeGrpcAddress
             ##
             ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
             ##
@@ -91,10 +61,10 @@ spec:
               value: "false"
             - name: LOAD_TESTER_PERFORM_READ_BENCHMARKS
               value: "false"
-            - name: CAMUNDA_CLIENT_MODE
-              value: "saas"
-            - name: CAMUNDA_CLIENT_AUTH_METHOD
-              value: "oidc"
+            - name: CAMUNDA_CLIENT_GRPC_ADDRESS
+              value: "http://camunda-gateway:26500"
+            - name: CAMUNDA_CLIENT_REST_ADDRESS
+              value: "http://camunda-gateway:8080"
             - name: LOAD_TESTER_WORKER_CAPACITY
               value: "60"
             - name: LOAD_TESTER_WORKER_THREADS
@@ -119,5 +89,3 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
-
-

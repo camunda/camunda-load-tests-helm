@@ -56,7 +56,7 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
+Common labels for all manifests
 */}}
 {{- define "camunda-load-tests.labels" -}}
 helm.sh/chart: {{ include "camunda-load-tests.chart" . }}
@@ -65,6 +65,9 @@ helm.sh/chart: {{ include "camunda-load-tests.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.global.commonLabels }}
+{{ tpl (toYaml .Values.global.commonLabels) $ }}
+{{- end }}
 {{- end }}
 
 {{/*

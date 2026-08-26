@@ -1,36 +1,40 @@
 ---
-# Source: camunda-load-tests/templates/workers.yaml
+# Source: camunda-load-tests/templates/starter.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker
+  name: starter
   labels:
-    app: worker
+    app: starter
     app.kubernetes.io/name: camunda-load-tests
     app.kubernetes.io/instance: load-test
     app.kubernetes.io/version: "8.8.0"
     app.kubernetes.io/managed-by: Helm
+    camunda.io/created-by: test-user
+    camunda.io/purpose: load-test
 spec:
   selector:
     matchLabels:
-      app: worker
-  replicas: 3
+      app: starter
+  replicas: 1
   template:
     metadata:
       labels:
-        app: worker
+        app: starter
         app.kubernetes.io/component: zeebe-client
         app.kubernetes.io/name: camunda-load-tests
         app.kubernetes.io/instance: load-test
         app.kubernetes.io/version: "8.8.0"
         app.kubernetes.io/managed-by: Helm
+        camunda.io/created-by: test-user
+        camunda.io/purpose: load-test
       annotations:
         
         
     spec:
       containers:
-        - name: worker
-          image: "gcr.io/zeebe-io/worker:SNAPSHOT"
+        - name: starter
+          image: "gcr.io/zeebe-io/starter:SNAPSHOT"
           imagePullPolicy: Always
           env:
             - name: JDK_JAVA_OPTIONS
@@ -40,21 +44,15 @@ spec:
                 -Dapp.brokerRestUrl=http://camunda-gateway:8080
                 -Dapp.preferRest=false
                 -Dapp.performReadBenchmarks=false
+                -Dapp.starter.rate=150
                 -Dzeebe.client.requestTimeout=62000
-                -Dapp.worker.capacity=60
-                -Dapp.worker.threads=10
-                -Dapp.worker.completionDelay=50ms
-                -Dapp.worker.workerName="worker"
-                -Dapp.worker.jobType="benchmark-task"
-                -Dapp.worker.payloadPath="bpmn/typical_payload.json"
+                -Dapp.starter.processId="benchmark"
+                -Dapp.starter.bpmnXmlPath="bpmn/one_task.bpmn"
+                -Dapp.starter.businessKey="businessKey"
+                -Dapp.starter.payloadPath="bpmn/typical_payload.json"
                 -XX:+HeapDumpOnOutOfMemoryError
             - name: LOG_LEVEL
               value: "INFO"
-            - name: TEST_SECRET
-              valueFrom:
-                secretKeyRef:
-                  key: secret
-                  name: credentials
             ##
             ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
             ##
@@ -66,29 +64,29 @@ spec:
               value: "http://camunda-gateway:26500"
             - name: CAMUNDA_CLIENT_REST_ADDRESS
               value: "http://camunda-gateway:8080"
-            - name: LOAD_TESTER_WORKER_CAPACITY
-              value: "60"
-            - name: LOAD_TESTER_WORKER_THREADS
-              value: "10"
-            - name: LOAD_TESTER_WORKER_COMPLETION_DELAY
-              value: "50ms"
-            - name: LOAD_TESTER_WORKER_WORKER_NAME
-              value: "worker"
-            - name: LOAD_TESTER_WORKER_JOB_TYPE
-              value: "benchmark-task"
-            - name: LOAD_TESTER_WORKER_PAYLOAD_PATH
+            - name: LOAD_TESTER_STARTER_RATE
+              value: "150"
+            - name: LOAD_TESTER_STARTER_PROCESS_ID
+              value: "benchmark"
+            - name: LOAD_TESTER_STARTER_BPMN_XML_PATH
+              value: "bpmn/one_task.bpmn"
+            - name: LOAD_TESTER_STARTER_BUSINESS_KEY
+              value: "businessKey"
+            - name: LOAD_TESTER_STARTER_PAYLOAD_PATH
               value: "bpmn/typical_payload.json"
             - name: LOGGING_LEVEL_IO_CAMUNDA_ZEEBE
               value: "INFO"
+          envFrom:
+            - configMapRef:
+                name: starter-config
+                optional: true
           resources:
             limits:
-              cpu: 500m
-              memory: 512Mi
+              cpu: 250m
+              memory: 2Gi
             requests:
-              cpu: 500m
-              memory: 512Mi
+              cpu: 250m
+              memory: 2Gi
           ports:
             - containerPort: 9600
               name: "http"
-
-
