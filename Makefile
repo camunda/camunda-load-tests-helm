@@ -6,7 +6,7 @@ chartPath=charts/camunda-load-tests
 chartVersion=$(shell grep -Po '(?<=^version: ).+' $(chartPath)/Chart.yaml)
 releaseName=load-test
 gitChglog=quay.io/git-chglog/git-chglog:0.15.1
-goBin=go
+goBin=go1.26.0
 #########################################################
 ######### Go.
 #########################################################
