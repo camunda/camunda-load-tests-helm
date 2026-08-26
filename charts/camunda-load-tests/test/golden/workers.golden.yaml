@@ -68,6 +68,9 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
+
+
+
 ---
 # Source: camunda-load-tests/templates/workers.yaml
 apiVersion: apps/v1
@@ -155,3 +158,5 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
+
+

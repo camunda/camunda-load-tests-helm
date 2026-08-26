@@ -8,7 +8,7 @@ on:
     types: [checks_requested]
 
 env:
-  HELM_VERSION: 4.2.3
+  HELM_VERSION: 4.2.4
 
 jobs:
   build:

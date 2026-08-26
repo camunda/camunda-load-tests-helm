@@ -16,6 +16,8 @@ spec:
   ports:
   - name: http
     port: 9600
+
+
 ---
 # Source: camunda-load-tests/templates/clients-service.yaml
 apiVersion: monitoring.coreos.com/v1
