@@ -170,7 +170,7 @@ starter:
   # Starter.replicas defines how many replicas of the application should be deployed
   replicas: 1
   # Starter.rate defines with which rate process instances should be created by the starter
-  rate: 150
+  rate: 300
   # Starter.rateDuration can be used to define the time unit for the rate (e.g. "1s" for per-second, "1m" for per-minute).
   # If not set, the application default is used.
   rateDuration:
