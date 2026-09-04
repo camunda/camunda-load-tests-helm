@@ -2,7 +2,7 @@ apiVersion: v2
 name: camunda-load-tests
 description: A Helm chart for Camunda load tests
 type: application
-version: 0.1.12
+version: 0.1.13
 appVersion: "8.8.0"
 sources:
   - https://github.com/camunda/camunda-load-tests-helm
@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: fixed\n  description: \"remove hardcoded worker pollingDelay default\"\n- kind: fixed\n  description: \"documentation and links\"\n"
+  artifacthub.io/changes: "- kind: added\n  description: \"propagate commonLabels to all resource templates\"\n- kind: added\n  description: \"add global.commonLabels helper to chart\"\n- kind: fixed\n  description: \"suppress blank lines when commonLabels is empty\"\n- kind: fixed\n  description: \"remove spurious leading newline from commonLabels helper\"\n- kind: changed\n  description: \"remove outdated configurations\"\n- kind: changed\n  description: \"make max default\"\n- kind: changed\n  description: \"merge commonLabels into camunda-load-tests.labels template\"\n"
