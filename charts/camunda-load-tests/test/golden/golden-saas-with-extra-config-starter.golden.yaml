@@ -26,7 +26,7 @@ spec:
         app.kubernetes.io/managed-by: Helm
       annotations:
         checksum/config: e8336a4e36fbb6f1f0137aef57a4e26c600cb335157a4fd7bd72064b06dee7a6
-        checksum/saas-credentials: 55680a76bdaa71a1066a3faa169123a1f124934633ead82234a6407d9825c513
+        
     spec:
       containers:
         - name: starter
