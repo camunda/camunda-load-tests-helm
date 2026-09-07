@@ -3,6 +3,46 @@ entries:
   camunda-load-tests:
   - annotations:
       artifacthub.io/changes: |
+        - kind: added
+          description: "propagate commonLabels to all resource templates"
+        - kind: added
+          description: "add global.commonLabels helper to chart"
+        - kind: fixed
+          description: "ignore saas-credentials checksum in golden tests"
+        - kind: fixed
+          description: "suppress blank lines when commonLabels is empty"
+        - kind: fixed
+          description: "remove spurious leading newline from commonLabels helper"
+        - kind: changed
+          description: "remove outdated configurations"
+        - kind: changed
+          description: "make max default"
+        - kind: changed
+          description: "merge commonLabels into camunda-load-tests.labels template"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-09-07T13:08:20.106889347Z"
+    description: A Helm chart for Camunda load tests
+    digest: c7cabe0ff08fd32b67d003070e157af25272da0f3e1c4cc3b01e26cdff135c28
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.13/camunda-load-tests-0.1.13.tgz
+    version: 0.1.13
+  - annotations:
+      artifacthub.io/changes: |
         - kind: fixed
           description: "remove hardcoded worker pollingDelay default"
         - kind: fixed
@@ -361,4 +401,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-05-26T08:55:12.37887882Z"
+generated: "2026-09-07T13:08:20.106993622Z"
