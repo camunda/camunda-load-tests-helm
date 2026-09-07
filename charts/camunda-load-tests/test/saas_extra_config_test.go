@@ -41,6 +41,10 @@ func TestGoldenSaasWithExtraConfig(t *testing.T) {
 			Namespace:      "load-test-" + strings.ToLower(random.UniqueId()),
 			GoldenFileName: "golden-saas-with-extra-config-" + name,
 			Templates:      []string{"templates/" + name + ".yaml"},
+			// checksum/saas-credentials hashes the rendered credentials.yaml, which embeds
+			// the chart version via the helm.sh/chart label. Ignore it so a chart version
+			// bump doesn't require regenerating this golden file.
+			IgnoredLines: []string{`checksum/saas-credentials:.*`},
 			SetValues: map[string]string{
 				"saas.enabled":                                             "true",
 				"saas.credentials.clientId":                                "clientId",
