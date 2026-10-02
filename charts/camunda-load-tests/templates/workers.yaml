@@ -39,7 +39,9 @@ spec:
           env:
             - name: JDK_JAVA_OPTIONS
               value: >-
+                -XX:+ExitOnOutOfMemoryError
                 -XX:+HeapDumpOnOutOfMemoryError
+                -XX:HeapDumpPath=/heap-dumps
             {{- if $worker.logLevel }}
             - name: LOG_LEVEL
               value: {{ $worker.logLevel | quote }}
@@ -157,12 +159,18 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
-{{- if $.Values.global.extraConfig }}
           volumeMounts:
+            - name: heap-dumps
+              mountPath: /heap-dumps
+{{- if $.Values.global.extraConfig }}
             - name: load-test-config
               mountPath: /usr/local/camunda/config/load-test-config.yaml
               subPath: load-test-config.yaml
+{{- end }}
       volumes:
+        - name: heap-dumps
+          emptyDir: {}
+{{- if $.Values.global.extraConfig }}
         - name: load-test-config
           configMap:
             name: load-test-config
