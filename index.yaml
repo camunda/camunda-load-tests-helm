@@ -3,6 +3,32 @@ entries:
   camunda-load-tests:
   - annotations:
       artifacthub.io/changes: |
+        - kind: fixed
+          description: "restart load test pods on out of memory and keep heap dumps"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-10-02T07:39:57.199503277Z"
+    description: A Helm chart for Camunda load tests
+    digest: 8760c7062239fced490c79783ca278d9944b5986c9416947c1e5ca5d99096736
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.14/camunda-load-tests-0.1.14.tgz
+    version: 0.1.14
+  - annotations:
+      artifacthub.io/changes: |
         - kind: added
           description: "propagate commonLabels to all resource templates"
         - kind: added
@@ -401,4 +427,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-09-07T13:08:20.106993622Z"
+generated: "2026-10-02T07:39:57.199622128Z"
