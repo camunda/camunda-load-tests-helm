@@ -157,6 +157,18 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
+          {{- if .Values.starter.startupProbe.enabled }}
+          startupProbe:
+            {{- toYaml (omit .Values.starter.startupProbe "enabled") | nindent 12 }}
+          {{- end }}
+          {{- if .Values.starter.livenessProbe.enabled }}
+          livenessProbe:
+            {{- toYaml (omit .Values.starter.livenessProbe "enabled") | nindent 12 }}
+          {{- end }}
+          {{- if .Values.starter.readinessProbe.enabled }}
+          readinessProbe:
+            {{- toYaml (omit .Values.starter.readinessProbe "enabled") | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: heap-dumps
               mountPath: /heap-dumps
