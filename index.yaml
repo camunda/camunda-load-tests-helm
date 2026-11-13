@@ -3,6 +3,34 @@ entries:
   camunda-load-tests:
   - annotations:
       artifacthub.io/changes: |
+        - kind: added
+          description: "raise default worker threads and starter CPU"
+        - kind: added
+          description: "configure readiness/liveness probes"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-11-13T09:22:03.537571822Z"
+    description: A Helm chart for Camunda load tests
+    digest: fd003c51bf6ba370ffec9d324a53403362ae88e1098c8591920d5a28ee530e5b
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.15/camunda-load-tests-0.1.15.tgz
+    version: 0.1.15
+  - annotations:
+      artifacthub.io/changes: |
         - kind: fixed
           description: "restart load test pods on out of memory and keep heap dumps"
       artifacthub.io/containsSecurityUpdates: "false"
@@ -427,4 +455,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-10-02T07:39:57.199622128Z"
+generated: "2026-11-13T09:22:03.537666572Z"
