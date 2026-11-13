@@ -17,4 +17,4 @@ annotations:
     - name: Zeebe Docs
       url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
   artifacthub.io/containsSecurityUpdates: "false"
-  artifacthub.io/changes: "- kind: fixed\n  description: \"restart load test pods on out of memory and keep heap dumps\"\n"
+  artifacthub.io/changes: "- kind: added\n  description: \"raise default worker threads and starter CPU\"\n- kind: added\n  description: \"configure readiness/liveness probes\"\n"
