@@ -145,6 +145,26 @@ workers:
       requests:
         cpu: 500m
         memory: 512Mi
+    # Workers.worker.startupProbe and readinessProbe configure the probes of the worker container.
+    # They are disabled by default and can be omitted for a worker. All keys except "enabled" are passed
+    # unchanged to the Kubernetes probe spec. The worker application has no liveness endpoint.
+    startupProbe:
+      enabled: false
+      httpGet:
+        path: /health/readiness
+        port: http
+      periodSeconds: 10
+      failureThreshold: 30
+      timeoutSeconds: 5
+    readinessProbe:
+      enabled: false
+      httpGet:
+        path: /health/readiness
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      failureThreshold: 3
+      timeoutSeconds: 5
 
   # Workers.worker defines the configuration for the default load test worker
   # Adding more and different worker can be done via adding a new map like:
@@ -192,6 +212,34 @@ starter:
   # Starter.businessKey can be used to specify a businessKey variable, inside a unique identifier is stored for
   # each created process instance
   businessKey: "businessKey"
+  # Starter.startupProbe, livenessProbe and readinessProbe configure the probes of the starter container.
+  # They are disabled by default. All keys except "enabled" are passed unchanged to the Kubernetes probe spec.
+  startupProbe:
+    enabled: false
+    httpGet:
+      path: /health/readiness
+      port: http
+    periodSeconds: 10
+    failureThreshold: 30
+    timeoutSeconds: 5
+  livenessProbe:
+    enabled: false
+    httpGet:
+      path: /health/liveness
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 5
+  readinessProbe:
+    enabled: false
+    httpGet:
+      path: /health/readiness
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 5
   # Starter.resources defines the resource requests and limits for the load test starter
   # The CPU limit of 1 avoids throttling the starter at rates of 800 process instances per second and above.
   resources:
