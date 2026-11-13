@@ -125,8 +125,9 @@ workers:
     replicas: 3
     # Workers.worker.capacity defines how many jobs the worker should activate and work on
     capacity: 60
-    # Workers.worker.threads defines how many threads the worker can use to work on jobs
-    threads: 10
+    # Workers.worker.threads defines how many threads the worker can use to work on jobs.
+    # Each job takes the completion delay (50 ms by default), so 3 replicas x 10 threads cap at 600 jobs/s.
+    threads: 30
     # Workers.worker.jobType defines the job type which should be used by the worker
     jobType: "benchmark-task"
     # Workers.worker.payloadPath defines the path (inside the worker app) to the payload resource
@@ -192,10 +193,11 @@ starter:
   # each created process instance
   businessKey: "businessKey"
   # Starter.resources defines the resource requests and limits for the load test starter
+  # The CPU limit of 1 avoids throttling the starter at rates of 800 process instances per second and above.
   resources:
     limits:
-      cpu: 250m
+      cpu: 1
       memory: 2Gi
     requests:
-      cpu: 250m
+      cpu: 500m
       memory: 2Gi
