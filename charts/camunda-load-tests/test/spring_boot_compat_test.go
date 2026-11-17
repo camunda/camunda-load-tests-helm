@@ -306,7 +306,7 @@ func TestSpringBootEnvVarsSaaSMode(t *testing.T) {
 	assert.Equal(t, "oidc", workerEnv["CAMUNDA_CLIENT_AUTH_METHOD"])
 }
 
-func TestStarterProbesDisabledByDefault(t *testing.T) {
+func TestStarterProbesEnabledByDefault(t *testing.T) {
 	chartPath, err := filepath.Abs("../")
 	require.NoError(t, err)
 
@@ -319,19 +319,23 @@ func TestStarterProbesDisabledByDefault(t *testing.T) {
 	helm.UnmarshalK8SYaml(t, output, &deployment)
 
 	container := deployment.Spec.Template.Spec.Containers[0]
-	assert.Nil(t, container.LivenessProbe)
-	assert.Nil(t, container.ReadinessProbe)
+	require.NotNil(t, container.StartupProbe)
+	require.NotNil(t, container.LivenessProbe)
+	require.NotNil(t, container.ReadinessProbe)
+	assert.Equal(t, "/health/readiness", container.StartupProbe.HTTPGet.Path)
+	assert.Equal(t, "/health/liveness", container.LivenessProbe.HTTPGet.Path)
+	assert.Equal(t, "/health/readiness", container.ReadinessProbe.HTTPGet.Path)
 }
 
-func TestStarterProbesEnabled(t *testing.T) {
+func TestStarterProbesDisabled(t *testing.T) {
 	chartPath, err := filepath.Abs("../")
 	require.NoError(t, err)
 
 	options := &helm.Options{
 		SetValues: map[string]string{
-			"starter.startupProbe.enabled":   "true",
-			"starter.livenessProbe.enabled":  "true",
-			"starter.readinessProbe.enabled": "true",
+			"starter.startupProbe.enabled":   "false",
+			"starter.livenessProbe.enabled":  "false",
+			"starter.readinessProbe.enabled": "false",
 		},
 		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
 	}
@@ -341,19 +345,40 @@ func TestStarterProbesEnabled(t *testing.T) {
 	helm.UnmarshalK8SYaml(t, output, &deployment)
 
 	container := deployment.Spec.Template.Spec.Containers[0]
-	require.NotNil(t, container.LivenessProbe)
-	require.NotNil(t, container.ReadinessProbe)
-	require.NotNil(t, container.StartupProbe)
-	assert.Equal(t, "/health/liveness", container.LivenessProbe.HTTPGet.Path)
-	assert.Equal(t, "/health/readiness", container.ReadinessProbe.HTTPGet.Path)
-	assert.Equal(t, "/health/readiness", container.StartupProbe.HTTPGet.Path)
+	assert.Nil(t, container.StartupProbe)
+	assert.Nil(t, container.LivenessProbe)
+	assert.Nil(t, container.ReadinessProbe)
 }
 
-func TestWorkerProbesDisabledByDefault(t *testing.T) {
+func TestWorkerProbesEnabledByDefault(t *testing.T) {
 	chartPath, err := filepath.Abs("../")
 	require.NoError(t, err)
 
 	options := &helm.Options{
+		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
+	}
+
+	output := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/workers.yaml"})
+	var deployment appsv1.Deployment
+	helm.UnmarshalK8SYaml(t, output, &deployment)
+
+	container := deployment.Spec.Template.Spec.Containers[0]
+	require.NotNil(t, container.StartupProbe)
+	require.NotNil(t, container.ReadinessProbe)
+	assert.Equal(t, "/health/readiness", container.StartupProbe.HTTPGet.Path)
+	assert.Equal(t, "/health/readiness", container.ReadinessProbe.HTTPGet.Path)
+	assert.Nil(t, container.LivenessProbe)
+}
+
+func TestWorkerProbesDisabled(t *testing.T) {
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	options := &helm.Options{
+		SetValues: map[string]string{
+			"workers.worker.startupProbe.enabled":   "false",
+			"workers.worker.readinessProbe.enabled": "false",
+		},
 		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
 	}
 
@@ -364,29 +389,5 @@ func TestWorkerProbesDisabledByDefault(t *testing.T) {
 	container := deployment.Spec.Template.Spec.Containers[0]
 	assert.Nil(t, container.StartupProbe)
 	assert.Nil(t, container.ReadinessProbe)
-	assert.Nil(t, container.LivenessProbe)
-}
-
-func TestWorkerProbesEnabled(t *testing.T) {
-	chartPath, err := filepath.Abs("../")
-	require.NoError(t, err)
-
-	options := &helm.Options{
-		SetValues: map[string]string{
-			"workers.worker.startupProbe.enabled":   "true",
-			"workers.worker.readinessProbe.enabled": "true",
-		},
-		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
-	}
-
-	output := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/workers.yaml"})
-	var deployment appsv1.Deployment
-	helm.UnmarshalK8SYaml(t, output, &deployment)
-
-	container := deployment.Spec.Template.Spec.Containers[0]
-	require.NotNil(t, container.StartupProbe)
-	require.NotNil(t, container.ReadinessProbe)
-	assert.Equal(t, "/health/readiness", container.StartupProbe.HTTPGet.Path)
-	assert.Equal(t, "/health/readiness", container.ReadinessProbe.HTTPGet.Path)
 	assert.Nil(t, container.LivenessProbe)
 }

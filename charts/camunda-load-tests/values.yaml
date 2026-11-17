@@ -146,10 +146,10 @@ workers:
         cpu: 500m
         memory: 512Mi
     # Workers.worker.startupProbe and readinessProbe configure the probes of the worker container.
-    # They are disabled by default and can be omitted for a worker. All keys except "enabled" are passed
+    # They are enabled by default and can be omitted for a worker. All keys except "enabled" are passed
     # unchanged to the Kubernetes probe spec. The worker application has no liveness endpoint.
     startupProbe:
-      enabled: false
+      enabled: true
       httpGet:
         path: /health/readiness
         port: http
@@ -157,7 +157,7 @@ workers:
       failureThreshold: 30
       timeoutSeconds: 5
     readinessProbe:
-      enabled: false
+      enabled: true
       httpGet:
         path: /health/readiness
         port: http
@@ -213,9 +213,9 @@ starter:
   # each created process instance
   businessKey: "businessKey"
   # Starter.startupProbe, livenessProbe and readinessProbe configure the probes of the starter container.
-  # They are disabled by default. All keys except "enabled" are passed unchanged to the Kubernetes probe spec.
+  # They are enabled by default. All keys except "enabled" are passed unchanged to the Kubernetes probe spec.
   startupProbe:
-    enabled: false
+    enabled: true
     httpGet:
       path: /health/readiness
       port: http
@@ -223,7 +223,7 @@ starter:
     failureThreshold: 30
     timeoutSeconds: 5
   livenessProbe:
-    enabled: false
+    enabled: true
     httpGet:
       path: /health/liveness
       port: http
@@ -232,7 +232,7 @@ starter:
     failureThreshold: 3
     timeoutSeconds: 5
   readinessProbe:
-    enabled: false
+    enabled: true
     httpGet:
       path: /health/readiness
       port: http
