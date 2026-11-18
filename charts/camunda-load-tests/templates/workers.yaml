@@ -1,3 +1,4 @@
+{{- $oidc := include "camunda-load-tests.oidc" . | fromYaml -}}
 {{- range $workerName, $worker := .Values.workers }}
 apiVersion: apps/v1
 kind: Deployment
@@ -46,7 +47,7 @@ spec:
             - name: LOG_LEVEL
               value: {{ $worker.logLevel | quote }}
             {{- end }}
-            {{- if $.Values.saas.enabled }}
+            {{- if $oidc.enabled }}
             - name: ZEEBE_REST_ADDRESS
               valueFrom:
                 secretKeyRef:
@@ -104,7 +105,7 @@ spec:
               value: {{ $.Values.global.preferRest.enabled | quote }}
             - name: LOAD_TESTER_PERFORM_READ_BENCHMARKS
               value: {{ $.Values.global.performReadBenchmarks | quote }}
-            {{- if not $.Values.saas.enabled }}
+            {{- if not $oidc.enabled }}
             - name: CAMUNDA_CLIENT_GRPC_ADDRESS
               value: "http://{{ $.Values.global.connect.serviceName }}:26500"
             - name: CAMUNDA_CLIENT_REST_ADDRESS

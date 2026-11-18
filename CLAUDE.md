@@ -31,7 +31,7 @@ helm lint charts/camunda-load-tests  # Lint the chart
 
 **Dual configuration:** Templates set both old HOCON `-Dapp.*` flags in `JDK_JAVA_OPTIONS` and new Spring Boot env vars (`LOAD_TESTER_*`, `CAMUNDA_CLIENT_*`) from the same Helm values. The old app reads the `-D` flags; the new Spring Boot app reads the env vars. Keep both in sync when modifying templates.
 
-**SaaS mode** (`saas.enabled=true`): sets `CAMUNDA_CLIENT_MODE=saas`, `CAMUNDA_CLIENT_AUTH_METHOD=oidc`, pulls credentials from a Secret, omits broker URL flags.
+**OIDC mode** (`oidc.enabled=true`): sets `CAMUNDA_CLIENT_MODE=saas`, `CAMUNDA_CLIENT_AUTH_METHOD=oidc`, pulls credentials from a Secret, omits broker URL flags. The legacy `saas.enabled=true` key is still accepted as a deprecated alias; `oidc` wins when both are set.
 
 ## Working with Tests
 
