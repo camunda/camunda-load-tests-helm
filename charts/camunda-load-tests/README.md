@@ -65,13 +65,13 @@ need to run through the following steps:
 ```shell
 helm install PREFIX-oidc-load-test camunda-load-tests/camunda-load-tests \
   --set oidc.enabled=true \
-  --set oidc.credentials.clientId="$ZEEBE_CLIENT_ID" \
-  --set oidc.credentials.clientSecret="$ZEEBE_CLIENT_SECRET" \
-  --set oidc.credentials.zeebeRestAddress="$ZEEBE_REST_ADDRESS" \
-  --set oidc.credentials.authServer="$ZEEBE_AUTHORIZATION_SERVER_URL" \
-  --set oidc.credentials.authType="OAUTH" \
-  --set oidc.credentials.zeebeGrpcAddress="$ZEEBE_GRPC_ADDRESS" \
-  --set oidc.credentials.authorizationAudience="$ZEEBE_TOKEN_AUDIENCE"
+  --set-string oidc.credentials.clientId="$ZEEBE_CLIENT_ID" \
+  --set-string oidc.credentials.clientSecret="$ZEEBE_CLIENT_SECRET" \
+  --set-string oidc.credentials.zeebeRestAddress="$ZEEBE_REST_ADDRESS" \
+  --set-string oidc.credentials.authServer="$ZEEBE_AUTHORIZATION_SERVER_URL" \
+  --set-string oidc.credentials.authType="OAUTH" \
+  --set-string oidc.credentials.zeebeGrpcAddress="$ZEEBE_GRPC_ADDRESS" \
+  --set-string oidc.credentials.authorizationAudience="$ZEEBE_TOKEN_AUDIENCE"
 ```
 
 This will run the load test against an OIDC-enabled Camunda cluster.

@@ -6,29 +6,56 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
-Default OIDC settings.
-
-These live in the template, not in values.yaml, so that a key present in
-`oidc` or the legacy `saas` always means the user set it explicitly. If the
-defaults were in values.yaml, `oidc.enabled: false` would silently override a
-legacy `saas.enabled: true`.
+Strip nil entries recursively from a map so YAML `null` overrides (e.g.
+`oidc: { enabled: null }` or `oidc: { credentials: null }`) fall through to
+defaults or legacy `saas` values instead of clobbering them in mergeOverwrite.
 */}}
-{{- define "camunda-load-tests.oidcDefaults" -}}
-{{- $credentials := dict "existingSecret" "" "clientId" "" "clientSecret" "" "zeebeRestAddress" "" "authServer" "https://login.cloud.ultrawombat.com/oauth/token" "authType" "OAUTH" "zeebeGrpcAddress" "" "authorizationAudience" "zeebe.ultrawombat.com" -}}
-{{- dict "enabled" false "credentials" $credentials | toYaml -}}
+{{- define "camunda-load-tests.pruneNilMap" -}}
+{{- $in := . -}}
+{{- range $k, $v := $in -}}
+  {{- if eq $v nil -}}
+    {{- $_ := unset $in $k -}}
+  {{- else if kindIs "map" $v -}}
+    {{- include "camunda-load-tests.pruneNilMap" $v -}}
+  {{- end -}}
+{{- end -}}
 {{- end -}}
 
 {{/*
 Resolve the effective OIDC configuration.
 
 Defaults are overridden by the deprecated `saas` key, which is in turn
-overridden by `oidc`. mergeOverwrite is used so an explicit `oidc.enabled:
-false` beats a legacy `saas.enabled: true`. The result is rendered as YAML and
-parsed back with fromYaml at each call site.
+overridden by `oidc`. Defaults live here rather than in values.yaml so that
+an omitted `oidc.enabled` does not mask a legacy `saas.enabled: true`, while an
+explicit `oidc.enabled: false` still beats `saas.enabled: true` via
+mergeOverwrite. Credential fields are stringified before toYaml so numeric
+`--set` values survive fromYaml without float64 scientific-notation conversion.
 */}}
 {{- define "camunda-load-tests.oidc" -}}
-{{- $defaults := include "camunda-load-tests.oidcDefaults" . | fromYaml -}}
-{{- mergeOverwrite $defaults (deepCopy (.Values.saas | default dict)) (deepCopy (.Values.oidc | default dict)) | toYaml -}}
+{{- $defaults := dict
+  "enabled" false
+  "credentials" (dict
+    "existingSecret" ""
+    "clientId" ""
+    "clientSecret" ""
+    "zeebeRestAddress" ""
+    "authServer" "https://login.cloud.ultrawombat.com/oauth/token"
+    "authType" "OAUTH"
+    "zeebeGrpcAddress" ""
+    "authorizationAudience" "zeebe.ultrawombat.com"
+  )
+-}}
+{{- $saas := deepCopy (.Values.saas | default dict) -}}
+{{- include "camunda-load-tests.pruneNilMap" $saas -}}
+{{- $oidc := deepCopy (.Values.oidc | default dict) -}}
+{{- include "camunda-load-tests.pruneNilMap" $oidc -}}
+{{- $merged := mergeOverwrite $defaults $saas $oidc -}}
+{{- $creds := $merged.credentials | default dict -}}
+{{- range $k, $v := $creds -}}
+  {{- $_ := set $creds $k (toString $v) -}}
+{{- end -}}
+{{- $_ := set $merged "credentials" $creds -}}
+{{- $merged | toYaml -}}
 {{- end -}}
 
 {{/*
