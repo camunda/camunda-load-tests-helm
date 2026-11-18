@@ -25,7 +25,7 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-// TestGoldenSaasWithExtraConfig exercises the `saas.enabled=true` +
+// TestGoldenSaasWithExtraConfig exercises the `oidc.enabled=true` +
 // `global.extraConfig` combination, which previously caused the
 // camunda-load-tests.annotations helper to emit both checksum annotations
 // on a single line, breaking YAML parsing of the rendered Deployments.
@@ -46,14 +46,14 @@ func TestGoldenSaasWithExtraConfig(t *testing.T) {
 			// bump doesn't require regenerating this golden file.
 			IgnoredLines: []string{`checksum/saas-credentials:.*`},
 			SetValues: map[string]string{
-				"saas.enabled":                                             "true",
-				"saas.credentials.clientId":                                "clientId",
-				"saas.credentials.clientSecret":                            "clientSecret",
-				"saas.credentials.authServer":                              "authServer",
-				"saas.credentials.zeebeRestAddress":                        "zeebeRestAddress",
-				"saas.credentials.authType":                                "authType",
-				"saas.credentials.zeebeGrpcAddress":                        "zeebeGrpcAddress",
-				"saas.credentials.authorizationAudience":                   "authorizationAudience",
+				"oidc.enabled":                                             "true",
+				"oidc.credentials.clientId":                                "clientId",
+				"oidc.credentials.clientSecret":                            "clientSecret",
+				"oidc.credentials.authServer":                              "authServer",
+				"oidc.credentials.zeebeRestAddress":                        "zeebeRestAddress",
+				"oidc.credentials.authType":                                "authType",
+				"oidc.credentials.zeebeGrpcAddress":                        "zeebeGrpcAddress",
+				"oidc.credentials.authorizationAudience":                   "authorizationAudience",
 				"global.extraConfig.load-tester.monitor-data-availability": "false",
 			},
 		})

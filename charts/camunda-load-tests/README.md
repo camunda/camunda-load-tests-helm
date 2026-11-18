@@ -51,10 +51,10 @@ and much closer to production systems.
 For more details, follow the Camunda Platform 8
 [local Kubernetes cluster guide](https://docs.camunda.io/docs/self-managed/platform-deployment/helm-kubernetes/guides/local-kubernetes-cluster/).
 
-### Running against Saas
+### Running with OIDC
 
-If you want to run the load test against a Camunda Saas cluster, or other 
-Camunda kubernetes deployment (such as in Google cloud, AWS etc.), you 
+If you want to run the load test against an OIDC-enabled cluster, such as
+Camunda SaaS or a Self-Managed deployment (in Google Cloud, AWS etc.), you
 need to run through the following steps:
 
 1. Create a new API client in the intended cluster.
@@ -63,18 +63,22 @@ need to run through the following steps:
 4. Run the following `install` command (please replace `PREFIX` with your initials)
 
 ```shell
-helm install PREFIX-saas-load-test camunda-load-tests/camunda-load-tests \
-  --set saas.enabled=true \
-  --set saas.credentials.clientId="$ZEEBE_CLIENT_ID" \
-  --set saas.credentials.clientSecret="$ZEEBE_CLIENT_SECRET" \
-  --set saas.credentials.zeebeRestAddress="$ZEEBE_REST_ADDRESS" \
-  --set saas.credentials.authServer="$ZEEBE_AUTHORIZATION_SERVER_URL" \
-  --set saas.credentials.authType="OAUTH" \
-  --set saas.credentials.zeebeGrpcAddress="$ZEEBE_GRPC_ADDRESS" \
-  --set saas.credentials.authorizationAudience="$ZEEBE_TOKEN_AUDIENCE"
+helm install PREFIX-oidc-load-test camunda-load-tests/camunda-load-tests \
+  --set oidc.enabled=true \
+  --set oidc.credentials.clientId="$ZEEBE_CLIENT_ID" \
+  --set oidc.credentials.clientSecret="$ZEEBE_CLIENT_SECRET" \
+  --set oidc.credentials.zeebeRestAddress="$ZEEBE_REST_ADDRESS" \
+  --set oidc.credentials.authServer="$ZEEBE_AUTHORIZATION_SERVER_URL" \
+  --set oidc.credentials.authType="OAUTH" \
+  --set oidc.credentials.zeebeGrpcAddress="$ZEEBE_GRPC_ADDRESS" \
+  --set oidc.credentials.authorizationAudience="$ZEEBE_TOKEN_AUDIENCE"
 ```
 
-This will run the load test against the SaaS Camunda cluster.
+This will run the load test against an OIDC-enabled Camunda cluster.
+
+The former `saas.*` keys are still accepted as a deprecated alias for `oidc.*`,
+so existing deployments keep working. When both are set, `oidc.*` wins. Support
+for `saas.*` will be removed in a future major chart version.
 
 ## Uninstalling Charts
 

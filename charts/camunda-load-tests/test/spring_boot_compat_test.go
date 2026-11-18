@@ -261,8 +261,8 @@ func TestSpringBootEnvVarsSaaSMode(t *testing.T) {
 	options := &helm.Options{
 		KubectlOptions: k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId())),
 		SetValues: map[string]string{
-			"saas.enabled":                    "true",
-			"saas.credentials.existingSecret": "my-secret",
+			"oidc.enabled":                    "true",
+			"oidc.credentials.existingSecret": "my-secret",
 		},
 	}
 

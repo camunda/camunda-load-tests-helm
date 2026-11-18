@@ -6,13 +6,40 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Default OIDC settings.
+
+These live in the template, not in values.yaml, so that a key present in
+`oidc` or the legacy `saas` always means the user set it explicitly. If the
+defaults were in values.yaml, `oidc.enabled: false` would silently override a
+legacy `saas.enabled: true`.
+*/}}
+{{- define "camunda-load-tests.oidcDefaults" -}}
+{{- $credentials := dict "existingSecret" "" "clientId" "" "clientSecret" "" "zeebeRestAddress" "" "authServer" "https://login.cloud.ultrawombat.com/oauth/token" "authType" "OAUTH" "zeebeGrpcAddress" "" "authorizationAudience" "zeebe.ultrawombat.com" -}}
+{{- dict "enabled" false "credentials" $credentials | toYaml -}}
+{{- end -}}
+
+{{/*
+Resolve the effective OIDC configuration.
+
+Defaults are overridden by the deprecated `saas` key, which is in turn
+overridden by `oidc`. mergeOverwrite is used so an explicit `oidc.enabled:
+false` beats a legacy `saas.enabled: true`. The result is rendered as YAML and
+parsed back with fromYaml at each call site.
+*/}}
+{{- define "camunda-load-tests.oidc" -}}
+{{- $defaults := include "camunda-load-tests.oidcDefaults" . | fromYaml -}}
+{{- mergeOverwrite $defaults (deepCopy (.Values.saas | default dict)) (deepCopy (.Values.oidc | default dict)) | toYaml -}}
+{{- end -}}
+
+{{/*
 Generate the common annotations for deployments.
 */}}
 {{- define "camunda-load-tests.annotations" -}}
+{{- $oidc := include "camunda-load-tests.oidc" . | fromYaml -}}
 {{ if $.Values.global.extraConfig -}}
 checksum/config: {{ $.Values.global.extraConfig | toYaml | sha256sum }}
 {{- end }}
-{{ if $.Values.saas.enabled -}}
+{{ if $oidc.enabled -}}
 checksum/saas-credentials: {{ include (print $.Template.BasePath "/credentials.yaml") . | sha256sum }}
 {{- end }}
 {{- end -}}
@@ -40,8 +67,10 @@ Create a default fully qualified credentials name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "camunda-load-tests.credentials-name" -}}
-{{- if .Values.saas.credentials.existingSecret }}
-{{- .Values.saas.credentials.existingSecret }}
+{{- $oidc := include "camunda-load-tests.oidc" . | fromYaml -}}
+{{- $credentials := $oidc.credentials | default dict -}}
+{{- if $credentials.existingSecret }}
+{{- $credentials.existingSecret }}
 {{- else }}
 {{- printf "%s-credentials" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
