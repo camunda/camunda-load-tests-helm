@@ -4,6 +4,34 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: added
+          description: "default the load test applications to the REST API"
+        - kind: added
+          description: "enable the starter and worker probes by default"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/links: |
+        - name: Zeebe Repo
+          url: https://github.com/camunda/camunda
+        - name: Zeebe Docs
+          url: https://docs.camunda.io/docs/components/zeebe/zeebe-overview/
+    apiVersion: v2
+    appVersion: 8.8.0
+    created: "2026-11-24T18:35:28.780208409Z"
+    description: A Helm chart for Camunda load tests
+    digest: 79f14fae9362051bf996865961fa7c5858d99b3b95aaf7043f7f30067e671142
+    maintainers:
+    - email: christopher.kujawa@camunda.com
+      name: ChrisKujawa
+    name: camunda-load-tests
+    sources:
+    - https://github.com/camunda/camunda-load-tests-helm
+    - https://github.com/camunda/camunda
+    type: application
+    urls:
+    - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.17/camunda-load-tests-0.1.17.tgz
+    version: 0.1.17
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
           description: "raise default worker threads and starter CPU"
         - kind: added
           description: "configure readiness/liveness probes"
@@ -455,4 +483,4 @@ entries:
     urls:
     - https://github.com/camunda/camunda-load-tests-helm/releases/download/camunda-load-tests-0.1.1/camunda-load-tests-0.1.1.tgz
     version: 0.1.1
-generated: "2026-11-13T09:22:03.537666572Z"
+generated: "2026-11-24T18:35:28.7803004Z"
