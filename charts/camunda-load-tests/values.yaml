@@ -25,8 +25,9 @@
 # Global configuration for variables which can be accessed by all sub charts
 global:
   # PreferRest allows to configure load test applications to make use of the REST API, instead of the gRPC API.
+  # Defaults to true. Set to false to use gRPC. Load testers built before the Spring Boot migration ignore it.
   preferRest:
-    enabled: false
+    enabled: true
   # PerformReadBenchmarks if true enables read benchmarks in the load test applications
   performReadBenchmarks: false
   connect:
