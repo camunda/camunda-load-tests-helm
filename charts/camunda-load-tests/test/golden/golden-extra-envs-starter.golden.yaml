@@ -46,7 +46,7 @@ spec:
             ## Spring Boot compatible env vars (for migrated load tester, ignored by old HOCON app)
             ##
             - name: CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC
-              value: "false"
+              value: "true"
             - name: LOAD_TESTER_PERFORM_READ_BENCHMARKS
               value: "false"
             - name: CAMUNDA_CLIENT_GRPC_ADDRESS

@@ -53,7 +53,7 @@ func TestSpringBootEnvVarsStarter(t *testing.T) {
 	assert.Equal(t, "my-process", envVars["LOAD_TESTER_STARTER_PROCESS_ID"])
 	_, durationLimitSet := envVars["LOAD_TESTER_STARTER_DURATION_LIMIT"]
 	assert.False(t, durationLimitSet, "LOAD_TESTER_STARTER_DURATION_LIMIT should not be set by default")
-	assert.Equal(t, "false", envVars["CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC"])
+	assert.Equal(t, "true", envVars["CAMUNDA_CLIENT_PREFER_REST_OVER_GRPC"])
 	assert.Equal(t, "false", envVars["LOAD_TESTER_PERFORM_READ_BENCHMARKS"])
 	assert.Equal(t, "http://camunda-gateway:26500", envVars["CAMUNDA_CLIENT_GRPC_ADDRESS"])
 	assert.Equal(t, "http://camunda-gateway:8080", envVars["CAMUNDA_CLIENT_REST_ADDRESS"])
