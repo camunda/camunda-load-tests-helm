@@ -159,13 +159,21 @@ spec:
           ports:
             - containerPort: 9600
               name: "http"
-          {{- if and $worker.startupProbe $worker.startupProbe.enabled }}
+          {{- /*
+            Both merges always keep the `httpGet` default.
+            A worker that sets another handler (`tcpSocket`, `exec`, `grpc`, etc.) renders both
+            handlers, and Kubernetes rejects a probe with more than one.
+            This applies to both probes.
+          */ -}}
+          {{- $startupProbe := mergeOverwrite (deepCopy $.Values.workerDefaults.startupProbe) ($worker.startupProbe | default dict) }}
+          {{- if $startupProbe.enabled }}
           startupProbe:
-            {{- toYaml (omit $worker.startupProbe "enabled") | nindent 12 }}
+            {{- toYaml (omit $startupProbe "enabled") | nindent 12 }}
           {{- end }}
-          {{- if and $worker.readinessProbe $worker.readinessProbe.enabled }}
+          {{- $readinessProbe := mergeOverwrite (deepCopy $.Values.workerDefaults.readinessProbe) ($worker.readinessProbe | default dict) }}
+          {{- if $readinessProbe.enabled }}
           readinessProbe:
-            {{- toYaml (omit $worker.readinessProbe "enabled") | nindent 12 }}
+            {{- toYaml (omit $readinessProbe "enabled") | nindent 12 }}
           {{- end }}
           volumeMounts:
             - name: heap-dumps
