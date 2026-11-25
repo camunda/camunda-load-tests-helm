@@ -114,7 +114,7 @@ Allows to configure the workers which can be deployed along the Zeebe Cluster. T
 | `worker` | | Configuration for the to be deployed worker application | |
 | | `replicas` | Defines how many replicas of the application should be deployed. | `3` |
 | | `capacity` | Defines how many jobs the worker should activate and work on. | `60` |
-| | `startupProbe`, `readinessProbe` | Probes of the worker container on `/health/readiness`, port `http`. Set `enabled: true` to render one; other keys are passed to the Kubernetes probe spec. The worker has no liveness endpoint. | `enabled: false` |
+| | `startupProbe`, `readinessProbe` | Probes of the worker container on `/health/readiness`, port `http`. The defaults of `workerDefaults` apply to every worker; set `enabled: false` to omit one. Other keys are passed to the Kubernetes probe spec. The worker has no liveness endpoint. | `enabled: true` |
 
 
 ### Starter

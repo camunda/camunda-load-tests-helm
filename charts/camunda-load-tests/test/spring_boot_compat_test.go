@@ -391,3 +391,94 @@ func TestWorkerProbesDisabled(t *testing.T) {
 	assert.Nil(t, container.ReadinessProbe)
 	assert.Nil(t, container.LivenessProbe)
 }
+
+func renderWorkerDeployments(t *testing.T, options *helm.Options) map[string]appsv1.Deployment {
+	chartPath, err := filepath.Abs("../")
+	require.NoError(t, err)
+
+	options.KubectlOptions = k8s.NewKubectlOptions("", "", "load-test-"+strings.ToLower(random.UniqueId()))
+	output := helm.RenderTemplate(t, options, chartPath, "load-test", []string{"templates/workers.yaml"})
+
+	deployments := make(map[string]appsv1.Deployment)
+	for _, document := range strings.Split(output, "\n---\n") {
+		if !strings.Contains(document, "kind: Deployment") {
+			continue
+		}
+		var deployment appsv1.Deployment
+		helm.UnmarshalK8SYaml(t, document, &deployment)
+		deployments[deployment.Name] = deployment
+	}
+	return deployments
+}
+
+func TestWorkerProbesEnabledByDefaultOnWorkersAddedByValues(t *testing.T) {
+	// given a realistic benchmark setup that replaces the default worker by several named workers
+	options := &helm.Options{
+		ValuesFiles: []string{"../values-realistic-benchmark.yaml"},
+	}
+
+	// when
+	deployments := renderWorkerDeployments(t, options)
+
+	// then every worker has the default probes
+	require.Contains(t, deployments, "customer-notification")
+	require.NotContains(t, deployments, "worker")
+	for name, deployment := range deployments {
+		container := deployment.Spec.Template.Spec.Containers[0]
+		require.NotNil(t, container.StartupProbe, name)
+		require.NotNil(t, container.ReadinessProbe, name)
+		assert.Equal(t, "/health/readiness", container.StartupProbe.HTTPGet.Path, name)
+		assert.Equal(t, "/health/readiness", container.ReadinessProbe.HTTPGet.Path, name)
+		assert.Equal(t, int32(30), container.StartupProbe.FailureThreshold, name)
+		assert.Nil(t, container.LivenessProbe, name)
+	}
+}
+
+func TestWorkerProbeOverrideKeepsOtherDefaults(t *testing.T) {
+	// given one worker that changes a single key of the readiness probe
+	options := &helm.Options{
+		SetValues: map[string]string{
+			"workers.otherWorker.jobType":                       "other-job",
+			"workers.otherWorker.readinessProbe.periodSeconds":  "3",
+			"workers.worker.readinessProbe.initialDelaySeconds": "20",
+		},
+	}
+
+	// when
+	deployments := renderWorkerDeployments(t, options)
+
+	// then the changed key applies to that worker only and the other keys stay at the defaults
+	other := deployments["otherWorker"].Spec.Template.Spec.Containers[0]
+	require.NotNil(t, other.ReadinessProbe)
+	assert.Equal(t, int32(3), other.ReadinessProbe.PeriodSeconds)
+	assert.Equal(t, int32(10), other.ReadinessProbe.InitialDelaySeconds)
+	assert.Equal(t, "/health/readiness", other.ReadinessProbe.HTTPGet.Path)
+
+	defaultWorker := deployments["worker"].Spec.Template.Spec.Containers[0]
+	require.NotNil(t, defaultWorker.ReadinessProbe)
+	assert.Equal(t, int32(10), defaultWorker.ReadinessProbe.PeriodSeconds)
+	assert.Equal(t, int32(20), defaultWorker.ReadinessProbe.InitialDelaySeconds)
+}
+
+func TestWorkerProbesDisabledOnOneWorkerOnly(t *testing.T) {
+	// given a second worker that disables its probes
+	options := &helm.Options{
+		SetValues: map[string]string{
+			"workers.otherWorker.jobType":                "other-job",
+			"workers.otherWorker.startupProbe.enabled":   "false",
+			"workers.otherWorker.readinessProbe.enabled": "false",
+		},
+	}
+
+	// when
+	deployments := renderWorkerDeployments(t, options)
+
+	// then only that worker has no probes
+	other := deployments["otherWorker"].Spec.Template.Spec.Containers[0]
+	assert.Nil(t, other.StartupProbe)
+	assert.Nil(t, other.ReadinessProbe)
+
+	defaultWorker := deployments["worker"].Spec.Template.Spec.Containers[0]
+	assert.NotNil(t, defaultWorker.StartupProbe)
+	assert.NotNil(t, defaultWorker.ReadinessProbe)
+}

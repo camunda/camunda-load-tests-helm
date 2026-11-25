@@ -146,26 +146,6 @@ workers:
       requests:
         cpu: 500m
         memory: 512Mi
-    # Workers.worker.startupProbe and readinessProbe configure the probes of the worker container.
-    # They are enabled by default and can be omitted for a worker. All keys except "enabled" are passed
-    # unchanged to the Kubernetes probe spec. The worker application has no liveness endpoint.
-    startupProbe:
-      enabled: true
-      httpGet:
-        path: /health/readiness
-        port: http
-      periodSeconds: 10
-      failureThreshold: 30
-      timeoutSeconds: 5
-    readinessProbe:
-      enabled: true
-      httpGet:
-        path: /health/readiness
-        port: http
-      initialDelaySeconds: 10
-      periodSeconds: 10
-      failureThreshold: 3
-      timeoutSeconds: 5
 
   # Workers.worker defines the configuration for the default load test worker
   # Adding more and different worker can be done via adding a new map like:
@@ -186,6 +166,30 @@ workers:
   #      requests:
   #        cpu: 500m
   #        memory: 512Mi
+
+# WorkerDefaults configuration applied to every entry of "workers", including workers added next to or
+# instead of the default one. A key set on a worker overrides the same key here.
+workerDefaults:
+  # WorkerDefaults.startupProbe and readinessProbe configure the probes of the worker containers.
+  # They are enabled by default. Set "enabled: false" on a worker to omit one. All keys except "enabled"
+  # are passed unchanged to the Kubernetes probe spec. The worker application has no liveness endpoint.
+  startupProbe:
+    enabled: true
+    httpGet:
+      path: /health/readiness
+      port: http
+    periodSeconds: 10
+    failureThreshold: 30
+    timeoutSeconds: 5
+  readinessProbe:
+    enabled: true
+    httpGet:
+      path: /health/readiness
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 5
 
 # Starter configuration for the to be deployed starter application
 starter:
